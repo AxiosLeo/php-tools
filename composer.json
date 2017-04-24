@@ -2,10 +2,10 @@
   "name": "axios/tpr",
   "description":"base on thinkphp5. restful api framework",
   "version": "1.0.0",
+  "minimum-stability": "dev",
   "type": "composer-plugin",
   "require": {
-    "composer-plugin-api": "^1.0",
-    "php": ">=5.4.0",
+    "php": ">=7.0",
     "topthink/framework": "^5.0",
     "topthink/think-mongo": "^1.6",
     "phpmailer/phpmailer": "^5.2"
@@ -23,10 +23,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "think\\composer\\": "src"
+      "axios\\composer\\": "src"
     }
-  },
-  "extra": {
-    "class": "think\\composer\\Plugin"
   }
 }
