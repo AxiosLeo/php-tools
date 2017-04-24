@@ -1,0 +1,30 @@
+{
+  "name": "axios/tpr",
+  "type": "composer-plugin",
+  "require": {
+    "composer-plugin-api": "^1.0"
+  },
+  "require-dev": {
+    "composer/composer": "1.0.*@dev",
+    "php": ">=5.4.0",
+    "topthink/framework": "^5.0",
+    "topthink/think-mongo": "^1.6",
+    "phpmailer/phpmailer": "^5.2"
+  },
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "axios",
+      "email": "369017150@qq.com",
+      "blog":"http://hanxv.cn"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "think\\composer\\": "src"
+    }
+  },
+  "extra": {
+    "class": "think\\composer\\Plugin"
+  }
+}
