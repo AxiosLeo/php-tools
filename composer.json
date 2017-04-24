@@ -2,14 +2,14 @@
   "name": "axios/tpr",
   "type": "composer-plugin",
   "require": {
-    "composer-plugin-api": "^1.0"
-  },
-  "require-dev": {
-    "composer/composer": "1.0.*@dev",
+    "composer-plugin-api": "^1.0",
     "php": ">=5.4.0",
     "topthink/framework": "^5.0",
     "topthink/think-mongo": "^1.6",
     "phpmailer/phpmailer": "^5.2"
+  },
+  "require-dev": {
+    "composer/composer": "1.0.*@dev"
   },
   "license": "Apache-2.0",
   "authors": [
