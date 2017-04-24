@@ -2,7 +2,6 @@
   "name": "axios/tpr",
   "description":"base on thinkphp5. restful api framework",
   "version": "1.0.0",
-  "minimum-stability": "dev-stable",
   "type": "composer-plugin",
   "require": {
     "php": ">=7.0",
