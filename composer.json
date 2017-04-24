@@ -1,5 +1,7 @@
 {
   "name": "axios/tpr",
+  "description":"base on thinkphp5. restful api framework",
+  "version": "1.0.0",
   "type": "composer-plugin",
   "require": {
     "composer-plugin-api": "^1.0",
