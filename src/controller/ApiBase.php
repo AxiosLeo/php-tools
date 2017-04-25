@@ -95,7 +95,6 @@ class ApiBase extends Controller{
         Config::set("default_return_type","json");
         Config::set('app_debug',Env::get('debug.status'));
         Config::set('exception_handle','\\axios\\tpr\\exception\\Http');
-        Config::set('extra_file_list');
         $this->method  = $this->request->method();
         GlobalService::set("method",$this->method);
         $this->param   = $this->request->param();
