@@ -92,6 +92,8 @@ class ApiBase extends Controller{
     function __construct(Request $request = null)
     {
         parent::__construct($request);
+        Config::set("default_return_type","json");
+        Config::set('app_debug',Env::get('debug.status'));
         $this->method  = $this->request->method();
         GlobalService::set("method",$this->method);
         $this->param   = $this->request->param();
