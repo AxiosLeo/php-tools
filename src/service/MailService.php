@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/10 17:21
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 use PHPMailer;
 use think\Config;
 

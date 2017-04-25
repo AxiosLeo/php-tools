@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/7 14:13
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 use think\Config;
 use \Redis;
 class RedisService extends Redis {

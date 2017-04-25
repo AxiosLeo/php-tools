@@ -6,9 +6,9 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/16 21:23
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 
-use axios\composer\tpr\controller\ApiBase;
+use axios\tpr\controller\ApiBase;
 
 class GlobalService extends ApiBase{
 

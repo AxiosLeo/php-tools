@@ -1,8 +1,19 @@
 {
   "name": "axios/tpr",
   "description":"base on thinkphp5. restful api framework",
+  "homepage": "https://github.com/AxiosCros/tpr-composer",
+  "license": "Apache-2.0",
+  "minimum-stability": "stable",
   "version": "1.0.0",
-  "type": "composer-plugin",
+  "authors": [
+    {
+      "name": "axios",
+      "email": "369017150@qq.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/AxiosCros/tpr-composer/issues"
+  },
   "require": {
     "php": ">=7.0",
     "topthink/framework": "^5.0",
@@ -12,17 +23,9 @@
   "require-dev": {
     "composer/composer": "1.0.*@dev"
   },
-  "license": "Apache-2.0",
-  "authors": [
-    {
-      "name": "axios",
-      "email": "369017150@qq.com",
-      "blog":"http://hanxv.cn"
-    }
-  ],
   "autoload": {
     "psr-4": {
-      "axios\\composer\\tpr\\": "src"
+      "axios\\tpr\\": "src"
     }
   }
 }

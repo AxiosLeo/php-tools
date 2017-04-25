@@ -7,7 +7,7 @@
  * @datetime: 2017/4/7 14:51
  */
 
-namespace axios\composer\tpr\controller;
+namespace axios\tpr\controller;
 
 use think\Request;
 

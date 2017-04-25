@@ -6,11 +6,11 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/7 14:34
  */
-namespace axios\composer\tpr\controller;
+namespace axios\tpr\controller;
 
-use axios\composer\tpr\service\GlobalService;
-use axios\composer\tpr\service\LangService;
-use axios\composer\tpr\service\UserService;
+use axios\tpr\service\GlobalService;
+use axios\tpr\service\LangService;
+use axios\tpr\service\UserService;
 use think\Request;
 
 class ApiLogin extends ApiBase{

@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/3/27 15:41
  */
-namespace axios\composer\tpr\exception;
+namespace axios\tpr\exception;
 
 use Exception;
 use think\Env;

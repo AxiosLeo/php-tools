@@ -5,7 +5,7 @@
  * Date: 2017/4/2
  * Time: 14:16
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 use think\Env;
 use think\Log;
 

@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/19 11:41
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 
 use think\Route;
 

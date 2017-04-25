@@ -6,9 +6,9 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/24 13:58
  */
-namespace axios\composer\tpr\middleware;
+namespace axios\tpr\middleware;
 
-use axios\composer\tpr\service\GlobalService;
+use axios\tpr\service\GlobalService;
 
 class BaseMiddleware {
     protected $param ;

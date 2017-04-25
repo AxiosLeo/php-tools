@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/10 15:59
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 use think\Config;
 use think\Db;
 

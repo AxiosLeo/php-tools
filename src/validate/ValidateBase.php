@@ -6,9 +6,9 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/3/27 11:37
  */
-namespace axios\composer\tpr\validate;
+namespace axios\tpr\validate;
 
-use axios\composer\tpr\service\LangService;
+use axios\tpr\service\LangService;
 use think\Validate;
 
 class ValidateBase extends Validate{

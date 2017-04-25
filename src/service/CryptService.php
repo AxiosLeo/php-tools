@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/20 13:55
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 
 class CryptService {
     private static $key_path;

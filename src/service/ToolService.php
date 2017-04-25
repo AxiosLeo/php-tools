@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/15 15:15
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 
 class ToolService {
     public static function uuid($salt=''){

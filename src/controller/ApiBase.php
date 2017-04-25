@@ -6,11 +6,11 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/3/27 10:18
  */
-namespace axios\composer\tpr\controller;
+namespace axios\tpr\controller;
 
-use axios\composer\tpr\service\GlobalService;
-use axios\composer\tpr\service\LangService;
-use axios\composer\tpr\service\ToolService;
+use axios\tpr\service\GlobalService;
+use axios\tpr\service\LangService;
+use axios\tpr\service\ToolService;
 use think\Cache;
 use think\Config;
 use think\Controller;

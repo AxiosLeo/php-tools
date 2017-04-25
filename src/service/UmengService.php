@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/21 9:39
  */
-namespace axios\composer\tpr\service;
+namespace axios\tpr\service;
 /**
  * Class UmengService
  * @package app\common\service
