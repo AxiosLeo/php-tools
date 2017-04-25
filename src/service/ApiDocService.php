@@ -57,7 +57,7 @@ class ApiDocService{
                     $methods[$m]['desc'] = $method_comment['desc']=="@desc"?"":$method_comment['desc'];
                     $methods[$m]['method'] = $method_comment['method']=="@method"?"":strtoupper($method_comment['method']);
                     $methods[$m]['parameter'] = $method_comment['parameter']=="@parameter"?"":$method_comment['parameter'];
-                    $methods[$m]['return'] = $method_comment['return']=="@return"?"":$method_comment['return'];
+                    $methods[$m]['response'] = $method_comment['response']=="@response"?"":$method_comment['response'];
                     $m++;
                 }
             }
@@ -69,12 +69,13 @@ class ApiDocService{
     public static function trans($comment){
         $title  = '@title';
         $desc   = '@desc';
+        $method = '';
         $package= '@package';
         $param  = '@parameter';
-        $method = '';
         $param_count  = 0;
-        $return = '@return';
-        $return_count = 0;
+        $response = '@response';
+        $response_count = 0;
+
 
         $docComment = $comment;
         if ($docComment !== false) {
@@ -101,8 +102,8 @@ class ApiDocService{
                     $method = trim(substr($comment, $pos + 8));
                 }
 
-                //@return
-                $pos = stripos($comment, '@return');
+                //@response
+                $pos = stripos($comment, '@response');
                 if($pos !== false){
                     $temp = explode(" ",trim(substr($comment,$pos + 7)));
                     $tn = 0;$tt=[];
@@ -114,11 +115,11 @@ class ApiDocService{
                         }
                     }
                     $temp = $tt;
-                    $return = [];
-                    $return[$return_count]['type'] = isset($temp[0]) ?LangService::trans($temp[0]):"";
-                    $return[$return_count]['name'] = isset($temp[1]) ?$temp[1]:"";
-                    $return[$return_count]['info'] = isset($temp[2]) ?$temp[2]:"";
-                    $return_count++;
+                    $response = [];
+                    $response[$response_count]['type'] = isset($temp[0]) ?LangService::trans($temp[0]):"";
+                    $response[$response_count]['name'] = isset($temp[1]) ?$temp[1]:"";
+                    $response[$response_count]['info'] = isset($temp[2]) ?$temp[2]:"";
+                    $response_count++;
                 }
 
                 //@parameter
@@ -148,8 +149,8 @@ class ApiDocService{
             'desc'  => $desc,
             'package'=>$package,
             'parameter' => $param,
-            'return'=> $return,
             'method'=>$method,
+            'response'=>$response
         ];
 
         return $comment;
