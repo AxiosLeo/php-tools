@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/4/25 11:18
  */
-if (!function_exists('validate')) {
+if (!function_exists('middleware')) {
     /**
      * 实例化验证器
      * @param string    $name 验证器名称
