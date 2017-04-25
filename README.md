@@ -3,7 +3,7 @@ tpr接口开发框架的composer版
 
 TPR框架开发版地址： [https://github.com/AxiosCros/thinkphp5-restfulapi](https://github.com/AxiosCros/thinkphp5-restfulapi)
 
-### 安装composre版
+### 安装
 ``` shell
 composer require axios/tpr
 ```
