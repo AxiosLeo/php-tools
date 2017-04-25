@@ -26,6 +26,9 @@
   "autoload": {
     "psr-4": {
       "axios\\tpr\\": "src"
-    }
+    },
+    "files": [
+      "src/helper.php"
+    ]
   }
 }
