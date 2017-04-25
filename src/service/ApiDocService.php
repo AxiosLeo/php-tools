@@ -186,14 +186,14 @@ class ApiDocService{
         $scan = self::deepScanDir(APP_PATH);
         $files = $scan['file'];
         foreach ($files as $k=>$f){
-            if(strpos($f,"controller") && !strpos($f,"common")){
+            if(strpos($f,"app")!==false && strpos($f,"controller")!==false && strpos($f,"common")===false){
                 require_once $f;
             }
         }
         $class = get_declared_classes();
         $n=0;$ApiList = [];
         foreach ($class as $k=>$c){
-            if(strpos($c,"controller") && !strpos($c,"common") && !strpos($c,'admin')){
+            if(strpos($c,"app")!==false && strpos($c,"controller")!==false && strpos($c,"common")===false && strpos($c,'admin')===false){
                 $ApiList[$n++]=$c;
             }
         }
