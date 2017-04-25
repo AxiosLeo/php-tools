@@ -50,8 +50,7 @@ class UserService {
         return RedisService::redis()->switchDB(1)->set($token,$user,$expire);
     }
 
-    public static function logVerifyCode($mobile,$time=60){
-        $code = mt_rand(100000,999999);
+    public static function logVerifyCode($mobile,$code,$time=60){
         RedisService::redis()->switchDB(2)->setex($mobile,$time,$code);
         return $code;
     }
