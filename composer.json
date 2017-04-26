@@ -16,9 +16,9 @@
   },
   "require": {
     "php": ">=7.0",
-    "topthink/framework": "^5.0",
-    "topthink/think-mongo": "^1.6",
-    "phpmailer/phpmailer": "^5.2"
+    "topthink/framework": "5.0",
+    "topthink/think-mongo": "1.6",
+    "phpmailer/phpmailer": "5.2"
   },
   "require-dev": {
     "composer/composer": "1.0.*@dev"
