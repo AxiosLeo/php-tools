@@ -92,7 +92,11 @@ class ApiBase extends Controller{
     function __construct(Request $request = null)
     {
         parent::__construct($request);
-        Config::set("default_return_type","json");
+        $return_type = Env::get('response.return_type');
+        if(empty($return_type)){
+            $return_type = "json";
+        }
+        Config::set("default_return_type",$return_type);
         Config::set('app_debug',Env::get('debug.status'));
         Config::set('exception_handle','\\axios\\tpr\\exception\\Http');
         $this->method  = $this->request->method();
