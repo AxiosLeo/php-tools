@@ -14,7 +14,7 @@ use axios\tpr\service\ToolService;
 use think\Cache;
 use think\Config;
 use think\Controller;
-use think\Db;
+
 use think\Env;
 use think\Request;
 use think\Response;
@@ -87,8 +87,6 @@ class ApiBase extends Controller{
 
     public $data=[];
 
-    protected $app_key;
-
     protected $return_type = 'json';
 
     function __construct(Request $request = null)
@@ -104,7 +102,7 @@ class ApiBase extends Controller{
         GlobalService::set("method",$this->method);
         $this->param   = $this->request->param();
         GlobalService::set('param',$this->param);
-        $this->appKeyFilter();
+
         $this->route   = $this->request->route();
         $this->filter  = Config::get('filter');
         $route         = $this->request->routeInfo();
@@ -116,7 +114,7 @@ class ApiBase extends Controller{
             }
         }
 
-        $this->path    = $this->request->path();
+        $this->path    = $this->request->module()."/".$this->request->controller()."/".$this->request->action();
         $this->debug   = Env::get("debug.status");
 
         $this->sign_status = Env::get('auth.sign_status');
@@ -136,22 +134,6 @@ class ApiBase extends Controller{
         $this->filter(); //请求过滤
 
         $this->middleware('before');  //前置中间件
-    }
-    private function appKeyFilter(){
-        if(Env::get('auth.auth_app_key')){
-            if(isset($this->param['app_key']) &&  !empty($this->param['app_key'])){
-                $this->app_key = $this->param['app_key'];
-            }else{
-                $this->app_key = $this->request->header("X-App-Key");
-            }
-            if(empty($this->app_key)){
-                $this->wrong(500,"app_key not exits");
-            }
-            if(!Db::name('app_version')->where('app_key',$this->app_key)->count()){
-                $this->wrong(500,"app key not found");
-            }
-            GlobalService::set('app_key',$this->app_key);
-        }
     }
 
     protected function commonFilter($scene='logout'){
