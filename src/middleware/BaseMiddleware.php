@@ -19,12 +19,15 @@ class BaseMiddleware {
 
     protected $identify ;
 
+    protected $response = [];
+
     function __construct()
     {
         $this->param = GlobalService::get('param');
         $this->method= GlobalService::get('method');
         $this->app_key = GlobalService::get('app_key');
         $this->identify = GlobalService::get('identify');
+        $this->response = GlobalService::get('req');
     }
 
     protected function get($name='param'){
