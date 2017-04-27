@@ -17,23 +17,27 @@ class GlobalService extends ApiBase{
     }
 
     public static function set($name,$value){
-        define($name,$value);
+        define(self::name($name),$value);
     }
 
     public static function get($name=''){
-        if(!defined($name)){
+        if(!defined(self::name($name))){
             return false;
         }
         $defined = get_defined_constants(true);
-        if(isset($defined['user'][$name])){
-            return $defined['user'][$name];
+        if(isset($defined['user'][self::name($name)])){
+            return $defined['user'][self::name($name)];
         }
         return "";
+    }
+
+    private static function name($name=''){
+        return "TPR_".strtoupper($name);
     }
 
     public function __invoke($name='')
     {
         // TODO: Implement __invoke() method.
-        return self::get($name);
+        return self::get(self::name($name));
     }
 }
