@@ -24,7 +24,11 @@ class Http extends Handle{
             $req['code']= "500";
             $req['message'] = "something error";
             $req['data'] = [];
-            Response::create($req,'json',"500")->send();
+            $return_type = Env::get('response.return_type');
+            if(empty($return_type)){
+                $return_type = "json";
+            }
+            Response::create($req,$return_type,"500")->send();
             die();
         }
     }
