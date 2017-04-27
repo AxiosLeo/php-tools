@@ -15,8 +15,6 @@ class BaseMiddleware {
 
     protected $method ;
 
-    protected $app_key ;
-
     protected $identify ;
 
     protected $response = [];
@@ -25,7 +23,6 @@ class BaseMiddleware {
     {
         $this->param = GlobalService::get('param');
         $this->method= GlobalService::get('method');
-        $this->app_key = GlobalService::get('app_key');
         $this->identify = GlobalService::get('identify');
         $this->response = GlobalService::get('req');
     }
