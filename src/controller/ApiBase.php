@@ -89,14 +89,15 @@ class ApiBase extends Controller{
 
     protected $app_key;
 
+    protected $return_type = 'json';
+
     function __construct(Request $request = null)
     {
         parent::__construct($request);
         $return_type = Env::get('response.return_type');
-        if(empty($return_type)){
-            $return_type = "json";
+        if(!empty($return_type)){
+            $this->return_type = $return_type;
         }
-        Config::set("default_return_type",$return_type);
         Config::set('app_debug',Env::get('debug.status'));
         Config::set('exception_handle','\\axios\\tpr\\exception\\Http');
         $this->method  = $this->request->method();
@@ -334,7 +335,7 @@ class ApiBase extends Controller{
      * @param $req
      */
     private function send($req){
-        Response::create($req, 'json', "200")->send();
+        Response::create($req,  $this->return_type, "200")->send();
         if(function_exists('fastcgi_finish_request')){
             fastcgi_finish_request();
         }
