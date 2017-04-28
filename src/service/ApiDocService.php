@@ -55,9 +55,9 @@ class ApiDocService{
                     $method_comment = self::trans($method->getDocComment());
                     $methods[$m]['title'] = $method_comment['title']=="@title"?$method->name:$method_comment['title'];
                     $methods[$m]['desc'] = $method_comment['desc']=="@desc"?"":$method_comment['desc'];
-                    $methods[$m]['method'] = $method_comment['method']=="@method"?"":strtoupper($method_comment['method']);
-                    $methods[$m]['parameter'] = $method_comment['parameter']=="@parameter"?"":$method_comment['parameter'];
-                    $methods[$m]['response'] = $method_comment['response']=="@response"?"":$method_comment['response'];
+                    $methods[$m]['method'] = $method_comment['method']=="@method"?[]:strtoupper($method_comment['method']);
+                    $methods[$m]['parameter'] = $method_comment['parameter']=="@parameter"?[]:$method_comment['parameter'];
+                    $methods[$m]['response'] = $method_comment['response']=="@response"?[]:$method_comment['response'];
                     $m++;
                 }
             }
