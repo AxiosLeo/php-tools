@@ -55,9 +55,9 @@ class ApiDocService{
                     $method_comment = self::trans($method->getDocComment());
                     $methods[$m]['title'] = $method_comment['title']=="@title"?$method->name:$method_comment['title'];
                     $methods[$m]['desc'] = $method_comment['desc']=="@desc"?"":$method_comment['desc'];
-                    $methods[$m]['method'] = $method_comment['method']=="@method"?[]:strtoupper($method_comment['method']);
-                    $methods[$m]['parameter'] = $method_comment['parameter']=="@parameter"?[]:$method_comment['parameter'];
-                    $methods[$m]['response'] = $method_comment['response']=="@response"?[]:$method_comment['response'];
+                    $methods[$m]['method'] = $method_comment['method']=="@method"?"":strtoupper($method_comment['method']);
+                    $methods[$m]['parameter'] = $method_comment['parameter'];
+                    $methods[$m]['response'] = $method_comment['response'];
                     $m++;
                 }
             }
@@ -71,9 +71,9 @@ class ApiDocService{
         $desc   = '@desc';
         $method = '';
         $package= '@package';
-        $param  = '@parameter';
+        $param  = [];
         $param_count  = 0;
-        $response = '@response';
+        $response = [];
         $response_count = 0;
 
 
@@ -115,7 +115,6 @@ class ApiDocService{
                         }
                     }
                     $temp = $tt;
-                    $response = [];
                     $response[$response_count]['type'] = isset($temp[0]) ?LangService::trans($temp[0]):"";
                     $response[$response_count]['name'] = isset($temp[1]) ?$temp[1]:"";
                     $response[$response_count]['info'] = isset($temp[2]) ?$temp[2]:"";
@@ -135,7 +134,6 @@ class ApiDocService{
                         }
                     }
                     $temp = $tt;
-                    $param = [];
                     $param[$param_count]['type'] = isset($temp[0]) ?LangService::trans($temp[0]):"";
                     $param[$param_count]['name'] = isset($temp[1]) ?$temp[1]:"";
                     $param[$param_count]['info'] = isset($temp[2]) ?$temp[2]:"";
