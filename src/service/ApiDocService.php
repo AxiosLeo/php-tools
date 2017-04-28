@@ -15,10 +15,10 @@ class ApiDocService{
         $ApiClass = self::scanApiClass();
         $list = [];$n=0;
         if(!empty($class)){
-            $list = self::makeDoc($class);
+            $list = self::makeClassDoc($class);
         }else{
             foreach ($ApiClass as $k=>$api){
-                $doc =  self::makeDoc($api);
+                $doc =  self::makeClassDoc($api);
                 if(!empty($doc)){
                     $list[$n++] = $doc;
                 }
@@ -28,12 +28,11 @@ class ApiDocService{
         return $list;
     }
 
-    public static function makeDoc($class=''){
+    public static function makeClassDoc($class=''){
         $doc = [];
         if(class_exists($class)){
             $reflectionClass = new \ReflectionClass($class);
             $doc['name'] = $reflectionClass->name;
-            $temp = explode("\\",$doc['name']);
             $doc['file_name'] = $reflectionClass->getFileName();
             $doc['short_name'] = $reflectionClass->getShortName();
             $comment = self::trans($reflectionClass->getDocComment());
@@ -44,26 +43,35 @@ class ApiDocService{
             $methods = [];$m=0;
             foreach ($_getMethods as $key=>$method){
                 if($method->class==$class){
-                    $methods[$m]['name']=$method->name;
-                    $methods[$m]['path'] = strtolower($temp[1])."/".strtolower($temp[3])."/".$method->name;
-                    $rule =  Route::name($methods[$m]['path']);
-                    $route = '';
-                    if(!empty($rule)){
-                        $route = $rule[0][0];
-                    }
-                    $methods[$m]['route'] = $route;
-                    $method_comment = self::trans($method->getDocComment());
-                    $methods[$m]['title'] = $method_comment['title']=="@title"?$method->name:$method_comment['title'];
-                    $methods[$m]['desc'] = $method_comment['desc']=="@desc"?"":$method_comment['desc'];
-                    $methods[$m]['method'] = $method_comment['method']=="@method"?"":strtoupper($method_comment['method']);
-                    $methods[$m]['parameter'] = $method_comment['parameter'];
-                    $methods[$m]['response'] = $method_comment['response'];
+                    $methods[$m] = self::makeMethodDoc($class,$method->name);
                     $m++;
                 }
             }
             $doc['methods'] = $methods;
         }
         return $doc;
+    }
+
+    public static function makeMethodDoc($class,$method_name){
+        $reflectionClass = new \ReflectionClass($class);
+        $method = $reflectionClass->getMethod($method_name);
+        $temp = explode("\\",$class);
+        $m = [];
+        $m['name'] = $method->name;
+        $m['path'] = strtolower($temp[1])."/".strtolower($temp[3])."/".$method->name;
+        $rule =  Route::name($m['path']);
+        $route = '';
+        if(!empty($rule)){
+            $route = $rule[0][0];
+        }
+        $m['route'] = $route;
+        $method_comment = self::trans($method->getDocComment());
+        $m['title'] = $method_comment['title']=="@title"?$method->name:$method_comment['title'];
+        $m['desc'] = $method_comment['desc']=="@desc"?"":$method_comment['desc'];
+        $m['method'] = $method_comment['method']=="@method"?"":strtoupper($method_comment['method']);
+        $m['parameter'] = $method_comment['parameter'];
+        $m['response'] = $method_comment['response'];
+        return $m;
     }
 
     public static function trans($comment){
