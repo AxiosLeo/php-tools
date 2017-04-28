@@ -113,7 +113,7 @@ class ApiDocService{
                 //@response
                 $pos = stripos($comment, '@response');
                 if($pos !== false){
-                    $temp = explode(" ",trim(substr($comment,$pos + 7)));
+                    $temp = explode(" ",trim(substr($comment,$pos + 9)));
                     $tn = 0;$tt=[];
                     foreach ($temp as $k=>$t){
                         if(empty($t)){
