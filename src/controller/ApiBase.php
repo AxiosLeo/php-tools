@@ -303,7 +303,7 @@ class ApiBase extends Controller{
      * @param string $message
      * @param array $header
      */
-    protected function response($data=[],$code=200,$message='',array $header=[]){
+    protected function rep($data=[],$code=200,$message='',array $header=[]){
         $this->code = $code;
         $this->data = $data;
         $req['code'] = strval($code);
@@ -320,9 +320,9 @@ class ApiBase extends Controller{
      * @param string $message
      * @param array $header
      */
-    protected function res($data=[],$code=200,$message='',array $header=[]){
+    protected function response($data=[],$code=200,$message='',array $header=[]){
         $data = arrayDataToString($data);
-        $this->response($data,$code,$message,$header);
+        $this->rep($data,$code,$message,$header);
     }
 
     /**
