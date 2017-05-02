@@ -114,7 +114,7 @@ class ApiBase extends Controller{
             }
         }
 
-        $this->path    = $this->request->module()."/".$this->request->controller()."/".$this->request->action();
+        $this->path    = strtolower($this->request->module())."/".strtolower($this->request->controller())."/".$this->request->action();
         $this->debug   = Env::get("debug.status");
 
         $this->sign_status = Env::get('auth.sign_status');
