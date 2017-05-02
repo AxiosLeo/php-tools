@@ -98,3 +98,17 @@ if(!function_exists('arraySort')){
         return $array;
     }
 }
+
+if(!function_exists('arrayDataToString')){
+    function arrayDataToString(&$array=[]){
+        foreach ($array as &$a){
+            if(is_array($a)){
+                $a = arrayDataToString($a);
+            }
+            if(is_int($a)){
+                $a = strval($a);
+            }
+        }
+        return $array;
+    }
+}

@@ -301,23 +301,37 @@ class ApiBase extends Controller{
      * @param array $data
      * @param int $code
      * @param string $message
+     * @param array $header
      */
-    protected function response($data=[],$code=200,$message=''){
+    protected function response($data=[],$code=200,$message='',array $header=[]){
         $this->code = $code;
         $this->data = $data;
         $req['code'] = strval($code);
         $req['data'] = $data;
         $req['message'] = !empty($message)?LangService::trans($message):LangService::message($code);
         $this->cache($req);
-        $this->send($req);
+        $this->send($req,$header);
+    }
+
+    /**
+     * 回调的每个数据全部转为string类型
+     * @param array $data
+     * @param int $code
+     * @param string $message
+     * @param array $header
+     */
+    protected function res($data=[],$code=200,$message='',array $header=[]){
+        $data = arrayDataToString($data);
+        $this->response($data,$code,$message,$header);
     }
 
     /**
      * 回调数据给客户端，并运行后置中间件
      * @param $req
+     * @param $header
      */
-    private function send($req){
-        Response::create($req,  $this->return_type, "200")->send();
+    private function send($req,$header=[]){
+        Response::create($req,  $this->return_type, "200")->header($header)->send();
         if(function_exists('fastcgi_finish_request')){
             fastcgi_finish_request();
         }
