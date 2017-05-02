@@ -19,7 +19,7 @@ class ApiLogin extends ApiBase{
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->commonFilter('login');//公共过滤
+//        $this->commonFilter('login');//公共过滤
         $this->checkToken();
     }
 

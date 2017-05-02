@@ -15,6 +15,6 @@ class ApiLogout extends ApiBase{
     function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->commonFilter('logout');//公共过滤
+//        $this->commonFilter('logout');//公共过滤
     }
 }
