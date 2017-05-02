@@ -112,6 +112,8 @@ if(!function_exists('arrayDataToString')){
             }
         }else if(is_int($array)){
             $array = strval($array);
+        }else if(is_null($array)){
+            $array = "";
         }
         return $array;
     }
