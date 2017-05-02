@@ -101,13 +101,17 @@ if(!function_exists('arraySort')){
 
 if(!function_exists('arrayDataToString')){
     function arrayDataToString(&$array=[]){
-        foreach ($array as &$a){
-            if(is_array($a)){
-                $a = arrayDataToString($a);
+        if(is_array($array)){
+            foreach ($array as &$a){
+                if(is_array($a)){
+                    $a = arrayDataToString($a);
+                }
+                if(is_int($a)){
+                    $a = strval($a);
+                }
             }
-            if(is_int($a)){
-                $a = strval($a);
-            }
+        }else if(is_int($array)){
+            $array = strval($array);
         }
         return $array;
     }
