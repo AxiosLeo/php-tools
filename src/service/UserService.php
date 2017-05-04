@@ -16,7 +16,8 @@ class UserService {
         $user_id = $user['id'];
         $user = serialize($user);
         if(empty($expire)){
-            $expire = Config::get('setting.token.token_expire');
+            $setting_token = Config::get('setting.token');
+            $expire = isset($setting_token['token_expire'])?$setting_token['token_expire']:3600;
         }
         $expire = empty($expire)?3600:$expire;
         RedisService::redis()->switchDB(1)->hSet("login_token",$user_id,$token);
@@ -44,8 +45,8 @@ class UserService {
         if(empty($user)){
             return 2; // token timeout
         }
-        $expire = Config::get('setting.token.token_expire');
-        $expire = empty($expire)?3600:$expire;
+        $setting_token = Config::get('setting.token');
+        $expire = isset($setting_token['token_expire'])?$setting_token['token_expire']:3600;
 
         return RedisService::redis()->switchDB(1)->set($token,$user,$expire);
     }
