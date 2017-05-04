@@ -127,6 +127,30 @@ class RedisService extends Redis {
         return $members;
     }
 
+
+    public function setArray($key , $array , $ttl=0){
+        if($ttl){
+            return $this->set($key,$this->formatArray($array),['ex'=>$ttl]);
+        }else{
+            return $this->set($key,$this->formatArray($array));
+        }
+    }
+
+    public function getArray($key){
+        if(!$this->exists($key)){
+            return false;
+        }
+        return $this->unFormatArray($this->get($key));
+    }
+
+    private function formatArray($array){
+        return base64_encode(@serialize($array));
+    }
+
+    private function unFormatArray($data){
+        return @unserialize(base64_decode($data));
+    }
+
     function __destruct()
     {
         // TODO: Implement __destruct() method.
