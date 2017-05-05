@@ -109,6 +109,10 @@ if(!function_exists('arrayDataToString')){
                 if(is_int($a)){
                     $a = strval($a);
                 }
+
+                if(is_null($array)){
+                    $array = "";
+                }
             }
         }else if(is_int($array)){
             $array = strval($array);
