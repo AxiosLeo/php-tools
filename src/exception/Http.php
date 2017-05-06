@@ -1,11 +1,14 @@
 <?php
-/**
- * @author: Axios
- *
- * @email: axioscros@aliyun.com
- * @blog:  http://hanxv.cn
- * @datetime: 2017/3/27 15:41
- */
+// +----------------------------------------------------------------------
+// | TPR [ Design For Api Develop ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2017-2017 http://hanxv.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: axios <axioscros@aliyun.com>
+// +----------------------------------------------------------------------
+
 namespace axios\tpr\exception;
 
 use Exception;
