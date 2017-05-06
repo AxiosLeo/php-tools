@@ -14,7 +14,7 @@ use think\App;
 use think\Config;
 use think\Db;
 
-class Mongodb{
+class LogMongodb{
     protected $config = [
         // 日志保存目录
         'path'  => LOG_PATH,
