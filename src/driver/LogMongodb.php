@@ -13,6 +13,7 @@ namespace axios\tpr\driver;
 use think\App;
 use think\Config;
 use think\Db;
+use think\Request;
 
 class LogMongodb{
     protected $config = [
@@ -64,6 +65,7 @@ class LogMongodb{
             $server     = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
             $remote     = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
             $method     = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
+            $request    = Request::instance();
             $insert     = [
                 'timestamp'=>$timestamp,
                 'datetime'=>$datetime,
@@ -73,7 +75,11 @@ class LogMongodb{
                 'memory_use'=>$memory_use . 'kb',
                 'file_load'=>$file_load,
                 'server'=>$server,
-                'remote'=>$remote
+                'remote'=>$remote,
+                'request'=>$request->path(),
+                'module'=>strtolower($request->module()),
+                'controller'=>strtolower($request->controller()),
+                'action'=>$request->action()
             ];
             if(isset($_SERVER['HTTP_HOST'])){
                 $insert['current_url'] =  $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -97,9 +103,10 @@ class LogMongodb{
                 $n++;
             }
             if(in_array($type, $this->config['apart_level'])){
-                $this->log($content,$type);
+                $this->log(array_merge($insert,$content,["log_type"=>$type]),$type);
             }
         }
+        $insert['log_type'] = isset($type)?$type:"";
         $insert['log'] = $content;
         $this->log($insert);
         return true;
