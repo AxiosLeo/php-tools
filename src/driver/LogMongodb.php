@@ -56,12 +56,6 @@ class LogMongodb{
         $datetime = isset($this->config['time_format'])?date($this->config['time_format']):date("Y-m-d H:i:s");
 
         if (App::$debug ) {
-            if(isset($_SERVER['HTTP_HOST'])){
-                $insert['current_url'] =  $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-            } else {
-                $insert['current_url'] = "cmd:" . implode(' ', $_SERVER['argv']);
-            }
-
             $runtime    = round(microtime(true) - THINK_START_TIME, 10);
             $qps        = $runtime > 0 ? number_format(1 / $runtime, 2). 'req/s]' : '∞'. 'req/s]';
             $runtime_str=  number_format($runtime, 6) . 's';
@@ -81,6 +75,11 @@ class LogMongodb{
                 'server'=>$server,
                 'remote'=>$remote
             ];
+            if(isset($_SERVER['HTTP_HOST'])){
+                $insert['current_url'] =  $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            } else {
+                $insert['current_url'] = "cmd:" . implode(' ', $_SERVER['argv']);
+            }
         }
 
         $content=[];

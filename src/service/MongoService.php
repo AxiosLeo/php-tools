@@ -11,6 +11,7 @@
 
 namespace axios\tpr\service;
 
+use MongoDB\Driver\Manager;
 use think\Config;
 use think\Db;
 
@@ -33,5 +34,12 @@ class MongoService{
     public function __call($name, $arguments)
     {
         return Db::connect(self::$config )->name($arguments);
+    }
+
+    public function getCheckConnect(){
+        $config = self::$config;
+
+        $mongo = new Manager('mongodb://'. ($config['username'] ? "{$config['username']}" : '') . ($config['password'] ? ":{$config['password']}@" : '') . $config['hostname'] . ($config['hostport'] ? ":{$config['hostport']}" : '') . '/' . ($config['database'] ? "{$config['database']}" : ''));
+        $mongo->getServers();
     }
 }
