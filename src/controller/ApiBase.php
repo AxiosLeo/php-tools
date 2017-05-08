@@ -18,6 +18,7 @@ use think\Config;
 use think\Controller;
 
 use think\Env;
+use think\Log;
 use think\Request;
 use think\Response;
 //use think\Validate;
@@ -137,33 +138,6 @@ class ApiBase extends Controller{
 
         $this->middleware('before');  //前置中间件
     }
-
-//    protected function commonFilter($scene='logout'){
-//        $setting = Config::get('setting.sign');
-//        $timestamp_name = isset($setting['timestamp_name'])&& !empty($setting['timestamp_name'])?$setting['timestamp_name']:"t";
-//        $sign_name = isset($setting['sign_name'])&& !empty($setting['sign_name'])?$setting['sign_name']:"sign";
-//        $rules = [
-//            'lang' => ['in:zh-cn,en-us'],
-//            'token' =>['regex:/^([a-z]|[0-9])*$/i']
-//        ];
-//        $message = [
-//            'token.regex'    =>'token@format@error ',
-//        ];
-//        $message[$timestamp_name.".length"] = "timestamp@length@error";
-//        $message[$timestamp_name.".number"] = "timestamp@is not@number";
-//        $message[$sign_name.".length"] = "sign@length@error";
-//        $message[$sign_name.".regex"] = "sign@regex@error";
-//        $rules[$timestamp_name] = ['length:10','number'];
-//        $rules[$sign_name] = ['length:32','regex:/^([a-z]|[0-9])*$/i'];
-//        $Validate = new Validate($rules,$message);
-//        $Validate->scene('logout', [$timestamp_name,$sign_name,'lang']);
-//        $Validate->scene('login', [$timestamp_name,$sign_name,'lang','token']);
-//
-//        $check = $Validate->scene($scene)->check($this->param);
-//        if(!$check){
-//            $this->wrong(400,LangService::trans($Validate->getError()));
-//        }
-//    }
 
     /**
      * 请求过滤
@@ -336,6 +310,18 @@ class ApiBase extends Controller{
         Response::create($req,  $this->return_type, "200")->header($header)->send();
         if(function_exists('fastcgi_finish_request')){
             fastcgi_finish_request();
+        }
+        $log_setting = Config::get('setting.api_log');
+        if(!empty($log_setting) && isset($log_setting['status']) && $log_setting['status']){
+            $log_database = isset($log_setting['log_database'])&& !empty($log_setting['log_database'])?$log_setting['log_database']:"tpr_log";
+            $log = [
+                'response'=>$req,
+                'data'=>$this->data,
+                'code'=>$this->code,
+                'return _type'=>$this->return_type,
+                'identify'=>$this->identify
+            ];
+            Log::record($log,$log_database);
         }
         GlobalService::set('req',$req);
         $this->middleware('after');

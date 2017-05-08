@@ -53,7 +53,7 @@ class LogMongodb{
      */
     public function save(array $log = []){
         $insert = [];
-        $timestamp = time();
+        $timestamp = microtime();
         $datetime = isset($this->config['time_format'])?date($this->config['time_format']):date("Y-m-d H:i:s");
 
         if (App::$debug ) {
