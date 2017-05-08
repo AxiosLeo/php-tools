@@ -58,7 +58,7 @@ class LogMongodb{
 
         if (App::$debug ) {
             $runtime    = round(microtime(true) - THINK_START_TIME, 10);
-            $qps        = $runtime > 0 ? number_format(1 / $runtime, 2). 'req/s]' : '∞'. 'req/s]';
+            $qps        = $runtime > 0 ? number_format(1 / $runtime, 2). 'req/s' : '∞'. 'req/s';
             $runtime_str=  number_format($runtime, 6) . 's';
             $memory_use = number_format((memory_get_usage() - THINK_START_MEM) / 1024, 2);
             $file_load  = count(get_included_files());
