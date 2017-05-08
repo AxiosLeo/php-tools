@@ -103,7 +103,8 @@ class LogMongodb{
                 $n++;
             }
             if(in_array($type, $this->config['apart_level'])){
-                $this->log(array_merge($insert,$content,["log_type"=>$type]),$type);
+                $this->log(array_merge($insert,["log_type"=>$type],$content),$type);
+                return true;
             }
         }
         $insert['log_type'] = isset($type)?$type:"";
