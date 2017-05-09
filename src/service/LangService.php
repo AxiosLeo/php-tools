@@ -16,14 +16,14 @@ use think\Config;
 class LangService {
 
     public static function trans($message){
-        $error = explode('@', $message);
+        $messageArray = explode('@', $message);
         $str = '';
-        foreach ($error as $e){
-            $tmp = lang($e);
-            if($e===$tmp){
-                $str.=lang($e)." ";
+        foreach ($messageArray as $k=>$m){
+            $tmp = lang($m);
+            if($m===$tmp){
+                $str.=$k==0?$m:" ".$m;
             }else{
-                $str.=lang($e);
+                $str.=$tmp;
             }
         }
         return $str;
