@@ -19,6 +19,9 @@ class LangService {
         $messageArray = explode('@', $message);
         $str = '';
         foreach ($messageArray as $k=>$m){
+            if(empty($m)){
+                continue;
+            }
             $tmp = lang($m);
             if($m===$tmp){
                 $str.=$k==0?$m:" ".$m;
