@@ -53,7 +53,7 @@ class LogMongodb{
      */
     public function save(array $log = []){
         $insert = [];
-        $timestamp = microtime();
+        $timestamp = time();
         $datetime = isset($this->config['time_format'])?date($this->config['time_format']):date("Y-m-d H:i:s");
 
         if (App::$debug ) {
@@ -104,7 +104,6 @@ class LogMongodb{
             }
             if(in_array($type, $this->config['apart_level'])){
                 $this->log(array_merge($insert,["log_type"=>$type],$content),$type);
-                return true;
             }
         }
         $insert['log_type'] = isset($type)?$type:"";
