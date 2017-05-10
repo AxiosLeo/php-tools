@@ -311,9 +311,10 @@ class ApiBase extends Controller{
         if(function_exists('fastcgi_finish_request')){
             fastcgi_finish_request();
         }
-        $log_setting = Config::get('setting.api_log');
-        if(!empty($log_setting) && isset($log_setting['status']) && $log_setting['status']){
-            $log_database = isset($log_setting['log_database'])&& !empty($log_setting['log_database'])?$log_setting['log_database']:"tpr_log";
+        $log_status= Env::get('log.status');
+        if(!empty($log_status) && $log_status){
+            $log_database = Env::get('log.database');
+            $log_database =  !empty($log_database)?$log_database:"tpr_log";
             $log = [
                 'response'=>$req,
                 'data'=>$this->data,
