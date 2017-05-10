@@ -13,7 +13,7 @@ namespace axios\tpr\exception;
 
 use Exception;
 use think\Env;
-use think\Exception\Handle;
+use think\exception\Handle;
 use think\Response;
 
 class Http extends Handle{
