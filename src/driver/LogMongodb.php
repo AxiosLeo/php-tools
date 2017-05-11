@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 namespace axios\tpr\driver;
-use think\App;
+//use think\App;
 use think\Config;
 use think\Db;
 use think\Request;
@@ -52,40 +52,38 @@ class LogMongodb{
      * @return bool
      */
     public function save(array $log = []){
-        $insert = [];
+//        $insert = [];
         $timestamp = time();
         $datetime = isset($this->config['time_format'])?date($this->config['time_format']):date("Y-m-d H:i:s");
 
-        if (App::$debug ) {
-            $runtime    = round(microtime(true) - THINK_START_TIME, 10);
-            $qps        = $runtime > 0 ? number_format(1 / $runtime, 2). 'req/s' : '∞'. 'req/s';
-            $runtime_str=  number_format($runtime, 6) . 's';
-            $memory_use = number_format((memory_get_usage() - THINK_START_MEM) / 1024, 2);
-            $file_load  = count(get_included_files());
-            $server     = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
-            $remote     = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
-            $method     = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
-            $request    = Request::instance();
-            $insert     = [
-                'timestamp'=>$timestamp,
-                'datetime'=>$datetime,
-                'method'=>$method,
-                'runtime'=>$runtime_str,
-                'qps'=>$qps,
-                'memory_use'=>$memory_use . 'kb',
-                'file_load'=>$file_load,
-                'server'=>$server,
-                'remote'=>$remote,
-                'request'=>$request->path(),
-                'module'=>strtolower($request->module()),
-                'controller'=>strtolower($request->controller()),
-                'action'=>$request->action()
-            ];
-            if(isset($_SERVER['HTTP_HOST'])){
-                $insert['current_url'] =  $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-            } else {
-                $insert['current_url'] = "cmd:" . implode(' ', $_SERVER['argv']);
-            }
+        $runtime    = round(microtime(true) - THINK_START_TIME, 10);
+        $qps        = $runtime > 0 ? number_format(1 / $runtime, 2). 'req/s' : '∞'. 'req/s';
+        $runtime_str=  number_format($runtime, 6) . 's';
+        $memory_use = number_format((memory_get_usage() - THINK_START_MEM) / 1024, 2);
+        $file_load  = count(get_included_files());
+        $server     = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
+        $remote     = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+        $method     = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'CLI';
+        $request    = Request::instance();
+        $insert     = [
+            'timestamp'=>$timestamp,
+            'datetime'=>$datetime,
+            'method'=>$method,
+            'runtime'=>$runtime_str,
+            'qps'=>$qps,
+            'memory_use'=>$memory_use . 'kb',
+            'file_load'=>$file_load,
+            'server'=>$server,
+            'remote'=>$remote,
+            'request'=>$request->path(),
+            'module'=>strtolower($request->module()),
+            'controller'=>strtolower($request->controller()),
+            'action'=>$request->action()
+        ];
+        if(isset($_SERVER['HTTP_HOST'])){
+            $insert['current_url'] =  $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        } else {
+            $insert['current_url'] = "cmd:" . implode(' ', $_SERVER['argv']);
         }
 
         $content=[];
