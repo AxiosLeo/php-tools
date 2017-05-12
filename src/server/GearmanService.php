@@ -9,7 +9,7 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-namespace axios\tpr\server\gearman;
+namespace axios\tpr\server;
 
 use think\Config;
 use think\Log;
