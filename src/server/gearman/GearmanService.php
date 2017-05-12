@@ -17,7 +17,11 @@ use think\Log;
 class GearmanService {
     public $worker;
     public $servers;
-    public $config;
+    public $config = [
+        'servers' =>"127.0.0.1:4730",
+        'job_name'=>"job",
+        'timeout' =>20000
+    ];
     public $jobName;
     public $receive = [
         'server'=>"",
@@ -26,15 +30,17 @@ class GearmanService {
     ];
     function __construct()
     {
-        $this->config = Config::get('gearman');
-        $this->servers = !isset($this->config['servers'])||empty($this->config['servers'])?"127.0.0.1:4730":$this->config['servers'];
-        $this->jobName = !isset($this->config['job_name'])|| empty($this->config['job_name'])?"job":$this->config['job_name'];
+        $config = Config::get('gearman');
+        $this->config = array_merge($this->config ,$config);
+        $this->servers = $this->config['servers'];
+        $this->jobName = $this->config['job_name'];
+
         $this->worker = new \GearmanWorker();
         $this->worker->addServers($this->servers);
+
         $count = 0;
         $this->worker->addFunction($this->jobName,'doJob',$count);
-        $this->worker->setTimeout (15000);
-
+        $this->worker->setTimeout ($this->config['timeout']);
     }
     public function run(){
         while(@$this->worker->work()|| $this->worker->returnCode() == GEARMAN_TIMEOUT){
