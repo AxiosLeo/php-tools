@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
+
 namespace axios\tpr\controller;
 
 use axios\tpr\service\GlobalService;
