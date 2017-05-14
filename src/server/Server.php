@@ -78,10 +78,13 @@ class Server extends Command {
                 pcntl_waitpid( $pid , $status ,WNOHANG);
             } else { //child
                 //Installing signal handler
-                pcntl_signal(SIGHUP,  function ($signo) use ($server){
-                    $pid = getmypid();
-                    RedisService::redis()->switchDB(0)->sRem($server,$pid);
-                    posix_kill($pid,SIGTERM);
+                pcntl_signal(SIGHUP,  function ($sig) use ($server){
+                    if($sig){
+                        $pid = getmypid();
+                        RedisService::redis()->switchDB(0)->sRem($server,$pid);
+                        posix_kill($pid,SIGTERM);
+                    }
+                    die();
                 });
 
                 /*** do something ***/
