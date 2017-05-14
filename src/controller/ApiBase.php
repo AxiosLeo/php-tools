@@ -93,6 +93,8 @@ class ApiBase extends Controller{
 
     protected $return_type = 'json';
 
+    protected $log_database = 'tpr_log';
+
     function __construct(Request $request = null)
     {
         parent::__construct($request);
@@ -138,6 +140,11 @@ class ApiBase extends Controller{
         $this->filter(); //请求过滤
 
         $this->middleware('before');  //前置中间件
+
+        $log_database = Env::get('log.database');
+        if(!empty($log_database)){
+            $this->log_database = $log_database;
+        }
     }
 
     /**
@@ -314,8 +321,6 @@ class ApiBase extends Controller{
         }
         $log_status= Env::get('log.status');
         if(!empty($log_status) && $log_status){
-            $log_database = Env::get('log.database');
-            $log_database =  !empty($log_database)?$log_database:"tpr_log";
             $log = [
                 'response'=>$req,
                 'data'=>$this->data,
@@ -323,11 +328,45 @@ class ApiBase extends Controller{
                 'return _type'=>$this->return_type,
                 'identify'=>$this->identify
             ];
-            Log::record($log,$log_database);
+            Log::record($log,$this->log_database);
         }
         GlobalService::set('req',$req);
-        $this->middleware('after');
+
+        $this->fork();
+
         die();
+    }
+
+    private function fork(){
+        $php_extension = get_loaded_extensions();
+        if(in_array("pcntl", $php_extension) && in_array("posix", $php_extension))
+        {
+            $pid = pcntl_fork();
+            if ($pid == -1) {
+                Log::record('could not fork','error');
+                die();
+            } else if ($pid) {
+                echo "child pid:".$pid."\n";
+                pcntl_waitpid( $pid , $status ,WNOHANG);
+            } else {
+                //Installing signal handler
+                pcntl_signal(SIGHUP,  function ($sig){
+                    if($sig){
+                        $pid = getmypid();
+                        posix_kill($pid,SIGTERM);
+                    }
+                });
+
+                $this->middleware('after');
+
+                //Dispatching
+                posix_kill(posix_getpid(), SIGHUP);
+                pcntl_signal_dispatch();
+                die();
+            }
+        }else{
+            $this->middleware('after');
+        }
     }
 
     /**
