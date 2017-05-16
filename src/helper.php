@@ -124,3 +124,10 @@ if(!function_exists('arrayDataToString')){
         return $array;
     }
 }
+
+if(!function_exists('check_sign')){
+    function check_sign($post_timestamp,$post_sign){
+        $sign = md5($post_timestamp."tpr");
+        return $post_sign!=$sign?$sign:true;
+    }
+}

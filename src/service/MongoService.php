@@ -20,9 +20,39 @@ use think\Db;
  * @package axios\tpr\service
  */
 class MongoService{
-    public static $config = [];
-    public static function connect($select='default'){
-        self::$config = Config::get('mongo.'.$select);
+    public static $config = [
+        "type"              => '\think\mongo\Connection',
+        "hostname"          => '127.0.0.1',
+        "database"          => 'test',
+        "username"          => 'test',
+        "password"          => '123456',
+        "hostport"          => '27017',
+        "dsn"               => '',
+        "params"            => [],
+        "charset"           => "utf8",
+        "pk"                => "_id",
+        "pk_type"           => "ObjectID",
+        "prefix"            => "",
+        "debug"             => false,
+        "deploy"            => 0,
+        "rw_separate"       => false,
+        "master_num"        => 1,
+        "slave_no"          => "",
+        "fields_strict"     => true,
+        "resultset_type"    => "array",
+        "auto_timestamp"    => false,
+        "datetime_format"   => "Y-m-d H:i:s",
+        "sql_explain"       => false,
+        "pk_convert_id"     => false,
+        "type_map" => [
+            "root" =>"array",
+            "document"=>"array",
+            "query" =>"\\think\\mongo\\Query"
+        ]
+    ];
+    public static function connect($select=''){
+        $config = !empty($select)? Config::get('mongo.'.$select): Config::get('mongo.default');
+        self::$config = array_merge(self::$config,$config);
         return new self();
     }
     public static function name($name=''){
@@ -34,12 +64,5 @@ class MongoService{
     public function __call($name, $arguments)
     {
         return Db::connect(self::$config )->name($arguments);
-    }
-
-    public function getCheckConnect(){
-        $config = self::$config;
-
-        $mongo = new Manager('mongodb://'. ($config['username'] ? "{$config['username']}" : '') . ($config['password'] ? ":{$config['password']}@" : '') . $config['hostname'] . ($config['hostport'] ? ":{$config['hostport']}" : '') . '/' . ($config['database'] ? "{$config['database']}" : ''));
-        $mongo->getServers();
     }
 }

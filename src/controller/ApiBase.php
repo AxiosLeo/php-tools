@@ -11,6 +11,7 @@
 
 namespace axios\tpr\controller;
 
+use axios\tpr\Result;
 use axios\tpr\service\GlobalService;
 use axios\tpr\service\LangService;
 use axios\tpr\service\ToolService;
@@ -277,7 +278,7 @@ class ApiBase extends Controller{
      */
     protected function wrong($code,$message='')
     {
-        $this->response([],strval($code),$message);
+        $this->response([],$code,$message);
     }
 
     /**
@@ -290,35 +291,8 @@ class ApiBase extends Controller{
     protected function rep($data=[],$code=200,$message='',array $header=[]){
         $this->code = $code;
         $this->data = $data;
-        $req['code'] = strval($code);
-        $req['data'] = $data;
-        $req['message'] = !empty($message)?LangService::trans($message):LangService::message($code);
+        $req = Result::instance($this->return_type)->rep($data,$code,$message,$header);
         $this->cache($req);
-        $this->send($req,$header);
-    }
-
-    /**
-     * 回调的每个数据全部转为string类型
-     * @param array $data
-     * @param int $code
-     * @param string $message
-     * @param array $header
-     */
-    protected function response($data=[],$code=200,$message='',array $header=[]){
-        $data = arrayDataToString($data);
-        $this->rep($data,$code,$message,$header);
-    }
-
-    /**
-     * 回调数据给客户端，并运行后置中间件
-     * @param $req
-     * @param $header
-     */
-    private function send($req,$header=[]){
-        Response::create($req,  $this->return_type, "200")->header($header)->send();
-        if(function_exists('fastcgi_finish_request')){
-            fastcgi_finish_request();
-        }
         $log_status= Env::get('log.status');
         if(!empty($log_status) && $log_status){
             $log = [
@@ -331,10 +305,20 @@ class ApiBase extends Controller{
             Log::record($log,$this->log_database);
         }
         GlobalService::set('req',$req);
-
         $this->fork();
-
         die();
+    }
+
+    /**
+     * 回调的每个数据全部转为string类型
+     * @param array $data
+     * @param int $code
+     * @param string $message
+     * @param array $header
+     */
+    protected function response($data=[],$code=200,$message='',array $header=[]){
+        $data = arrayDataToString($data);
+        $this->rep($data,$code,$message,$header);
     }
 
     private function fork(){
@@ -367,6 +351,11 @@ class ApiBase extends Controller{
         }else{
             $this->middleware('after');
         }
+    }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement __call() method.
     }
 
     /**

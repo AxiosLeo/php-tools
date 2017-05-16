@@ -8,9 +8,9 @@
  */
 namespace tpr\index\controller;
 
-use axios\tpr\controller\ApiBase;
+use axios\tpr\core\Api;
 
-class Index extends ApiBase {
+class Index extends Api {
     public function index(){
         $this->response();
     }

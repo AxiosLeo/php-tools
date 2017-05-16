@@ -105,7 +105,7 @@ class LogMongodb{
                 $this->log(array_merge($insert,["log_type"=>$type],$content),$type);
             }
         }
-        $insert['log_type'] = isset($type)?$type:"";
+        $insert['log_type'] = isset($type)?$type:"info";
         $insert['log'] = $content;
         $this->log($insert);
         return true;
