@@ -9,7 +9,7 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-namespace axios\tpr\exception;
+namespace axios\tpr\core;
 
 use Exception;
 use think\Env;

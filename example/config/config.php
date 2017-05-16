@@ -12,7 +12,7 @@ return [
     // 应用调试模式
     'app_debug'              => \think\Env::get('debug.status'),
     // 异常处理handle类 留空使用
-    'exception_handle'       => '\\axios\\tpr\\exception\\Http',
+    'exception_handle'       => '\\axios\\tpr\\core\\Http',
 
     'log'                    => [
         // 日志记录方式，内置 file socket 支持扩展
