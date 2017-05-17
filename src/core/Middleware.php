@@ -13,14 +13,10 @@ namespace axios\tpr\core;
 
 use think\Request;
 
-class Middleware {
-
-    function __construct(Request $request)
+class Middleware extends Api {
+    function __construct(Request $request = null)
     {
-
-    }
-
-    protected function get($name='param'){
-
+        parent::__construct($request);
+        $this->param = $this->request->param();
     }
 }
