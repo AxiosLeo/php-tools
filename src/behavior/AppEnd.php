@@ -41,7 +41,7 @@ class AppEnd{
         $class = Loader::parseClass(strtolower($this->module), 'middleware',strtolower($this->controller),false);
         if(class_exists($class)){
             $Middleware = Loader::validate($this->controller, 'validate', false,$this->module);
-            call_user_func_array([$Middleware,'after'],array($this->request));
+            call_user_func_array([$Middleware,'after'],array($this->request,$this->req));
         }
     }
 
