@@ -7,8 +7,6 @@
  * @datetime: 2017/5/16 10:40
  */
 return [
-    // 应用命名空间
-    'app_namespace'          => 'tpr',
     // 应用调试模式
     'app_debug'              => \think\Env::get('debug.status'),
     // 异常处理handle类 留空使用
