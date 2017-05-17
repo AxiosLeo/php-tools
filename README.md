@@ -1,11 +1,31 @@
 # tpr-composer
-tpr接口开发框架的核心代码
+TPR接口开发框架的核心代码
 
-TPR框架开发版地址： [https://github.com/AxiosCros/thinkphp5-restfulapi](https://github.com/AxiosCros/thinkphp5-restfulapi)
+后台管理系统版： 
+[https://github.com/AxiosCros/thinkphp5-restfulapi](https://github.com/AxiosCros/thinkphp5-restfulapi)
 
-### 安装
+### 接口开发安装方式(无后台管理系统)
+``` shell
+git clone https://github.com/AxiosCros/tpr-composer.git
+
+cd tpr-composer 
+
+composer install
+
+```
+
+### 插件安装
 ``` shell
 composer require axios/tpr
+```
+
+### 后台管理系统版安装方式
+``` shell
+git clone https://github.com/AxiosCros/thinkphp5-restfulapi.git
+cd thinkphp5-restfulapi
+composer install
+
+cp .env.example .env
 ```
 
 ### 文档

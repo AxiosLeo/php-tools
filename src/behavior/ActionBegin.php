@@ -1,11 +1,14 @@
 <?php
-/**
- * @author: Axios
- *
- * @email: axioscros@aliyun.com
- * @blog:  http://hanxv.cn
- * @datetime: 2017/5/16 15:52
- */
+// +----------------------------------------------------------------------
+// | TPR [ Design For Api Develop ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2017-2017 http://hanxv.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: axios <axioscros@aliyun.com>
+// +----------------------------------------------------------------------
+
 namespace axios\tpr\behavior;
 
 use axios\tpr\core\Cache;
