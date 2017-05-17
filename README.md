@@ -30,3 +30,6 @@ cp .env.example .env
 
 ### 文档
 [《TPR接口开发框架使用文档》](http://www.kancloud.cn/axios/tpr)
+
+## 开源协议
+> 遵循Apache2开源协议发布，并提供免费使用
