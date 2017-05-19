@@ -60,7 +60,7 @@ class ActionBegin{
     private function middleware(){
         $class = Loader::parseClass(strtolower($this->module), 'middleware',strtolower($this->controller),false);
         if(class_exists($class)){
-            $Middleware = Loader::validate($this->controller, 'validate', false,$this->module);
+            $Middleware = Loader::validate($this->controller, 'middleware', false,$this->module);
             call_user_func_array([$Middleware,'before'],array($this->request));
         }
     }
