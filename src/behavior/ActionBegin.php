@@ -14,6 +14,7 @@ namespace axios\tpr\behavior;
 use axios\tpr\core\Cache;
 use axios\tpr\service\LangService;
 use axios\tpr\core\Result;
+use think\Validate;
 use think\Request;
 use think\Loader;
 
@@ -33,20 +34,23 @@ class ActionBegin{
     }
 
     public function run(){
-        $this->middleware();
-        $this->cache();
-        $this->filter();
-    }
-
-    private function filter(){
         $class = Loader::parseClass($this->module, 'validate',$this->controller,false);
-
         if(class_exists($class)){
             $Validate = Loader::validate($this->controller, 'validate', false,$this->module);
-            $check = isset($filter['scene'])?$Validate->scene($this->action)->check($this->param):$Validate->check($this->param);
-            if(!$check){
-                Result::wrong(400,LangService::trans($Validate->getError()));
-            }
+            $this->filter($Validate);
+        }
+
+        $this->middleware();
+        $this->cache();
+    }
+
+    /**
+     * @param Validate $Validate
+     */
+    private function filter($Validate){
+        $check = $Validate->hasScene($this->action) ? $Validate->scene($this->action)->check($this->param):true;
+        if(!$check){
+            Result::wrong(400,LangService::trans($Validate->getError()));
         }
     }
 
