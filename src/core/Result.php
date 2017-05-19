@@ -49,6 +49,7 @@ final class Result{
         self::send($req,$header);
         return $req;
     }
+
     public static function send($req,$header=[]){
         if(empty(self::$return_type)){
             self::initReturnType();
@@ -58,6 +59,7 @@ final class Result{
             fastcgi_finish_request();
         }
     }
+
     private static function initReturnType(){
         $return_type = Env::get('api.return_type','json');
         self::$return_type = $return_type;
