@@ -62,11 +62,12 @@ class ApiDocService{
         $temp = explode("\\",$class);
         $m = [];
         $m['name'] = $method->name;
-        if(in_array('v1',$temp)){
-            $m['path'] = strtolower($temp[1])."/".strtolower($temp[3]).'.'.strtolower($temp[4])."/".$method->name;
-        }else{
-            $m['path'] = strtolower($temp[1])."/".strtolower($temp[3])."/".$method->name;
-        }
+        $m['path'] = strtolower($temp[1])."/".strtolower($temp[3])."/".$method->name;
+//        if(in_array('v1',$temp)){
+//            $m['path'] = strtolower($temp[1])."/".strtolower($temp[3]).'.'.strtolower($temp[4])."/".$method->name;
+//        }else{
+//            $m['path'] = strtolower($temp[1])."/".strtolower($temp[3])."/".$method->name;
+//        }
 
         $rule =  Route::name($m['path']);
         $route = '';
