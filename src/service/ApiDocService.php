@@ -39,6 +39,7 @@ class ApiDocService{
             $doc['file_name'] = $reflectionClass->getFileName();
             $doc['short_name'] = $reflectionClass->getShortName();
             $comment = self::trans($reflectionClass->getDocComment());
+            $doc['view']=$comment['view'];
             $doc['title'] = $comment['title'];
             $doc['desc'] = $comment['desc'];
             $doc['package']=$comment['package'];
@@ -61,7 +62,12 @@ class ApiDocService{
         $temp = explode("\\",$class);
         $m = [];
         $m['name'] = $method->name;
-        $m['path'] = strtolower($temp[1])."/".strtolower($temp[3])."/".$method->name;
+        if(in_array('v1',$temp)){
+            $m['path'] = strtolower($temp[1])."/".strtolower($temp[3]).'.'.strtolower($temp[4])."/".$method->name;
+        }else{
+            $m['path'] = strtolower($temp[1])."/".strtolower($temp[3])."/".$method->name;
+        }
+
         $rule =  Route::name($m['path']);
         $route = '';
         if(!empty($rule)){
@@ -69,15 +75,18 @@ class ApiDocService{
         }
         $m['route'] = $route;
         $method_comment = self::trans($method->getDocComment());
+        $m['view'] = $method_comment['view']=="@view"?"":$method_comment['view'];
         $m['title'] = $method_comment['title']=="@title"?$method->name:$method_comment['title'];
         $m['desc'] = $method_comment['desc']=="@desc"?"":$method_comment['desc'];
         $m['method'] = $method_comment['method']=="@method"?"":strtoupper($method_comment['method']);
         $m['parameter'] = $method_comment['parameter'];
+        $m['header'] = $method_comment['header'];
         $m['response'] = $method_comment['response'];
         return $m;
     }
 
     public static function trans($comment){
+        $view  = '@view';
         $title  = '@title';
         $desc   = '@desc';
         $method = '';
@@ -86,7 +95,8 @@ class ApiDocService{
         $param_count  = 0;
         $response = [];
         $response_count = 0;
-
+        $header = [];
+        $header_count = 0;
 
         $docComment = $comment;
         if ($docComment !== false) {
@@ -95,6 +105,11 @@ class ApiDocService{
             $title = trim(substr($comment, strpos($comment, '*') + 1));
 
             foreach ($docCommentArr as $comment) {
+                //@view
+                $pos = stripos($comment, '@view');
+                if ($pos !== false) {
+                    $view = trim(substr($comment, $pos + 5));
+                }
                 //@desc
                 $pos = stripos($comment, '@desc');
                 if ($pos !== false) {
@@ -150,13 +165,35 @@ class ApiDocService{
                     $param[$param_count]['info'] = isset($temp[2]) ?$temp[2]:"";
                     $param_count++;
                 }
+
+                //@header
+                $pos = stripos($comment, '@header');
+                if($pos !== false){
+                    $temp = explode(" ",trim(substr($comment,$pos + 7)));
+                    $tn = 0;$tt=[];
+                    foreach ($temp as $k=>$t){
+                        if(empty($t)){
+                            unset($temp[$k]);
+                        }else{
+                            $tt[$tn++]=$t;
+                        }
+                    }
+                    $temp = $tt;
+                    $header[$header_count]['type'] = isset($temp[0]) ?LangService::trans($temp[0]):"";
+                    $header[$header_count]['name'] = isset($temp[1]) ?$temp[1]:"";
+                    $header[$header_count]['info'] = isset($temp[2]) ?$temp[2]:"";
+                    $header_count++;
+                }
+
             }
         }
 
         $comment = [
+            'view' => $view,
             'title' => $title,
             'desc'  => $desc,
             'package'=>$package,
+            'header' => $header,
             'parameter' => $param,
             'method'=>$method,
             'response'=>$response
