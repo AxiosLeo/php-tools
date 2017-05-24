@@ -131,3 +131,12 @@ if(!function_exists('check_sign')){
         return $post_sign!=$sign?$sign:true;
     }
 }
+
+if(!function_exists('tpr_read_env')){
+    function tpr_read_env(){
+        if (is_file(ROOT_PATH . '.env')) {
+            return parse_ini_file(ROOT_PATH . '.env', true);
+        }
+        return false;
+    }
+}
