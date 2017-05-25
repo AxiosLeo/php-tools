@@ -21,13 +21,13 @@ class Http extends Handle{
     {
         //TODO::开发者对异常的操作
         //可以在此交由系统处理
-        if(Env::get('debug.status')){
+        if(Env::get('global.status',false)){
             return parent::render($e);
         }else{
             $req['code']= "500";
             $req['message'] = "something error";
             $req['data'] = [];
-            $return_type = Env::get('response.return_type');
+            $return_type = Env::get('api.return_type','json');
             if(empty($return_type)){
                 $return_type = "json";
             }
