@@ -125,6 +125,13 @@ if(!function_exists('arrayDataToString')){
     }
 }
 
+if(!function_exists('objectToArray')){
+    function objectToArray($object) {
+        $object =  json_decode( json_encode( $object),true);
+        return  $object;
+    }
+}
+
 if(!function_exists('check_sign')){
     function check_sign($post_timestamp,$post_sign){
         $sign = md5($post_timestamp."tpr");

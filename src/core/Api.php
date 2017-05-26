@@ -34,7 +34,12 @@ class Api extends Controller{
     }
 
     protected function response($data=[],$code=200,$message='',array $header=[]){
-        $data = arrayDataToString($data);
+        if(is_object($data)){
+            $data = objectToArray($data);
+        }
+        if(is_array($data)){
+            $data = arrayDataToString($data);
+        }
         $this->rep($data,$code,$message,$header);
     }
 
