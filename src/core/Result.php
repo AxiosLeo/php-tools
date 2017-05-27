@@ -21,7 +21,9 @@ final class Result{
 
     public static $return_type;
 
-    public function __construct($return_type)
+    public static $toString = true;
+
+    public function __construct($return_type,$toString=true)
     {
         // TODO: Implement __call() method.
         if(empty($return_type)){
@@ -29,12 +31,14 @@ final class Result{
         }else{
             self::$return_type = $return_type;
         }
+        self::$toString = $toString;
     }
 
-    public static function instance($return_type = ""){
+    public static function instance($return_type = "",$toString=true){
         if (is_null(self::$instance)) {
-            self::$instance = new static($return_type);
+            self::$instance = new static($return_type,$toString);
         }
+
         return self::$instance;
     }
 
@@ -43,6 +47,14 @@ final class Result{
     }
 
     public static function rep($data=[],$code=200,$message='',array $header=[]){
+        if(self::$toString){
+            if(is_object($data)){
+                $data = objectToArray($data);
+            }
+            if(is_array($data)){
+                $data = arrayDataToString($data);
+            }
+        }
         $req['code'] = strval($code);
         $req['data'] = $data;
         $req['message'] = !empty($message)?LangService::trans($message):LangService::message($code);

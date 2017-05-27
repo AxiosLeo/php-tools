@@ -16,7 +16,11 @@ use think\Request;
 
 class Api extends Controller{
     protected $param;
+
     protected $return_type;
+
+    protected $toString = true;
+
     function __construct(Request $request = null)
     {
         parent::__construct($request);
@@ -28,18 +32,12 @@ class Api extends Controller{
     }
 
     protected function rep($data=[],$code=200,$message='',array $header=[]){
-        $req = Result::instance($this->return_type)->rep($data,$code,$message,$header);
+        $req = Result::instance($this->return_type,$this->toString)->rep($data,$code,$message,$header);
         $this->request->req = $req;
         Cache::set($req,$this->request);
     }
 
     protected function response($data=[],$code=200,$message='',array $header=[]){
-        if(is_object($data)){
-            $data = objectToArray($data);
-        }
-        if(is_array($data)){
-            $data = arrayDataToString($data);
-        }
         $this->rep($data,$code,$message,$header);
     }
 
