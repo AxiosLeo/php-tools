@@ -19,7 +19,7 @@ class Api extends Controller{
 
     protected $return_type;
 
-    protected $toString = true;
+    protected $toString = false;
 
     function __construct(Request $request = null)
     {
@@ -38,6 +38,7 @@ class Api extends Controller{
     }
 
     protected function response($data=[],$code=200,$message='',array $header=[]){
+        $this->toString = true;
         $this->rep($data,$code,$message,$header);
     }
 
