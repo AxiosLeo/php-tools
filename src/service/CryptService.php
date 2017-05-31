@@ -51,6 +51,9 @@ class CryptService {
     }
 
     public function encrypt($data,$encrypt='pri'){
+        if(!is_string($data)){
+            return false;
+        }
         $str = '';$count=0;
         for($i=0; $i<strlen($data); $i+=117){
             $src = substr($data, $i, 117);
