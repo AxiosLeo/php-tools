@@ -52,8 +52,8 @@ class CryptService {
 
     public function encrypt($data,$encrypt='pri'){
         $str = '';$count=0;
-        for($i=0; $i<strlen($data); $i+=128){
-            $src = substr($data, $i, 128);
+        for($i=0; $i<strlen($data); $i+=117){
+            $src = substr($data, $i, 117);
             $out = $encrypt=='pri'?self::doEncrypt($src,1):self::doEncrypt($src,0);
             if($out===NULL){
                 return NULL;
