@@ -14,14 +14,33 @@ namespace axios\tpr\service;
 use think\Route;
 
 class ApiDocService{
-    public static function api($class=''){
-        $ApiClass = self::scanApiClass();
+    public static $instance;
+    public static $dir;
+    public static $apiClassList;
+    public static $connector = '--';
+    private static $isConnect = false;
+    private static $content = '';
+
+    function __construct($dir = APP_PATH)
+    {
+        self::$dir = $dir;
+        self::$apiClassList = self::scanApiClass($dir);
+    }
+
+    public static function dir($dir = APP_PATH){
+        if(is_null(self::$instance)){
+            return new static($dir);
+        }
+        return self::$instance;
+    }
+
+    public static function doc($class=''){
         $list = [];$n=0;
         if(!empty($class)){
             $list = self::makeClassDoc($class);
         }else{
-            foreach ($ApiClass as $k=>$api){
-                $doc =  self::makeClassDoc($api);
+            foreach (self::$apiClassList as $k=>$apiClassDir){
+                $doc =  self::makeClassDoc($apiClassDir);
                 if(!empty($doc)){
                     $list[$n++] = $doc;
                 }
@@ -39,9 +58,8 @@ class ApiDocService{
             $doc['file_name'] = $reflectionClass->getFileName();
             $doc['short_name'] = $reflectionClass->getShortName();
             $comment = self::trans($reflectionClass->getDocComment());
-            $doc['title'] = $comment['title'];
-            $doc['desc'] = $comment['desc'];
-            $doc['package']=$comment['package'];
+            $doc['comment'] = $comment;
+
             $_getMethods = $reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC);
             $methods = [];$m=0;
             foreach ($_getMethods as $key=>$method){
@@ -69,100 +87,71 @@ class ApiDocService{
         }
         $m['route'] = $route;
         $method_comment = self::trans($method->getDocComment());
-        $m['title'] = $method_comment['title']=="@title"?$method->name:$method_comment['title'];
-        $m['desc'] = $method_comment['desc']=="@desc"?"":$method_comment['desc'];
-        $m['method'] = $method_comment['method']=="@method"?"":strtoupper($method_comment['method']);
-        $m['parameter'] = $method_comment['parameter'];
-        $m['response'] = $method_comment['response'];
+        $m['comment'] = $method_comment;
         return $m;
     }
 
     public static function trans($comment){
-        $title  = '@title';
-        $desc   = '@desc';
-        $method = '';
-        $package= '@package';
-        $param  = [];
-        $param_count  = 0;
-        $response = [];
-        $response_count = 0;
-
-
         $docComment = $comment;
+        $data = [];
         if ($docComment !== false) {
             $docCommentArr = explode("\n", $docComment);
-            $comment = trim($docCommentArr[1]);
-            $title = trim(substr($comment, strpos($comment, '*') + 1));
-
-            foreach ($docCommentArr as $comment) {
-                //@desc
-                $pos = stripos($comment, '@desc');
-                if ($pos !== false) {
-                    $desc = trim(substr($comment, $pos + 5));
+            foreach ($docCommentArr as $comment){
+                //find @ position
+                $posA = strpos($comment,'@');
+                if($posA===false){
+                    continue;
                 }
-
-                //@package
-                $pos = stripos($comment, '@package');
-                if ($pos !== false) {
-                    $package = trim(substr($comment, $pos + 8));
+                $content = trim(substr($comment, $posA));
+                $needle_length = strpos($content,' ');
+                $needle = trim(substr($content,1,$needle_length));
+                $content = trim(substr($content, $needle_length));
+                $content = self::transContent($content);
+                if($content===true){
+                    continue;
                 }
-
-                //@method
-                $pos = stripos($comment, '@method');
-                if ($pos !== false) {
-                    $method = trim(substr($comment, $pos + 8));
-                }
-
-                //@response
-                $pos = stripos($comment, '@response');
-                if($pos !== false){
-                    $temp = explode(" ",trim(substr($comment,$pos + 9)));
-                    $tn = 0;$tt=[];
-                    foreach ($temp as $k=>$t){
-                        if(empty($t)){
-                            unset($temp[$k]);
-                        }else{
-                            $tt[$tn++]=$t;
-                        }
+                if(isset($data[$needle])){
+                    if(is_array($data[$needle])){
+                        $n = count($data[$needle]);
+                        array_push($data[$needle],$content);
+                    }else{
+                        $tmp = $data[$needle];
+                        $data[$needle] = [];
+                        $data[$needle][0] = $tmp;
+                        $data[$needle][1] = $content;
                     }
-                    $temp = $tt;
-                    $response[$response_count]['type'] = isset($temp[0]) ?LangService::trans($temp[0]):"";
-                    $response[$response_count]['name'] = isset($temp[1]) ?$temp[1]:"";
-                    $response[$response_count]['info'] = isset($temp[2]) ?$temp[2]:"";
-                    $response_count++;
-                }
-
-                //@parameter
-                $pos = stripos($comment, '@parameter');
-                if($pos !== false){
-                    $temp = explode(" ",trim(substr($comment,$pos + 10)));
-                    $tn = 0;$tt=[];
-                    foreach ($temp as $k=>$t){
-                        if(empty($t)){
-                            unset($temp[$k]);
-                        }else{
-                            $tt[$tn++]=$t;
-                        }
+                }else{
+                    if(is_array($content)){
+                        $data[$needle][0]=$content;
+                    }else{
+                        $data[$needle] = $content;
                     }
-                    $temp = $tt;
-                    $param[$param_count]['type'] = isset($temp[0]) ?LangService::trans($temp[0]):"";
-                    $param[$param_count]['name'] = isset($temp[1]) ?$temp[1]:"";
-                    $param[$param_count]['info'] = isset($temp[2]) ?$temp[2]:"";
-                    $param_count++;
                 }
             }
         }
 
-        $comment = [
-            'title' => $title,
-            'desc'  => $desc,
-            'package'=>$package,
-            'parameter' => $param,
-            'method'=>$method,
-            'response'=>$response
-        ];
+        return $data;
+    }
 
-        return $comment;
+    public static function transContent($content){
+        $connector = self::$connector;
+        self::$isConnect = strpos($content,$connector)===false?false:true;
+        self::$content = self::$content.$content;
+        if(self::$isConnect){
+            return true;
+        }
+        $content = self::$content;
+        self::$content = '';
+        if(strpos($content,' ')!==false){
+            $contentArray = explode(' ',$content);
+            $data = [
+                'type'=>isset($contentArray[0])?$contentArray[0]:'',
+                'name'=>isset($contentArray[1])?$contentArray[1]:'',
+                'desc'=>isset($contentArray[2])?$contentArray[2]:''
+            ];
+            $content = $data;
+        }
+        return $content;
     }
 
     public static function deepScanDir($dir) {
@@ -191,19 +180,22 @@ class ApiDocService{
         );
     }
 
-    public static function scanApiClass(){
-        $scan = self::deepScanDir(APP_PATH);
+    public static function scanApiClass($dir=APP_PATH){
+        $scan = self::deepScanDir($dir);
         $files = $scan['file'];
-        foreach ($files as $k=>$f){
-            if(strpos($f,"app")!==false && strpos($f,"controller")!==false && strpos($f,"common")===false){
-                require_once $f;
-            }
-        }
-        $class = get_declared_classes();
         $n=0;$ApiList = [];
-        foreach ($class as $k=>$c){
-            if(strpos($c,"app")!==false && strpos($c,"controller")!==false && strpos($c,"common")===false && strpos($c,'admin')===false){
-                $ApiList[$n++]=$c;
+        foreach ($files as $k=>$f){
+            if(strpos($f,"controller")!==false){
+                require_once $f;
+                if(strpos($f,'common')===false){
+                    $content = file_get_contents($f);
+                    $namespace_begin = strpos($content,'namespace')+10;
+                    $namespace_end = strpos($content,';');
+                    $namespace = substr($content,$namespace_begin,$namespace_end-$namespace_begin);
+                    $class_name = basename($f,'.php');
+                    $class = $namespace.'\\'.$class_name;
+                    $ApiList[$n++]=$class;
+                }
             }
         }
         return $ApiList;
