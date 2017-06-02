@@ -17,7 +17,7 @@ class ApiDocService{
     public static $instance;
     public static $dir;
     public static $apiClassList;
-    public static $connector = '--';
+    public static $connector = ';';
     private static $isConnect = false;
     private static $content = '';
 
@@ -25,6 +25,11 @@ class ApiDocService{
     {
         self::$dir = $dir;
         self::$apiClassList = self::scanApiClass($dir);
+    }
+
+    public static function config($dir,$connector=';'){
+        self::$connector = $connector;
+        return self::dir($dir);
     }
 
     public static function dir($dir = APP_PATH){
@@ -112,7 +117,6 @@ class ApiDocService{
                 }
                 if(isset($data[$needle])){
                     if(is_array($data[$needle])){
-                        $n = count($data[$needle]);
                         array_push($data[$needle],$content);
                     }else{
                         $tmp = $data[$needle];
