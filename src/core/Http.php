@@ -21,7 +21,7 @@ class Http extends Handle{
     {
         //TODO::开发者对异常的操作
         //可以在此交由系统处理
-        if(Env::get('global.status',false)){
+        if(Env::get('global.debug',false)){
             return parent::render($e);
         }else{
             $req['code']= "500";
