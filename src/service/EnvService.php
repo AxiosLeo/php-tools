@@ -60,4 +60,22 @@ class EnvService {
         }
         return $tmp;
     }
+
+    public static function set($index,$value){
+        if(strpos($index,'.')){
+            $indexArray = explode('.',$index);
+            $envData = self::$env_array_section;
+            $tmp = &$envData;
+            foreach ($indexArray as $i){
+                if(!isset($tmp[$i])){
+                    return false;
+                }
+                $tmp = &$tmp[$i];
+            }
+            $tmp = $value;
+        }
+        return false;
+    }
+
+
 }
