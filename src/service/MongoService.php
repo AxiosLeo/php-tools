@@ -11,7 +11,7 @@
 
 namespace axios\tpr\service;
 
-use MongoDB\Driver\Manager;
+use MongoDB\Driver\Exception\ConnectionException;
 use think\Config;
 use think\Db;
 
@@ -50,19 +50,45 @@ class MongoService{
             "query" =>"\\think\\mongo\\Query"
         ]
     ];
-    public static function connect($select=''){
-        $config = !empty($select)? Config::get('mongo.'.$select): Config::get('mongo.default');
-        self::$config = array_merge(self::$config,$config);
-        return new self();
-    }
-    public static function name($name=''){
-        if(empty(self::$config)){
-            self::$config =  Config::get('mongo.default');
-        }
-        return Db::connect(self::$config )->name($name);
-    }
-    public function __call($name, $arguments)
+    public static $errorMsg = '';
+    public static $errorCode = 0;
+    public static $instance;
+    public static $MongoDb;
+    public function __construct($config = [])
     {
-        return Db::connect(self::$config )->name($arguments);
+        $config = !empty($config) ? $config : Config::get('mongo.default');
+        self::$config = array_merge(self::$config,$config);
+        self::$MongoDb = Db::connect(self::$config);
+    }
+
+    public static function connect($config=''){
+        if (is_null(self::$instance)) {
+            self::$instance = new static($config);
+        }
+        return self::$instance;
+    }
+
+    private static function init(){
+        if(self::$instance===null){
+            self::connect();
+        }
+    }
+
+    public static function name($name=''){
+        self::init();
+        return self::$MongoDb->name($name);
+    }
+
+    public static function checkConnect($config=[]){
+        self::connect($config);
+        try{
+            self::connect(self::$config)->name('test')->select();
+            return true;
+        }
+        catch (ConnectionException $e){
+            self::$errorMsg = $e->getMessage();
+            self::$errorCode = $e->getCode();
+            return false;
+        }
     }
 }
