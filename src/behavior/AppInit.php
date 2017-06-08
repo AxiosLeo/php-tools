@@ -30,6 +30,8 @@ class AppInit {
     }
 
     public function lang(){
+        Lang::detect();
+        $this->request->langset(Lang::range());
         $lang_path = defined('LANG_PATH')?LANG_PATH:CONF_PATH.'lang'.DIRECTORY_SEPARATOR;
         $lastString = substr($lang_path,-1);
         if($lastString!=DS){
