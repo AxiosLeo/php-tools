@@ -11,10 +11,9 @@
 
 namespace axios\tpr\core;
 
+use axios\tpr\service\EnvService;
 use axios\tpr\service\LangService;
-use function Sodium\crypto_box_seed_keypair;
 use think\Response;
-use think\Env;
 
 final class Result{
     public static $instance;
@@ -73,7 +72,7 @@ final class Result{
     }
 
     private static function initReturnType(){
-        $return_type = Env::get('api.return_type','json');
+        $return_type = EnvService::get('api.return_type','json');
         self::$return_type = $return_type;
     }
 }

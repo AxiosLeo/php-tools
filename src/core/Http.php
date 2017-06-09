@@ -11,8 +11,8 @@
 
 namespace axios\tpr\core;
 
+use axios\tpr\service\EnvService;
 use Exception;
-use think\Env;
 use think\exception\Handle;
 use think\Response;
 
@@ -21,13 +21,13 @@ class Http extends Handle{
     {
         //TODO::开发者对异常的操作
         //可以在此交由系统处理
-        if(Env::get('global.debug',false)){
+        if(EnvService::get('global.debug',false)){
             return parent::render($e);
         }else{
             $req['code']= "500";
             $req['message'] = "something error";
             $req['data'] = [];
-            $return_type = Env::get('api.return_type','json');
+            $return_type = EnvService::get('api.return_type','json');
             if(empty($return_type)){
                 $return_type = "json";
             }

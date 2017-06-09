@@ -11,10 +11,8 @@
 
 namespace axios\tpr\behavior;
 
-use think\Env;
 use think\Lang;
 use think\Request;
-use axios\tpr\core\Result;
 
 class AppInit {
     public $param;

@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 namespace axios\tpr\driver;
-//use think\App;
+
 use think\Config;
 use think\Db;
 use think\Request;
