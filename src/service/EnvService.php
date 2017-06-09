@@ -19,6 +19,7 @@ class EnvService {
     public static $env_array_section ;
     public static $env_array ;
     public static $instance;
+    public static $needBack;
 
     private function __construct($env_path=''){
         if(file_exists($env_path)){
@@ -30,12 +31,12 @@ class EnvService {
 
     private static function init(){
         if(self::$instance===null){
-            self::select();
+            self::$instance = new static();
         }
     }
 
     public static function select($env_path=''){
-        if(is_null(self::$instance)){
+        if(is_null(self::$instance) || !empty($env_path)){
             self::$instance = new static($env_path);
         }
         return  self::$instance ;
