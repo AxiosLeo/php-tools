@@ -140,11 +140,11 @@ if(!function_exists('check_sign')){
 }
 
 if(!function_exists('tpr_infinite_tree')){
-    function tpr_infinite_tree($data,$parent_index='parent_id',$data_index='id',$child_name='child'){
+    function tpr_infinite_tree($data,$parent_index='parent_id',$data_index='id',$child_name='child',$layer_name='layer'){
         $items = [];
         foreach ($data as $d){
             $items[$d[$data_index]] = $d;
-            if(!isset($d[$parent_index]) || !isset($d[$data_index]) || isset($d[$child_name])){
+            if(!isset($d[$parent_index]) || !isset($d[$data_index]) || isset($d[$child_name]) || isset($d[$layer_name])){
                 return false;
             }
         }
@@ -152,8 +152,10 @@ if(!function_exists('tpr_infinite_tree')){
         $tree = [];$n=0;
         foreach($items as $item){
             if(isset($items[$item[$parent_index]])){
+                $items[$item[$data_index]][$layer_name] = $items[$item[$parent_index]]['layer']+1;
                 $items[$item[$parent_index]][$child_name][] = &$items[$item[$data_index]];
             }else{
+                $items[$item[$data_index]][$layer_name] = 0;
                 $tree[$n++] = &$items[$item[$data_index]];
             }
         }
