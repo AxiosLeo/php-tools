@@ -69,10 +69,7 @@ class MysqlService{
     }
 
     public static function connect($config=''){
-        if (is_null(self::$instance)) {
-            self::$instance = new static($config);
-        }
-        return self::$instance;
+        return new static($config);
     }
 
     private static function init(){
