@@ -32,6 +32,8 @@ class Model extends \think\Model{
         if(!empty($name) && $this->name!=$name){
             $this->name = $name;
         }
-        $this->table($connection['prefix'].$this->name);
+        if(isset($connection['prefix'])){
+            $this->table($connection['prefix'].$this->name);
+        }
     }
 }
