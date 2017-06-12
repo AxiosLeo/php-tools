@@ -55,16 +55,35 @@ class MysqlService{
         'sql_explain'     => false,
     ];
 
-    public static function connect($select=''){
-        $config = !empty($select)? Config::get('mysql.'.$select): Config::get('mysql.default');
+    public static $instance;
+    public static $MysqlDb;
+
+    public function __construct($config = [])
+    {
+        if(is_string($config)){
+            $config = Config::get('mysql.'.$config);
+        }
+        $config = !empty($config) ? $config : Config::get('mysql.default');
         self::$config = array_merge(self::$config,$config);
-        return new self();
+        self::$MysqlDb = Db::connect(self::$config);
+    }
+
+    public static function connect($config=''){
+        if (is_null(self::$instance)) {
+            self::$instance = new static($config);
+        }
+        return self::$instance;
+    }
+
+    private static function init(){
+        if(self::$instance===null){
+            self::connect();
+        }
     }
 
     public static function name($name=''){
-        $config =  Config::get('mysql.default');
-        self::$config = array_merge(self::$config,$config);
-        return Db::connect(self::$config )->name($name);
+        self::init();
+        return self::$MysqlDb->name($name);
     }
 
     public function __call($name, $arguments)
