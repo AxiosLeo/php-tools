@@ -140,22 +140,28 @@ if(!function_exists('check_sign')){
 }
 
 if(!function_exists('tpr_infinite_tree')){
-    function tpr_infinite_tree($data,$parent_index='parent_id',$data_index='id',$child_name='child',$layer_name='layer'){
+    function tpr_infinite_tree($data,$parent_index='parent_id',$data_index='id',$child_name='child'){
+//        $data = [
+//            ['id'=>1,'parent_id'=>0],
+//            ['id'=>2,'parent_id'=>3],
+//            ['id'=>3,'parent_id'=>1],
+//            ['id'=>4,'parent_id'=>2],
+//            ['id'=>5,'parent_id'=>6],
+//            ['id'=>6,'parent_id'=>7],
+//            ['id'=>7,'parent_id'=>5],
+//        ];
         $items = [];
         foreach ($data as $d){
             $items[$d[$data_index]] = $d;
-            if(!isset($d[$parent_index]) || !isset($d[$data_index]) || isset($d[$child_name]) || isset($d[$layer_name])){
+            if(!isset($d[$parent_index]) || !isset($d[$data_index]) || isset($d[$child_name])){
                 return false;
             }
         }
-
         $tree = [];$n=0;
         foreach($items as $item){
             if(isset($items[$item[$parent_index]])){
-                $items[$item[$data_index]][$layer_name] = $items[$item[$parent_index]]['layer']+1;
                 $items[$item[$parent_index]][$child_name][] = &$items[$item[$data_index]];
             }else{
-                $items[$item[$data_index]][$layer_name] = 0;
                 $tree[$n++] = &$items[$item[$data_index]];
             }
         }
