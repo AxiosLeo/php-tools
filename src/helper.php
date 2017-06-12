@@ -139,11 +139,24 @@ if(!function_exists('check_sign')){
     }
 }
 
-if(!function_exists('tpr_read_env')){
-    function tpr_read_env(){
-        if (is_file(ROOT_PATH . '.env')) {
-            return parse_ini_file(ROOT_PATH . '.env', true);
+if(!function_exists('tpr_infinite_tree')){
+    function tpr_infinite_tree($data,$parent_index='parent_id',$data_index='id',$child_name='child'){
+        $items = [];
+        foreach ($data as $d){
+            $items[$d[$data_index]] = $d;
+            if(!isset($d[$parent_index]) || !isset($d[$data_index]) || isset($d[$child_name])){
+                return false;
+            }
         }
-        return false;
+
+        $tree = [];$n=0;
+        foreach($items as $item){
+            if(isset($items[$item[$parent_index]])){
+                $items[$item[$parent_index]][$child_name][] = &$items[$item[$data_index]];
+            }else{
+                $tree[$n++] = &$items[$item[$data_index]];
+            }
+        }
+        return $tree;
     }
 }
