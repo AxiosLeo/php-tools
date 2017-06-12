@@ -65,7 +65,8 @@ class MongoService{
     }
 
     public static function connect($config=''){
-        return new static($config);
+        self::$instance = new static($config);
+        return self::$instance;
     }
 
     private static function init(){
