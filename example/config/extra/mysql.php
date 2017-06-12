@@ -8,6 +8,7 @@
  */
 return [
     'default'=>[
+        'type'            => 'mysql',
         // 服务器地址
         'hostname'        => \think\Env::get("mysql.hostname"),
         // 数据库名
