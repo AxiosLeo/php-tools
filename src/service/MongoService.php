@@ -56,6 +56,9 @@ class MongoService{
     public static $MongoDb;
     public function __construct($config = [])
     {
+        if(is_string($config)){
+            $config = Config::get('mongo.'.$config);
+        }
         $config = !empty($config) ? $config : Config::get('mongo.default');
         self::$config = array_merge(self::$config,$config);
         self::$MongoDb = Db::connect(self::$config);
