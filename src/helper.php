@@ -178,7 +178,7 @@ if(!function_exists('traversal_tree')){
             $data[] = $node;
             if(isset($t[$child_name]) && !empty($t[$child_name])){
                 $layer++;
-                $this->traversal_tree($t[$child_name],$data,$layer);
+                traversal_tree_to_node_list($t[$child_name],$data,$layer);
             }
         }
     }
