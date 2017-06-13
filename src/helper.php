@@ -57,7 +57,7 @@ if (!function_exists('get_client_ip')) {
 }
 
 if(!function_exists('arraySort')){
-    function arraySort($array,$sortRule="",$order="asc"){
+    function array_sort($array,$sortRule="",$order="asc"){
         /**
          * $array = [
          *              ["book"=>10,"version"=>10],
@@ -103,11 +103,11 @@ if(!function_exists('arraySort')){
 }
 
 if(!function_exists('arrayDataToString')){
-    function arrayDataToString(&$array=[]){
+    function check_data_to_string(&$array=[]){
         if(is_array($array)){
             foreach ($array as &$a){
                 if(is_array($a)){
-                    $a = arrayDataToString($a);
+                    $a = check_data_to_string($a);
                 }
                 if(is_int($a)){
                     $a = strval($a);
@@ -126,7 +126,7 @@ if(!function_exists('arrayDataToString')){
 }
 
 if(!function_exists('objectToArray')){
-    function objectToArray($object) {
+    function object_to_array($object) {
         $object =  json_decode( json_encode( $object),true);
         return  $object;
     }
@@ -166,5 +166,20 @@ if(!function_exists('tpr_infinite_tree')){
             }
         }
         return $tree;
+    }
+}
+
+if(!function_exists('traversal_tree')){
+    function traversal_tree_to_node_list($tree,&$data=[],$layer=0,$layer_name = 'layer',$child_name = 'child'){
+        foreach ($tree as $t){
+            $node = $t;
+            unset($node[$child_name]);
+            $node[$layer_name]=$layer;
+            $data[] = $node;
+            if(isset($t[$child_name]) && !empty($t[$child_name])){
+                $layer++;
+                $this->traversal_tree($t[$child_name],$data,$layer);
+            }
+        }
     }
 }
