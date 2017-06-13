@@ -169,7 +169,7 @@ if(!function_exists('tpr_infinite_tree')){
     }
 }
 
-if(!function_exists('traversal_tree')){
+if(!function_exists('traversal_tree_to_node_list')){
     function traversal_tree_to_node_list($tree,&$data=[],$layer=0,$layer_name = 'layer',$child_name = 'child'){
         foreach ($tree as $t){
             $node = $t;
@@ -177,8 +177,7 @@ if(!function_exists('traversal_tree')){
             $node[$layer_name]=$layer;
             $data[] = $node;
             if(isset($t[$child_name]) && !empty($t[$child_name])){
-                $layer++;
-                traversal_tree_to_node_list($t[$child_name],$data,$layer);
+                traversal_tree_to_node_list($t[$child_name],$data,$layer+1);
             }
         }
     }
