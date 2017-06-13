@@ -16,7 +16,7 @@ use think\Config;
 class LangService {
 
     public static function trans($message,$sub=' '){
-        if(is_array($message)){
+        if(is_array($message) || is_object($message)){
             return $message;
         }
         $messageArray = explode('@', $message);
