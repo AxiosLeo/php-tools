@@ -48,10 +48,10 @@ final class Result{
     public static function rep($data=[],$code=200,$message='',array $header=[]){
         if(self::$toString){
             if(is_object($data)){
-                $data = objectToArray($data);
+                $data = object_to_array($data);
             }
             if(is_array($data)){
-                $data = arrayDataToString($data);
+                $data = check_data_to_string($data);
             }
         }
         $req['code'] = strval($code);
