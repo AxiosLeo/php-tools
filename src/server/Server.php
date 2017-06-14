@@ -61,7 +61,7 @@ class Server extends Command {
 
         $fork = isset($fork)&&is_numeric($fork)?intval($fork):1;
 
-        $class  = "axios\\tpr\\server\\$server\\".ucfirst($server)."Service";
+        $class  = "axios\\tpr\\server\\$server\\".ucfirst($server)."Server";
         RedisService::redis()->switchDB(0)->set($server."_pid",getmypid());
         RedisService::redis()->switchDB(0)->set($server."_fork",intval($fork));
         echo "PID:".getmypid()."\n";

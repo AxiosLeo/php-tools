@@ -14,7 +14,7 @@ namespace axios\tpr\server;
 use think\Config;
 use think\Log;
 
-class GearmanService {
+class GearmanServer {
     public $worker;
     public $servers;
     public $config = [
