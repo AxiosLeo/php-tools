@@ -12,10 +12,10 @@
 namespace axios\tpr\core;
 
 use axios\tpr\service\EnvService;
+use axios\tpr\service\ForkService;
 use axios\tpr\service\LangService;
 use think\Response;
-use think\Hook;
-use think\Log;
+
 final class Result{
     public static $instance;
 
@@ -66,36 +66,11 @@ final class Result{
         if(empty(self::$return_type)){
             self::initReturnType();
         }
-        echo posix_getpid();
         Response::create($req,  self::$return_type, "200")->header($header)->send();
         if(function_exists('fastcgi_finish_request')){
             fastcgi_finish_request();
         }
-        Log::record(posix_getpid(),'debug');
-        if(function_exists('pcntl_fork') && function_exists('posix_kill')){
-            Hook::add('request_done', 'axios\\tpr\\behavior\\RequestEnd');
-            file_put_contents(ROOT_PATH.'test.txt',time());
-            $pid = pcntl_fork();
-            pcntl_signal(SIGHUP,  function (){
-                $pid = posix_getpid();
-                posix_kill($pid,SIGTERM);
-                exit();
-            });
-            if($pid>0){
-                pcntl_wait($status);
-                exit();
-            }else if($pid==0){
-                $ppid = pcntl_fork();
-                if($ppid>0){
-                    posix_kill(posix_getpid(), SIGINT);
-                    exit();
-                }else if($ppid == -1){
-                    exit();
-                }
-            }else{
-                exit();
-            }
-        }
+        ForkService::fork(true);
     }
 
     private static function initReturnType(){
