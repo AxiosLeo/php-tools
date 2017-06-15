@@ -24,4 +24,6 @@ include_once CONF_PATH.'common.php';
 
 // 加载框架引导文件
 require THINK_PATH.'start.php';
+
+// 调用监听请求结束的行为
 \think\Hook::listen('request_done');
