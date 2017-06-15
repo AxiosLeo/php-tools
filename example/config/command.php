@@ -7,5 +7,5 @@
  * @datetime: 2017/5/16 11:05
  */
 return [
-
+    'axios\\tpr\\server\\Server'
 ];

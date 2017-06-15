@@ -21,6 +21,6 @@ class Index extends Validate {
     ];
 
     protected $scene = [
-        'index'  =>  ['name'],
+        'test'  =>  ['name'],
     ];
 }
