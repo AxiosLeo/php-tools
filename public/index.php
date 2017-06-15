@@ -24,3 +24,4 @@ include_once CONF_PATH.'common.php';
 
 // 加载框架引导文件
 require THINK_PATH.'start.php';
+\think\Hook::listen('request_done');
