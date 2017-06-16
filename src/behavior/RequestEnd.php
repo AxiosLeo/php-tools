@@ -11,9 +11,10 @@
 
 namespace axios\tpr\behavior;
 
+use axios\tpr\service\ForkService;
 use think\Request;
 
-class RequestEnd{
+class RequestEnd extends ForkService{
     public $param;
     public $request;
     function __construct()
@@ -23,6 +24,8 @@ class RequestEnd{
     }
 
     public function run(){
+        $queue = parent::$queue;
+        parent::doFork($queue);
         posix_kill(posix_getpid(), SIGINT);
         exit();
     }

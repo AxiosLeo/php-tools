@@ -15,6 +15,7 @@ require_once THINK_PATH."library/think/Hook.php";
 \think\Hook::add('app_init' ,'axios\\tpr\\behavior\\AppInit');
 \think\Hook::add('action_begin' ,'axios\\tpr\\behavior\\ActionBegin');
 \think\Hook::add('app_end' ,'axios\\tpr\\behavior\\AppEnd');
+\think\Hook::add('request_done', 'axios\\tpr\\behavior\\RequestEnd');
 
 // 加载公共语言包路径
 define('LANG_PATH',CONF_PATH.'lang/');
