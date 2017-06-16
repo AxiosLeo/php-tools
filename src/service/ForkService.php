@@ -11,8 +11,6 @@
  namespace axios\tpr\service;
 
  class ForkService{
-     public static $max = 100;
-
      public static $size = 0;
 
      public static $queue = [];
@@ -20,18 +18,21 @@
      protected static $pid_list = [];
 
      public static function check(){
-         return function_exists('pcntl_fork') && function_exists('posix_kill');
+         return function_exists('pcntl_fork') && function_exists('posix_kill') && function_exists('ftok') && function_exists('shmop_open') ;
      }
 
      protected static function doFork($queue){
-         CounterService::createMemoryCounter(__FILE__,'h');
+         $max = EnvService::get('global.max_process',100);
+         CounterService::incMemoryCounter(__FILE__,'h');
          foreach ($queue as $q){
-             self::doWork($q['class'],$q['func'],$q['args']);
-             do {
-                 sleep(1);
+             $size = CounterService::getMemoryCounter(__FILE__,'h');
+             while($size>=$max) {
+                 sleep(3);
                  $size = CounterService::getMemoryCounter(__FILE__,'h');
-             }while($size>=self::$max);
+             };
+             self::doWork($q['class'],$q['func'],$q['args']);
          }
+         CounterService::decMemoryCounter(__FILE__,'h');
      }
 
      public static function doWork($class,$func,$args=[]){
@@ -70,11 +71,7 @@
                  }
 
                  if(!$killFather){
-                     $size = CounterService::incMemoryCounter(__FILE__,'h');
-                     $file = ROOT_PATH.'size.txt';
-                     $content = file_exists($file)?file_get_contents($file):'';
-                     $content .= '->pid:'.$pid.';size:'.$size.'status;code'."\r\n";
-                     file_put_contents($file,$content);
+                     CounterService::incMemoryCounter(__FILE__,'h');
                  }
 
                  return false;
