@@ -21,7 +21,7 @@
          return function_exists('pcntl_fork') && function_exists('posix_kill') && function_exists('ftok') && function_exists('shmop_open') ;
      }
 
-     protected static function doFork($queue){
+     public static function doFork($queue=[]){
          $max = EnvService::get('global.max_process',100);
          CounterService::incMemoryCounter(__FILE__,'h');
          foreach ($queue as $q){
@@ -44,6 +44,7 @@
              if($fork){
                  return $fork;
              }
+             ToolService::identity(2);
              call_user_func_array([$class,$func],$args);
              CounterService::decMemoryCounter(__FILE__,'h');
              posix_kill(posix_getpid(), SIGINT);
