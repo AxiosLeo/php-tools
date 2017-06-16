@@ -70,7 +70,9 @@ final class Result{
         if(function_exists('fastcgi_finish_request')){
             fastcgi_finish_request();
         }
+        $queue = ForkService::$queue;
         ForkService::fork(true);
+        ForkService::doFork($queue);
     }
 
     private static function initReturnType(){
