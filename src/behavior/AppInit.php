@@ -11,8 +11,10 @@
 
 namespace axios\tpr\behavior;
 
+use axios\tpr\service\ToolService;
 use think\Lang;
 use think\Request;
+use think\Hook;
 
 class AppInit {
     public $param;
@@ -24,6 +26,8 @@ class AppInit {
     }
 
     public function run(){
+        Hook::add('log_write_done', 'axios\\tpr\\behavior\\LogWriteDone');
+        ToolService::identity(1);
         $this->lang();
     }
 

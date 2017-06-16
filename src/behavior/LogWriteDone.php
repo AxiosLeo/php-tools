@@ -12,9 +12,17 @@
 namespace axios\tpr\behavior;
 
 use axios\tpr\service\ForkService;
+use axios\tpr\service\ToolService;
 use think\Request;
 
-class RequestEnd extends ForkService{
+/**
+ * Class LogWriteDone
+ * @package axios\tpr\behavior
+ *
+ * need library/think/Log.php 161
+ *  ->   Hook::listen('log_write_done', $log);
+ */
+class LogWriteDone extends ForkService{
     public $param;
     public $request;
     function __construct()
@@ -24,9 +32,10 @@ class RequestEnd extends ForkService{
     }
 
     public function run(){
-        $queue = parent::$queue;
-        parent::doFork($queue);
-        posix_kill(posix_getpid(), SIGINT);
-        exit();
+        $identity = ToolService::identity();
+        if($identity==2){
+            posix_kill(posix_getpid(), SIGINT);
+            exit();
+        }
     }
 }
