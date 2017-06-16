@@ -44,7 +44,6 @@
              if($fork){
                  return $fork;
              }
-             ToolService::identity(2);
              call_user_func_array([$class,$func],$args);
              CounterService::decMemoryCounter(__FILE__,'h');
              posix_kill(posix_getpid(), SIGINT);
@@ -70,7 +69,7 @@
                  }else if($ppid == -1){
                      exit();
                  }
-
+                 ToolService::identity(2);
                  if(!$killFather){
                      CounterService::incMemoryCounter(__FILE__,'h');
                  }
