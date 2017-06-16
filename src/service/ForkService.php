@@ -34,12 +34,6 @@
          }
      }
 
-     protected static function checkProcess(){
-         foreach (self::$pid_list as $pl){
-
-         }
-     }
-
      public static function doWork($class,$func,$args=[]){
          if(is_string($class) && class_exists($class)){
              $class = new $class();
