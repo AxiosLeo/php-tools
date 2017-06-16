@@ -15,8 +15,13 @@ use think\Log;
 
 class TestService {
     public function test($a,$b){
-        sleep(5);
-        Log::record($a.__CLASS__.'->'.__FUNCTION__.$b,'debug');
+        $sleep = $b;
+        sleep($sleep);
+//        $test = new Test();
+//        $content = file_exists(ROOT_PATH.'test.txt')?file_get_contents(ROOT_PATH.'test.txt'):'';
+//        $content .= "-------------------------------\r\n";
+//        $content .= time()."->pid:".posix_getpid().";sleep:".$sleep."a:".$a.";b:".$b."\r\n";
+//        file_put_contents(ROOT_PATH.'test.txt',$content);
         return true;
     }
 }

@@ -16,8 +16,10 @@ use tpr\index\service\TestService;
 class Index extends Api {
     public function index(){
         $test = new TestService();
-        ForkService::work($test,'test',[1,2]);
-        Log::record('after_test','debug');
-        $this->response(1);
+        $test->test(1,2);
+//        for ($i=0;$i<15;$i++){
+//            ForkService::work($test,'test',[$i,2*$i+1]);
+//        }
+//        $this->response(1);
     }
 }
