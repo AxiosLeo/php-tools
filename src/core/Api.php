@@ -28,7 +28,7 @@ class Api extends Controller{
     }
 
     protected function wrong($code,$message=''){
-        $this->rep([],$code,$message);
+        $this->response([],$code,$message);
     }
 
     protected function rep($data=[],$code=200,$message='',array $header=[]){
