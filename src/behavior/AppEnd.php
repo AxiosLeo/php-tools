@@ -45,12 +45,16 @@ class AppEnd{
         if(isset($middleware_config[$this->mca])){
             $middleware_config = $middleware_config[$this->mca];
             $Middleware = validate($middleware_config[0]);
-            call_user_func_array([$Middleware,$middleware_config[1]],[$this->request]);
+            if(isset($middleware_config[1]) && method_exists($Middleware,$middleware_config[1])){
+                call_user_func_array([$Middleware,$middleware_config[1]],[$this->request]);
+            }
         }else{
             $class = Loader::parseClass(strtolower($this->module), 'middleware',strtolower($this->controller),false);
             if(class_exists($class)){
-                $Middleware = Loader::validate($this->controller, 'validate', false,$this->module);
-                call_user_func_array([$Middleware,'after'],array($this->request,$this->req));
+                $Middleware = Loader::validate($this->controller, 'middleware', false,$this->module);
+                if(method_exists($Middleware,'after')){
+                    call_user_func_array([$Middleware,'after'],array($this->request,$this->req));
+                }
             }
         }
     }

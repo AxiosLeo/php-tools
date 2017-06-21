@@ -9,19 +9,12 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-return [
-    'before'=>[
-        /***
-         * 'module/controller/action'=>['MiddlewareClassName','MiddlewareActionName']
-         ***/
-        'index/index/index'=>['tpr\index\middleware\index','index'],
-    ],
+namespace tpr\index\middleware;
 
-    'after'=>[
+use axios\tpr\core\Middleware;
 
-        /***
-         * 'module/controller/action'=>['MiddlewareClassName','MiddlewareActionName']
-         ***/
-//        'index/index/index'=>['tpr\index\middleware\index','index'],
-    ]
-];
+class Index {
+    public function index(){
+
+    }
+}

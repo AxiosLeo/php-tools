@@ -27,19 +27,19 @@ class ApiDocService{
         self::$apiClassList = self::scanApiClass($dir);
     }
 
-    public static function config($dir,$connector=';'){
+    public static function config($dir=APP_PATH,$connector=';'){
         self::$connector = $connector;
-        return self::dir($dir);
-    }
-
-    public static function dir($dir = APP_PATH){
         if(is_null(self::$instance)){
             return new static($dir);
         }
+        self::$dir = $dir;
         return self::$instance;
     }
 
     public static function doc($class=''){
+        if(empty(self::$dir)){
+            self::config();
+        }
         $list = [];$n=0;
         if(!empty($class)){
             $list = self::makeClassDoc($class);
@@ -56,6 +56,9 @@ class ApiDocService{
     }
 
     public static function makeClassDoc($class=''){
+        if(empty(self::$dir)){
+            self::config();
+        }
         $doc = [];
         if(class_exists($class)){
             $reflectionClass = new \ReflectionClass($class);
@@ -79,6 +82,9 @@ class ApiDocService{
     }
 
     public static function makeMethodDoc($class,$method_name){
+        if(empty(self::$dir)){
+            self::config();
+        }
         $reflectionClass = new \ReflectionClass($class);
         $method = $reflectionClass->getMethod($method_name);
         $temp = explode("\\",$class);
@@ -96,7 +102,7 @@ class ApiDocService{
         return $m;
     }
 
-    public static function trans($comment){
+    private static function trans($comment){
         $docComment = $comment;
         $data = [];
         if ($docComment !== false) {
@@ -137,7 +143,7 @@ class ApiDocService{
         return $data;
     }
 
-    public static function transContent($content){
+    private static function transContent($content){
         $connector = self::$connector;
         self::$isConnect = strpos($content,$connector)===false?false:true;
         self::$content = self::$content.$content;
@@ -158,7 +164,7 @@ class ApiDocService{
         return $content;
     }
 
-    public static function deepScanDir($dir) {
+    private static function deepScanDir($dir) {
         $fileArr = array ();
         $dirArr = array ();
         $dir = rtrim($dir, '//');
@@ -184,7 +190,7 @@ class ApiDocService{
         );
     }
 
-    public static function scanApiClass($dir=APP_PATH){
+    private static function scanApiClass($dir=APP_PATH){
         $scan = self::deepScanDir($dir);
         $files = $scan['file'];
         $n=0;$ApiList = [];
