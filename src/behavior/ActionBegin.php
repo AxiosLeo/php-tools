@@ -15,9 +15,9 @@ use axios\tpr\core\Cache;
 use axios\tpr\service\EnvService;
 use axios\tpr\service\LangService;
 use axios\tpr\core\Result;
-use think\Validate;
 use think\Request;
 use think\Loader;
+use think\Config;
 
 class ActionBegin{
     public $param;
@@ -25,6 +25,7 @@ class ActionBegin{
     public $module;
     public $controller;
     public $action;
+    public $mca ;
     function __construct()
     {
         $this->request    = Request::instance();
@@ -32,15 +33,13 @@ class ActionBegin{
         $this->module     = strtolower($this->request->module());
         $this->controller = strtolower($this->request->controller());
         $this->action     = $this->request->action();
+        $this->mca        = $this->module.'/'.$this->controller.'/'.$this->action;
+        $this->request->mca = $this->mca;
     }
 
     public function run(){
         $this->sign();
-        $class = Loader::parseClass($this->module, 'validate',$this->controller,false);
-        if(class_exists($class)){
-            $Validate = Loader::validate($this->controller, 'validate', false,$this->module);
-            $this->filter($Validate);
-        }
+        $this->filter();
 
         $this->middleware();
         $this->cache();
@@ -75,13 +74,29 @@ class ActionBegin{
         }
     }
 
-    /**
-     * @param Validate $Validate
-     */
-    private function filter($Validate){
-        $check = $Validate->hasScene($this->action) ? $Validate->scene($this->action)->check($this->param):true;
-        if(!$check){
-            Result::wrong(400,LangService::trans($Validate->getError()));
+    private function filter(){
+        $validate_config = Config::get('validate.'.$this->mca);
+
+        if(!empty($validate_config)){
+            $Validate = validate($validate_config[0]);
+            if(isset($validate_config[1])){
+                $check = $Validate->hasScene($validate_config[1]) ? $Validate->scene($validate_config[1])->check($this->param):true;
+            }else{
+                $check = $Validate->check($this->param);
+            }
+
+            if(!$check){
+                Result::wrong(400,LangService::trans($Validate->getError()));
+            }
+        }else{
+            $class = Loader::parseClass($this->module, 'validate',$this->controller,false);
+            if(class_exists($class)){
+                $Validate = Loader::validate($this->controller, 'validate', false,$this->module);
+                $check = $Validate->hasScene($this->action) ? $Validate->scene($this->action)->check($this->param):true;
+                if(!$check){
+                    Result::wrong(400,LangService::trans($Validate->getError()));
+                }
+            }
         }
     }
 
@@ -93,10 +108,18 @@ class ActionBegin{
     }
 
     private function middleware(){
-        $class = Loader::parseClass(strtolower($this->module), 'middleware',strtolower($this->controller),false);
-        if(class_exists($class)){
-            $Middleware = Loader::validate($this->controller, 'middleware', false,$this->module);
-            call_user_func_array([$Middleware,'before'],array($this->request));
+        $middleware_config =  Config::get('middleware.before');
+        if(isset($middleware_config[$this->mca])){
+            $middleware_config = $middleware_config[$this->mca];
+            $Middleware = validate($middleware_config[0]);
+            call_user_func_array([$Middleware,$middleware_config[1]],[$this->request]);
+        }else{
+            $class = Loader::parseClass(strtolower($this->module), 'middleware',strtolower($this->controller),false);
+            if(class_exists($class)){
+                $Middleware = Loader::validate($this->controller, 'middleware', false,$this->module);
+                call_user_func_array([$Middleware,'before'],array($this->request));
+            }
         }
+
     }
 }
