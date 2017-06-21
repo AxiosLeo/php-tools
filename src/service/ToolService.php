@@ -42,12 +42,14 @@ class ToolService {
     }
 
     public static function identity($identity=0){
-        $shm = ftok(__FILE__, 'h');
-        $shm_id = shmop_open($shm,'c',0644,1);
-        if($identity===0){
-            return shmop_read($shm_id,0,1);
+        if(function_exists('ftok') && function_exists('shmop_open')){
+            $shm = ftok(__FILE__, 'h');
+            $shm_id = shmop_open($shm,'c',0644,1);
+            if($identity===0){
+                return shmop_read($shm_id,0,1);
+            }
+            shmop_write($shm_id,$identity,0);
         }
-        shmop_write($shm_id,$identity,0);
         return $identity;
     }
 
