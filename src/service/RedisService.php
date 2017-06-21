@@ -10,8 +10,10 @@
 // +----------------------------------------------------------------------
 
 namespace axios\tpr\service;
+
 use think\Config;
 use \Redis;
+
 class RedisService extends Redis {
     private $config;
     private $prefix;
