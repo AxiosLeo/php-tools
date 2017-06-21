@@ -68,6 +68,9 @@ class ForkService{
                 }else if($ppid == -1){
                     exit();
                 }
+
+                ToolService::identity(2);
+
                 return false;
             }else{
                 return false;
