@@ -25,18 +25,18 @@ final class Result{
 
     public function __construct($return_type,$toString=true)
     {
-        // TODO: Implement __call() method.
-        if(empty($return_type)){
-            self::initReturnType();
-        }else{
-            self::$return_type = $return_type;
-        }
         self::$toString = $toString;
     }
 
-    public static function instance($return_type = "",$toString=true){
+    public static function instance($return_type = null,$toString=true){
         if (is_null(self::$instance)) {
             self::$instance = new static($return_type,$toString);
+        }
+
+        if(empty($return_type)){
+            self::initReturnType();
+        }else{
+            self::$return_type = in_array($return_type,['json','xml'])?$return_type:'json';
         }
 
         return self::$instance;

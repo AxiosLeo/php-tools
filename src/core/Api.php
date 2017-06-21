@@ -17,7 +17,7 @@ use think\Request;
 class Api extends Controller{
     protected $param;
 
-    protected $return_type;
+    protected $return_type = "json";
 
     protected $toString = false;
 
