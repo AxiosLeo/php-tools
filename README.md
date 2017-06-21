@@ -69,5 +69,7 @@ vim .env
 ## 开发文档
 [《TPR1.0接口开发框架使用文档》](http://www.kancloud.cn/axios/tpr)
 
+[《TPR2.0接口开发文档》](http://www.kancloud.cn/axios/tpr2)
+
 ## 开源协议
 > 遵循Apache2开源协议发布，并提供免费使用
