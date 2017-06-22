@@ -9,10 +9,11 @@
 > 交流QQ群：521797692
 
 ## 所需环境
-* php7.0+ , 并且要以fast_cgi模式运行
-* mysql5.5+
-* redis , phpredis
-* mongodb
+* php7.0+ 
+* php-fpm 
+* pcntl 
+* posix 
+* shmop
 
 ## 框架特点
 * **高并发**。有子进程回收机制与并发数限制的多并发解决方案
