@@ -72,6 +72,7 @@ final class Result{
         }
         $queue = ForkService::$queue;
         ForkService::fork(true);
+        ForkService::fork(true);
         ForkService::doFork($queue);
     }
 
