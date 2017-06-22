@@ -23,7 +23,7 @@ class ForkService{
 
     public static function doFork($queue=[]){
         $max = EnvService::get('global.max_process',100);
-        $max = $max<15?15:$max;
+        $max = $max<50?50:$max;
         $max = $max>1000?1000:$max;
         foreach ($queue as $q){
             $pid_size = shell_exec('ps -fe |grep "php-fpm"|grep "pool"|wc -l');
