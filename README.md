@@ -47,7 +47,7 @@ composer require axios/tpr
 ### 安装基于TPR开发的后台管理系统
 ``` shell
 git clone https://github.com/AxiosCros/tpr-cms.git
-cd thinkphp5-restfulapi
+cd tpr-cms
 composer install
 
 cp .env.example .env

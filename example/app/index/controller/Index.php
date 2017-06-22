@@ -19,12 +19,16 @@ class Index extends Api {
      */
     public function index(){
 //        $doc = ApiDocService::config(APP_PATH)->doc();
-        $doc = ApiDocService::doc();
-        dump($doc);
-        $doc = ApiDocService::makeClassDoc('tpr\index\controller\Index');
-        dump($doc);
-        $doc = ApiDocService::makeMethodDoc('tpr\index\controller\Index','index');
-        dump($doc);
-//        $this->response('hello,world!');
+//        $doc = ApiDocService::doc();
+//        dump($doc);
+//        $doc = ApiDocService::makeClassDoc('tpr\index\controller\Index');
+//        dump($doc);
+//        $doc = ApiDocService::makeMethodDoc('tpr\index\controller\Index','index');
+//        dump($doc);
+        $this->response('hello,world!');
+    }
+
+    public function forkTest(){
+        $this->response();
     }
 }
