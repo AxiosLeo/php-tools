@@ -106,3 +106,9 @@ if(!function_exists('check_sign')){
         return $post_sign!=$sign?$sign:true;
     }
 }
+
+if(!function_exists('env')){
+    function env($index,$default=''){
+        return \axios\tpr\service\EnvService::get($index,$default);
+    }
+}
