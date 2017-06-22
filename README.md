@@ -33,7 +33,11 @@
 
 ### 纯接口开发的安装方式(无后台管理系统)
 ``` shell
+#github
 git clone https://github.com/AxiosCros/tpr-composer.git
+
+#oschina
+git clone https://git.oschina.net/AxiosCro/tpr-composer.git
 
 cd tpr-composer 
 
