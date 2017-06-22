@@ -71,7 +71,6 @@ final class Result{
             fastcgi_finish_request();
         }
         $queue = ForkService::$queue;
-        ForkService::fork();
         ForkService::fork(true);
         ForkService::doFork($queue);
     }
