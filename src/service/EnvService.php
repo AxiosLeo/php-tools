@@ -59,13 +59,12 @@ class EnvService {
                     return $default;
                 }
             }
-            return $tmp;
-        }
-
-        $tmp = self::$env_array;
-        $tmp = isset($tmp[$index])?$tmp[$index]:null;
-        if(is_null($tmp)){
-            return $default;
+        }else{
+            $tmp = self::$env_array_section;
+            $tmp = isset($tmp[$index])?$tmp[$index]:null;
+            if(is_null($tmp)){
+                return $default;
+            }
         }
         return $tmp;
     }
