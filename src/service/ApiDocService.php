@@ -170,9 +170,19 @@ class ApiDocService{
             }
             $data = [
                 'type'=>isset($contentArray[0])?$contentArray[0]:'',
-                'name'=>isset($contentArray[1])?$contentArray[1]:'',
-                'desc'=>isset($contentArray[2])?$contentArray[2]:''
+                'name'=>isset($contentArray[1])?$contentArray[1]:''
             ];
+            $desc = '';
+            foreach ($contentArray as $k=>$c){
+                if($k<2){
+                    continue;
+                }
+                if(!empty($c)){
+                    $desc = $desc.trim($c).' ';
+                }
+            }
+
+            $data['desc'] = $desc;
             $content = $data;
         }
         return $content;
