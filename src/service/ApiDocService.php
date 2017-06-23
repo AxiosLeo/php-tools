@@ -21,6 +21,11 @@ class ApiDocService{
     private static $isConnect = false;
     private static $content = '';
 
+    public static $typeList = [
+        'char', 'string', 'int', 'float', 'boolean',
+        'date', 'array', 'fixed', 'enum', 'object',
+    ];
+
     function __construct($dir = APP_PATH)
     {
         self::$dir = $dir;
@@ -154,6 +159,9 @@ class ApiDocService{
         self::$content = '';
         if(strpos($content,' ')!==false){
             $contentArray = explode(' ',$content);
+            if(isset($contentArray[1]) && !in_array($contentArray[1],self::$typeList)){
+                return $content;
+            }
             $data = [
                 'type'=>isset($contentArray[0])?$contentArray[0]:'',
                 'name'=>isset($contentArray[1])?$contentArray[1]:'',
