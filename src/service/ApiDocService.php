@@ -120,9 +120,14 @@ class ApiDocService{
                 }
                 $content = trim(substr($comment, $posA));
                 $needle_length = strpos($content,' ');
-                $needle = trim(substr($content,1,$needle_length));
-                $content = trim(substr($content, $needle_length));
-                $content = self::transContent($content);
+                if($needle_length === false){
+                    $needle = str_replace('@','',trim($content));
+                    $content = '';
+                }else{
+                    $needle = trim(substr($content,1,$needle_length));
+                    $content = trim(substr($content, $needle_length));
+                    $content = self::transContent($content);
+                }
                 if($content===true){
                     continue;
                 }
@@ -159,7 +164,7 @@ class ApiDocService{
         self::$content = '';
         if(strpos($content,' ')!==false){
             $contentArray = explode(' ',$content);
-            if(isset($contentArray[1]) && !in_array($contentArray[1],self::$typeList)){
+            if(isset($contentArray[0]) && !in_array($contentArray[0],self::$typeList)){
                 return $content;
             }
             $data = [
