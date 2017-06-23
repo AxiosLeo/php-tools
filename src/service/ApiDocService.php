@@ -158,6 +158,7 @@ class ApiDocService{
         self::$isConnect = strpos($content,$connector)===false?false:true;
         self::$content = self::$content.$content;
         if(self::$isConnect){
+            self::$content = str_replace(self::$connector,'',self::$content);
             return true;
         }
         $content = self::$content;
