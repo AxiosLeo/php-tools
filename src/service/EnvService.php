@@ -15,7 +15,7 @@ namespace axios\tpr\service;
  * @package axios\tpr\service
  */
 class EnvService {
-    public static $env_path = ROOT_PATH.".env";
+    public static $env_path;
     public static $env_array_section ;
     public static $env_array ;
     public static $instance;
@@ -24,6 +24,9 @@ class EnvService {
     private function __construct($env_path=''){
         if(file_exists($env_path)){
             self::$env_path = $env_path;
+        }else{
+            defined('ROOT_PATH') or define('ROOT_PATH',__DIR__.'/../../../../../');
+            self::$env_path = ROOT_PATH.'.env';
         }
         self::$env_array_section = parse_ini_file(self::$env_path, true);
         self::$env_array = parse_ini_file(self::$env_path, false);
