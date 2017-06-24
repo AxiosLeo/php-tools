@@ -22,6 +22,7 @@ class EnvService {
     public static $needBack;
 
     private function __construct($env_path=''){
+        defined('ENV_PREFIX') or define('ENV_PREFIX', 'PHP_'); // 环境变量的配置前缀
         if(file_exists($env_path)){
             self::$env_path = $env_path;
         }else{
