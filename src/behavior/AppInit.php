@@ -26,7 +26,10 @@ class AppInit {
     }
 
     public function run(){
+        Hook::add('action_begin' ,'axios\\tpr\\behavior\\ActionBegin');
+        Hook::add('app_end' ,'axios\\tpr\\behavior\\AppEnd');
         Hook::add('log_write_done', 'axios\\tpr\\behavior\\LogWriteDone');
+        Hook::add('request_end', 'axios\\tpr\\behavior\\RequestEnd');
         ToolService::identity(1);
         $this->lang();
     }

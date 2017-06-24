@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 // +----------------------------------------------------------------------
 // | TPR [ Design For Api Develop ]
@@ -10,11 +9,22 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-define('ROOT_PATH',__DIR__.'/');
-define('APP_PATH', ROOT_PATH . 'example/app/');
-define('CONF_PATH', ROOT_PATH.'example/config/');
-define('RUNTIME_PATH', ROOT_PATH . 'example/runtime/');
-define('THINK_PATH', ROOT_PATH . 'vendor/topthink/framework/');
+namespace axios\tpr\behavior;
 
-// 加载框架引导文件
-require THINK_PATH.'/console.php';
+use axios\tpr\service\ForkService;
+use think\Request;
+
+class RequestEnd extends ForkService{
+    public $param;
+    public $request;
+    function __construct()
+    {
+        $this->request = Request::instance();
+        $this->param = $this->request->param();
+    }
+
+    public function run(){
+        posix_kill(posix_getpid(), SIGINT);
+        exit();
+    }
+}

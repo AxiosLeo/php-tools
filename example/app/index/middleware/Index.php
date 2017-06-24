@@ -9,19 +9,12 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-namespace tpr\index\service;
+namespace tpr\index\middleware;
 
-use think\Log;
+use axios\tpr\core\Middleware;
 
-class TestService {
-    public function test($a,$b){
-        $sleep = $b;
-        sleep($sleep);
-//        $test = new Test();
-//        $content = file_exists(ROOT_PATH.'test.txt')?file_get_contents(ROOT_PATH.'test.txt'):'';
-//        $content .= "-------------------------------\r\n";
-//        $content .= time()."->pid:".posix_getpid().";sleep:".$sleep."a:".$a.";b:".$b."\r\n";
-//        file_put_contents(ROOT_PATH.'test.txt',$content);
-        return true;
+class Index {
+    public function index(){
+
     }
 }

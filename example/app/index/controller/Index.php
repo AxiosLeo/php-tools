@@ -9,17 +9,26 @@
 namespace tpr\index\controller;
 
 use axios\tpr\core\Api;
-use axios\tpr\service\ForkService;
-use think\Log;
-use tpr\index\service\TestService;
+use axios\tpr\service\ApiDocService;
 
 class Index extends Api {
+    /**
+     * 多行注释
+     * @desc 一行写不下;
+     * @desc 那就两行
+     */
     public function index(){
-        $test = new TestService();
-        $test->test(1,2);
-//        for ($i=0;$i<15;$i++){
-//            ForkService::work($test,'test',[$i,2*$i+1]);
-//        }
-//        $this->response(1);
+//        $doc = ApiDocService::config(APP_PATH)->doc();
+//        $doc = ApiDocService::doc();
+//        dump($doc);
+//        $doc = ApiDocService::makeClassDoc('tpr\index\controller\Index');
+//        dump($doc);
+//        $doc = ApiDocService::makeMethodDoc('tpr\index\controller\Index','index');
+//        dump($doc);
+        $this->response('hello,world!');
+    }
+
+    public function forkTest(){
+        $this->response();
     }
 }

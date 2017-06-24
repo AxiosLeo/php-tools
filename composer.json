@@ -4,7 +4,7 @@
   "homepage": "https://github.com/AxiosCros/tpr-composer",
   "license": "Apache-2.0",
   "minimum-stability": "stable",
-  "version": "2.1.4",
+  "version": "2.1.13",
   "authors": [
     {
       "name": "axios",
@@ -17,7 +17,7 @@
   "require": {
     "php": ">=7.0",
     "topthink/framework": "^5.0",
-    "topthink/think-mongo": "^1.6",
+    "topthink/think-mongo": "v1.7",
     "phpmailer/phpmailer": "^5.2"
   },
   "require-dev": {

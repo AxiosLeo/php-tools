@@ -11,6 +11,7 @@
 
 namespace axios\tpr\core;
 
+use axios\tpr\service\ToolService;
 use think\Cache as TCache;
 use think\Config;
 use think\Request;
@@ -19,7 +20,7 @@ class Cache {
     public static function set($req,Request $request){
         $config = Config::get('cache');
         if(isset($config['list'][$request->path()])){
-            $ip = get_client_ip();
+            $ip = ToolService::getClientIp();
             $expire = $config['list'][$request->path()];
             $expire = $expire?$expire:300;
             $param = $request->except($config['except_param']);
@@ -31,7 +32,7 @@ class Cache {
     public static function get(Request $request){
         $config = Config::get('cache');
         if(isset($config['list'][$request->path()])){
-            $ip = get_client_ip();
+            $ip = ToolService::getClientIp();
             $param = $request->except($config['except_param']);
             $identify = md5($ip.serialize($param));
             $cache =  TCache::get($identify);

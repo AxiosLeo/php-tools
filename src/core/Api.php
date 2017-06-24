@@ -17,7 +17,7 @@ use think\Request;
 class Api extends Controller{
     protected $param;
 
-    protected $return_type;
+    protected $return_type = "json";
 
     protected $toString = false;
 
@@ -28,7 +28,7 @@ class Api extends Controller{
     }
 
     protected function wrong($code,$message=''){
-        $this->rep([],$code,$message);
+        $this->response([],$code,$message);
     }
 
     protected function rep($data=[],$code=200,$message='',array $header=[]){

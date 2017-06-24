@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 // +----------------------------------------------------------------------
 // | TPR [ Design For Api Develop ]
@@ -10,11 +9,11 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-define('ROOT_PATH',__DIR__.'/');
-define('APP_PATH', ROOT_PATH . 'example/app/');
-define('CONF_PATH', ROOT_PATH.'example/config/');
-define('RUNTIME_PATH', ROOT_PATH . 'example/runtime/');
-define('THINK_PATH', ROOT_PATH . 'vendor/topthink/framework/');
+return [
+    /***
+     * 'module/controller/action'=>['ValidateClassName','ValidateSceneName']
+     ***/
 
-// 加载框架引导文件
-require THINK_PATH.'/console.php';
+    'index/index/index'=>['tpr\index\validate\index','index'],
+    'index/index/test'=>['index','test'],
+];
