@@ -22,8 +22,8 @@ class ApiDocService{
     private static $content = '';
 
     public static $typeList = [
-        'char', 'string', 'int', 'float', 'boolean',
-        'date', 'array', 'fixed', 'enum', 'object',
+        'char', 'string', 'int', 'float', 'boolean','bool',
+        'date', 'array', 'fixed', 'enum', 'object','double',
     ];
 
     function __construct($dir = APP_PATH)
