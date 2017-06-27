@@ -15,6 +15,7 @@ use axios\tpr\core\Cache;
 use axios\tpr\service\EnvService;
 use axios\tpr\service\LangService;
 use axios\tpr\core\Result;
+use think\exception\ClassNotFoundException;
 use think\Request;
 use think\Loader;
 use think\Config;
@@ -78,7 +79,12 @@ class ActionBegin{
         $validate_config = Config::get('validate.'.$this->mca);
 
         if(!empty($validate_config)){
-            $Validate = validate($validate_config[0]);
+            try{
+                $Validate = validate($validate_config[0]);
+            }catch (ClassNotFoundException $e){
+                throw new ClassNotFoundException('class not exists:' . $validate_config[0],__CLASS__);
+            }
+
             if(isset($validate_config[1])){
                 $check = $Validate->hasScene($validate_config[1]) ? $Validate->scene($validate_config[1])->check($this->param):true;
             }else{
@@ -111,7 +117,12 @@ class ActionBegin{
         $middleware_config =  Config::get('middleware.before');
         if(isset($middleware_config[$this->mca])){
             $middleware_config = $middleware_config[$this->mca];
-            $Middleware = validate($middleware_config[0]);
+            try{
+                $Middleware = validate($middleware_config[0]);
+            }catch (ClassNotFoundException $e){
+                throw new ClassNotFoundException('class not exists:' . $middleware_config[0],__CLASS__);
+            }
+
             call_user_func_array([$Middleware,$middleware_config[1]],[$this->request]);
         }else{
             $class = Loader::parseClass(strtolower($this->module), 'middleware',strtolower($this->controller),false);
