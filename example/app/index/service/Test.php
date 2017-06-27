@@ -12,5 +12,17 @@
 namespace example\index\service;
 
 class Test {
-
+    public function files(){
+        $filename = ROOT_PATH.'test';
+        if(file_exists($filename)){
+            $fp = fopen($filename,'w');
+            if(flock($fp,LOCK_EX)){
+                $content = file_get_contents($filename);
+                fwrite($fp,$content.posix_getpid()."\r\n");
+                sleep(rand(1,5));
+                flock($fp , LOCK_UN);
+            }
+            fclose($fp);
+        }
+    }
 }

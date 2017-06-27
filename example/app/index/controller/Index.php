@@ -9,7 +9,8 @@
 namespace example\index\controller;
 
 use axios\tpr\core\Api;
-use axios\tpr\service\ApiDocService;
+use axios\tpr\service\ForkService;
+
 class Index extends Api {
     /**
      * 多行注释
@@ -17,7 +18,10 @@ class Index extends Api {
      * @desc 那就两行
      */
     public function index(){
-
+//        $Test = new \example\index\service\Test();
+//        for($i = 0; $i<10 ; $i++){
+//            ForkService::work($Test,'files',[]);
+//        }
         $this->response('hello,world!');
     }
 
