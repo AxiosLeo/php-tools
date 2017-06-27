@@ -22,7 +22,7 @@ class ForkService{
     }
 
     public static function doFork($queue=[]){
-        $max = EnvService::get('global.max_process',100);
+        $max = intval(EnvService::get('global.max_process',100));
         $max = $max<50?50:$max;
         $max = $max>1000?1000:$max;
         foreach ($queue as $q){
