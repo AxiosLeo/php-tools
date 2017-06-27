@@ -16,8 +16,8 @@ namespace axios\tpr\service;
  */
 class EnvService {
     public static $env_path;
-    public static $env_array_section ;
-    public static $env_array ;
+    public static $env_array_section = [] ;
+    public static $env_array = [] ;
     public static $instance;
     public static $needBack;
 
@@ -29,8 +29,10 @@ class EnvService {
             defined('ROOT_PATH') or define('ROOT_PATH',__DIR__.'/../../../../../');
             self::$env_path = ROOT_PATH.'.env';
         }
-        self::$env_array_section = parse_ini_file(self::$env_path, true);
-        self::$env_array = parse_ini_file(self::$env_path, false);
+        if(file_exists(self::$env_path)){
+            self::$env_array_section = parse_ini_file(self::$env_path, true);
+            self::$env_array = parse_ini_file(self::$env_path, false);
+        }
     }
 
     private static function init(){
