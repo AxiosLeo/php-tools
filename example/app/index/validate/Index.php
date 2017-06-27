@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/5/16 15:55
  */
-namespace tpr\index\validate;
+namespace example\index\validate;
 
 use axios\tpr\core\Validate;
 

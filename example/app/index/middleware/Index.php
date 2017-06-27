@@ -9,7 +9,7 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-namespace tpr\index\middleware;
+namespace example\index\middleware;
 
 use axios\tpr\core\Middleware;
 

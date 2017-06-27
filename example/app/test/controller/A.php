@@ -6,7 +6,7 @@
  * @blog:  http://hanxv.cn
  * @datetime: 2017/5/16 16:17
  */
-namespace tpr\test\controller;
+namespace example\test\controller;
 
 use axios\tpr\core\Api;
 

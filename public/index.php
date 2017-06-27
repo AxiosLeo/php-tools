@@ -7,7 +7,7 @@ define('ROOT_PATH',__DIR__.'/../');
 define('APP_PATH', ROOT_PATH . 'example/app/');
 define('CONF_PATH', ROOT_PATH.'example/config/');
 define('RUNTIME_PATH', ROOT_PATH . 'example/runtime/');
-define('APP_NAMESPACE','tpr');
+define('APP_NAMESPACE','example');
 define('THINK_PATH',ROOT_PATH."vendor/topthink/framework/");
 
 // 加载Behavior

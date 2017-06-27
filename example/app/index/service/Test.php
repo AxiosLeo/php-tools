@@ -9,11 +9,8 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-return [
-    /***
-     * 'module/controller/action'=>['ValidateClassName','ValidateSceneName']
-     ***/
+namespace example\index\service;
 
-    'index/index/index'=>['example\index\validate\index','index'],
-    'index/index/test'=>['index','test'],
-];
+class Test {
+
+}

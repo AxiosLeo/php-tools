@@ -9,7 +9,7 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-namespace tpr\index\controller;
+namespace example\index\controller;
 
 use axios\tpr\core\Api;
 use axios\tpr\service\EnvService;
