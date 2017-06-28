@@ -12,6 +12,7 @@
 namespace axios\tpr\service;
 
 class ToolService {
+    private static $identity = 1;
     public static function uuid($salt=''){
         return md5($salt.uniqid(md5(microtime(true)),true));
     }
@@ -41,15 +42,19 @@ class ToolService {
         return $str;
     }
 
-    public static function identity($identity=0){
-        if(function_exists('ftok') && function_exists('shmop_open')){
-            $shm = ftok(__FILE__, 'h');
-            $shm_id = shmop_open($shm,'c',0644,1);
-            if($identity===0){
-                return shmop_read($shm_id,0,1);
-            }
-            shmop_write($shm_id,$identity,0);
+    public static function identity($identity=false){
+//        if(function_exists('ftok') && function_exists('shmop_open')){
+//            $shm = ftok(__FILE__, 'h');
+//            $shm_id = shmop_open($shm,'c',0644,1);
+//            if($identity===0){
+//                return shmop_read($shm_id,0,1);
+//            }
+//            shmop_write($shm_id,$identity,0);
+//        }
+        if($identity===false){
+            return self::$identity;
         }
+        self::$identity = $identity;
         return $identity;
     }
 
