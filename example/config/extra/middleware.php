@@ -14,7 +14,7 @@ return [
         /***
          * 'module/controller/action'=>['MiddlewareClassName','MiddlewareActionName']
          ***/
-//        'index/index/index'=>['example\index\middleware\index','index'],
+//        'index/index/index'=>['example\index\middleware\Index','index'],
     ],
 
     'after'=>[
@@ -22,6 +22,6 @@ return [
         /***
          * 'module/controller/action'=>['MiddlewareClassName','MiddlewareActionName']
          ***/
-//        'index/index/index'=>['tpr\index\middleware\index','index'],
+//        'index/index/index'=>['tpr\index\middleware\Index','index'],
     ]
 ];

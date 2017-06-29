@@ -24,7 +24,9 @@ class RequestEnd extends ForkService{
     }
 
     public function run(){
-        posix_kill(posix_getpid(), SIGINT);
-        exit();
+        if(function_exists('posix_kill')){
+            posix_kill(posix_getpid(), SIGINT);
+            exit();
+        }
     }
 }
