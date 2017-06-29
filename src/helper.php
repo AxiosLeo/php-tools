@@ -124,7 +124,7 @@ if(!function_exists('tpr_infinite_tree')){
     }
 }
 
-if(!function_exists('')){
+if(!function_exists('traversal_tree_to_node_list')){
     /**
      * 遍历生成树，生成节点列表
      * @param $tree
