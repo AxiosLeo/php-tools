@@ -14,6 +14,6 @@ return [
      * 'module/controller/action'=>['ValidateClassName','ValidateSceneName']
      ***/
 
-    'index/index/index'=>['example\index\validate\Index','index'],
-    'index/index/test'=>['index','test'],
+//    'index/index/index'=>['example\index\validate\Index','index'],
+//    'index/index/test'=>['index','test'],
 ];
