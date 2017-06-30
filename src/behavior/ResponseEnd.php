@@ -38,7 +38,6 @@ class ResponseEnd {
     }
 
     public function run(){
-        File::save(ROOT_PATH.'test.txt','response end ');
         $this->middleware();
     }
 
