@@ -25,6 +25,7 @@ class Index extends Middleware {
     public function after(Request $request = null, array $response = [])
     {
         // TODO: Implement after() method.
+        sleep(3);
 //        Log::record($request,'debug');
 //        Log::record($response,'debug');
     }
