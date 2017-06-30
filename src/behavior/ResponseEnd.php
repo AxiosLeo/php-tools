@@ -11,6 +11,7 @@
 
 namespace axios\tpr\behavior;
 
+use example\index\service\File;
 use think\Request;
 use think\Config;
 use think\Loader;
@@ -37,6 +38,7 @@ class ResponseEnd {
     }
 
     public function run(){
+        File::save(ROOT_PATH.'test.txt','response end ');
         $this->middleware();
     }
 

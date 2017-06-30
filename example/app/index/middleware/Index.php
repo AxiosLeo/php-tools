@@ -12,6 +12,7 @@
 namespace example\index\middleware;
 
 use axios\tpr\core\Middleware;
+use example\index\service\File;
 use think\Log;
 use think\Request;
 
@@ -26,6 +27,7 @@ class Index extends Middleware {
     {
         // TODO: Implement after() method.
         sleep(3);
+        File::save(ROOT_PATH.'test.txt','this is middleware ');
 //        Log::record($request,'debug');
 //        Log::record($response,'debug');
     }
