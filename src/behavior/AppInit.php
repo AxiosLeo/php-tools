@@ -30,6 +30,7 @@ class AppInit {
         Hook::add('app_end' ,'axios\\tpr\\behavior\\AppEnd');
         Hook::add('log_write_done', 'axios\\tpr\\behavior\\LogWriteDone');
         Hook::add('request_end', 'axios\\tpr\\behavior\\RequestEnd');
+        Hook::add('response_end', 'axios\\tpr\\behavior\\ResponseEnd');
         ToolService::identity(1);
         $this->lang();
     }
