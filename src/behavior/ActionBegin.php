@@ -128,7 +128,9 @@ class ActionBegin{
             $class = Loader::parseClass(strtolower($this->module), 'middleware',strtolower($this->controller),false);
             if(class_exists($class)){
                 $Middleware = Loader::validate($this->controller, 'middleware', false,$this->module);
-                call_user_func_array([$Middleware,'before'],array($this->request));
+                if(method_exists($Middleware,'before')){
+                    call_user_func_array([$Middleware,'before'],array($this->request));
+                }
             }
         }
 
