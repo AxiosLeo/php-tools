@@ -11,13 +11,21 @@
 
 namespace example\index\middleware;
 
-use example\index\service\File;
-use think\Controller;
+use axios\tpr\core\Middleware;
 use think\Log;
+use think\Request;
 
-class Index extends Controller {
-    public function after(){
-        Log::record('test'.time(),'debug');
-        File::save(ROOT_PATH.'test.txt',time());
+class Index extends Middleware {
+    public function before(Request $request = null)
+    {
+        // TODO: Implement before() method.
+        Log::record($request,'debug');
+    }
+
+    public function after(Request $request = null, array $response = [])
+    {
+        // TODO: Implement after() method.
+        Log::record($request,'debug');
+        Log::record($response,'debug');
     }
 }

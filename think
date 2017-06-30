@@ -11,7 +11,7 @@
 // +----------------------------------------------------------------------
 
 define('ROOT_PATH',__DIR__.'/');
-define('APP_PATH', ROOT_PATH . 'example/app/');
+define('APP_PATH', ROOT_PATH . 'app/');
 define('CONF_PATH', ROOT_PATH.'example/config/');
 define('RUNTIME_PATH', ROOT_PATH . 'example/runtime/');
 define('THINK_PATH', ROOT_PATH . 'vendor/topthink/framework/');

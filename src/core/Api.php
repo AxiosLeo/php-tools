@@ -32,9 +32,7 @@ class Api extends Controller{
     }
 
     protected function rep($data=[],$code=200,$message='',array $header=[]){
-        $req = Result::instance($this->return_type,$this->toString)->rep($data,$code,$message,$header);
-        $this->request->req = $req;
-        Cache::set($req,$this->request);
+        Result::instance($this->return_type,$this->toString)->rep($data,$code,$message,$header);
     }
 
     protected function response($data=[],$code=200,$message='',array $header=[]){

@@ -16,6 +16,7 @@ use axios\tpr\service\ForkService;
 use axios\tpr\service\LangService;
 use think\exception\HttpResponseException;
 use think\Response;
+use think\Request;
 
 final class Result{
     public static $instance;
@@ -59,6 +60,9 @@ final class Result{
         $req['code'] = strval($code);
         $req['data'] = $data;
         $req['message'] = !empty($message)?LangService::trans($message):LangService::message($code);
+        $request = Request::instance();
+        $request->req = $req;
+        Cache::set($req,$request);
         self::send($req,$header);
         return $req;
     }

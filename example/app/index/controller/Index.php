@@ -32,7 +32,7 @@ class Index extends Api {
      * @test void|string    asdf
      */
     public function index(){
-        ApiDocService::config(__DIR__);
+//        ApiDocService::config(__DIR__);
 //        dump(ApiDocService::makeClassDoc(__CLASS__));
         $this->response('hello,world!');
     }
