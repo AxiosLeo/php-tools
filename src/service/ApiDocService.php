@@ -22,8 +22,8 @@ class ApiDocService{
     private static $content = '';
 
     public static $typeList = [
-        'char', 'string', 'int', 'float', 'boolean','bool',
-        'date', 'array', 'fixed', 'enum', 'object','double',
+        'char', 'string', 'int', 'float', 'boolean','bool','date',
+        'array', 'fixed', 'enum', 'object','double','void','mixed'
     ];
 
     function __construct($dir = APP_PATH)
@@ -165,7 +165,7 @@ class ApiDocService{
         self::$content = '';
         if(strpos($content,' ')!==false){
             $contentArray = explode(' ',$content);
-            if(isset($contentArray[0]) && !in_array($contentArray[0],self::$typeList)){
+            if(isset($contentArray[0]) && !self::isType($contentArray[0])){
                 return $content;
             }
             $data = [
@@ -186,6 +186,22 @@ class ApiDocService{
             $content = $data;
         }
         return $content;
+    }
+
+    private static function isType($type = ''){
+        if(strpos($type , '|')){
+            $array = explode('|',$type);
+            foreach ($array as $a){
+                if(in_array($a,self::$typeList)){
+                    return true;
+                }
+            }
+        }else{
+            if(in_array($type,self::$typeList)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private static function deepScanDir($dir) {
