@@ -19,13 +19,13 @@ class Index extends Middleware {
     public function before(Request $request = null)
     {
         // TODO: Implement before() method.
-        Log::record($request,'debug');
+//        Log::record($request,'debug');
     }
 
     public function after(Request $request = null, array $response = [])
     {
         // TODO: Implement after() method.
-        Log::record($request,'debug');
-        Log::record($response,'debug');
+//        Log::record($request,'debug');
+//        Log::record($response,'debug');
     }
 }
