@@ -14,6 +14,7 @@ namespace axios\tpr\core;
 use axios\tpr\service\EnvService;
 use axios\tpr\service\ForkService;
 use axios\tpr\service\LangService;
+use think\exception\HttpResponseException;
 use think\Response;
 
 final class Result{
@@ -66,13 +67,11 @@ final class Result{
         if(empty(self::$return_type)){
             self::initReturnType();
         }
-        Response::create($req,  self::$return_type, "200")->header($header)->send();
-        if(function_exists('fastcgi_finish_request')){
-            fastcgi_finish_request();
-        }
+        $response = Response::create($req,  self::$return_type, "200")->header($header);
         $queue = ForkService::$queue;
-        ForkService::fork(true);
+        ForkService::fork();
         ForkService::doFork($queue);
+        throw new HttpResponseException($response);
     }
 
     private static function initReturnType(){

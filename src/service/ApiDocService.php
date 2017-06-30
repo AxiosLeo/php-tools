@@ -164,6 +164,7 @@ class ApiDocService{
         $content = self::$content;
         self::$content = '';
         if(strpos($content,' ')!==false){
+            $content = preg_replace("/[\s]+/is"," ",$content);
             $contentArray = explode(' ',$content);
             if(isset($contentArray[0]) && !self::isType($contentArray[0])){
                 return $content;
@@ -192,12 +193,12 @@ class ApiDocService{
         if(strpos($type , '|')){
             $array = explode('|',$type);
             foreach ($array as $a){
-                if(in_array($a,self::$typeList)){
+                if(in_array(strtolower($a),self::$typeList)){
                     return true;
                 }
             }
         }else{
-            if(in_array($type,self::$typeList)){
+            if(in_array(strtolower($type),self::$typeList)){
                 return true;
             }
         }

@@ -29,11 +29,11 @@ class Index extends Api {
      * @multiRowParam multi_row_param comment
      * @multiRowParam string multi_row;
      * @multiRowParam _param2 this is multi_row_param comment
-     * @test void|string asdf
+     * @test void|string    asdf
      */
     public function index(){
         ApiDocService::config(__DIR__);
-        dump(ApiDocService::makeClassDoc(__CLASS__));
+//        dump(ApiDocService::makeClassDoc(__CLASS__));
         $this->response('hello,world!');
     }
 

@@ -9,15 +9,19 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-namespace example\index\middleware;
+namespace example\index\service;
 
-use example\index\service\File;
-use think\Controller;
-use think\Log;
+class File{
+    public static function save($filename,$content='default',$append=true){
+        if(is_array($content) || is_object($content)){
+            $content = dump($content,false);
+        }
+        $file_content = file_exists($filename)? file_get_contents($filename):'';
 
-class Index extends Controller {
-    public function after(){
-        Log::record('test'.time(),'debug');
-        File::save(ROOT_PATH.'test.txt',time());
+        if($append){
+            $content = $file_content.$content."\r\n\r\n";
+        }
+
+        return file_put_contents($filename,$content);
     }
 }
