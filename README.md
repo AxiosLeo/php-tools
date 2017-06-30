@@ -1,6 +1,4 @@
-# TPR---基于thinkphp5的restful接口框架
-
-> 主要基于thinkphp5的restful设计风格的接口框架。
+# TPR---基于thinkphp5的restful接口composer组件
 
 > 专为接口开发而设计
 
