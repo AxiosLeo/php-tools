@@ -20,6 +20,7 @@ class RedisService extends Redis {
         'auth'          => '',
         'port'          => '6379',
         'prefix'        => 'redis:',
+        'timeout'=>60,
         'database'      =>[
             'default'    => 0,
         ]
