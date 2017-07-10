@@ -14,21 +14,22 @@ namespace axios\tpr\service;
 use think\Config;
 use \Redis;
 
-class RedisService extends Redis {
+class RedisService extends Redis
+{
     private $config = [
-        'host'          => '127.0.0.1',
-        'auth'          => '',
-        'port'          => '6379',
-        'prefix'        => 'redis:',
-        'timeout'=>60,
-        'database'      =>[
-            'default'    => 0,
+        'host' => '127.0.0.1',
+        'auth' => '',
+        'port' => '6379',
+        'prefix' => 'redis:',
+        'timeout' => 60,
+        'database' => [
+            'default' => 0,
         ]
     ];
 
     private static $config_index = '';
 
-    private static $instance ;
+    private static $instance;
 
     private $db = 0;
 
@@ -38,16 +39,18 @@ class RedisService extends Redis {
     {
         self::$config_index = $select;
 
-        $config = Config::get('redis.'.$select);
-        $config = empty($config) ? []:$config;
-        $this->config = array_merge($this->config , $config);
+        $config = Config::get('redis.' . $select);
+        $config = empty($config) ? [] : $config;
+        $this->config = array_merge($this->config, $config);
 
         $this->do_connect($this->config);
     }
-    public static function redis($select= 'default'){
-        if(self::$instance == null){
+
+    public static function redis($select = 'default')
+    {
+        if (self::$instance == null) {
             self::$instance = new self($select);
-        }else if(self::$config_index != $select){
+        } else if (self::$config_index != $select) {
             self::$instance = new self($select);
         }
         return self::$instance;
@@ -58,25 +61,26 @@ class RedisService extends Redis {
      * @param $config
      * @return string
      */
-    private function do_connect($config){
-        if(isset($config['type']) && $config['type'] == 'unix'){
+    private function do_connect($config)
+    {
+        if (isset($config['type']) && $config['type'] == 'unix') {
             if (!isset($config['socket'])) {
                 return 'redis config key [socket] not found';
             }
             $this->connect($config['socket']);
-        }else{
+        } else {
             $port = intval($config['port']);
-            $timeout =  intval($config['timeout']);
+            $timeout = intval($config['timeout']);
             $this->connect($config['host'], $port, $timeout);
         }
 
-        if(isset($config['auth']) && !empty($config['auth'])){
+        if (isset($config['auth']) && !empty($config['auth'])) {
             $this->auth($config['auth']);
         }
 
         $this->select($this->db);
 
-        $this->setOption(\Redis::OPT_PREFIX, $config['prefix'] );
+        $this->setOption(\Redis::OPT_PREFIX, $config['prefix']);
         return $this;
     }
 
@@ -85,14 +89,15 @@ class RedisService extends Redis {
      * @param $name
      * @return $this
      */
-    public function switchDB($name){
+    public function switchDB($name)
+    {
         $arr = $this->config['database'];
-        if(is_int($name)){
+        if (is_int($name)) {
             $db = $name;
-        }else{
+        } else {
             $db = isset($arr[$name]) ? $arr[$name] : 0;
         }
-        if($db != $this->db){
+        if ($db != $this->db) {
             $this->select($db);
             $this->db = $db;
         }
@@ -109,16 +114,19 @@ class RedisService extends Redis {
      * @param int $expire
      * @return int
      */
-    public function counter($key,$init=0,$expire=0){
-        if(empty($expire)){
-            $this->set($key,$init);
-        }else{
-            $this->psetex($key,$expire,$init);
+    public function counter($key, $init = 0, $expire = 0)
+    {
+        if (empty($expire)) {
+            $this->set($key, $init);
+        } else {
+            $this->psetex($key, $expire, $init);
         }
         return $init;
     }
-    public function countNumber($key){
-        if(!$this->exists($key)){
+
+    public function countNumber($key)
+    {
+        if (!$this->exists($key)) {
             return false;
         }
         return $this->get($key);
@@ -129,47 +137,53 @@ class RedisService extends Redis {
      * @param $key
      * @return bool|int
      */
-    public function count($key){
-        if(!$this->exists($key)){
+    public function count($key)
+    {
+        if (!$this->exists($key)) {
             return false;
         }
         $count = $this->incr($key);
         return $count;
     }
 
-    public function setsMembers($key){
+    public function setsMembers($key)
+    {
         $size = $this->sCard($key);
         $members = [];
-        for($i=0;$i<$size;$i++){
+        for ($i = 0; $i < $size; $i++) {
             $members[$i] = $this->sPop($key);
         }
-        foreach ($members as $m){
-            $this->sAdd($key,$m);
+        foreach ($members as $m) {
+            $this->sAdd($key, $m);
         }
         return $members;
     }
 
 
-    public function setArray($key , $array , $ttl=0){
-        if($ttl){
-            return $this->set($key,$this->formatArray($array),['ex'=>$ttl]);
-        }else{
-            return $this->set($key,$this->formatArray($array));
+    public function setArray($key, $array, $ttl = 0)
+    {
+        if ($ttl) {
+            return $this->set($key, $this->formatArray($array), ['ex' => $ttl]);
+        } else {
+            return $this->set($key, $this->formatArray($array));
         }
     }
 
-    public function getArray($key){
-        if(!$this->exists($key)){
+    public function getArray($key)
+    {
+        if (!$this->exists($key)) {
             return false;
         }
         return $this->unFormatArray($this->get($key));
     }
 
-    private function formatArray($array){
+    private function formatArray($array)
+    {
         return base64_encode(@serialize($array));
     }
 
-    private function unFormatArray($data){
+    private function unFormatArray($data)
+    {
         return @unserialize(base64_decode($data));
     }
 
