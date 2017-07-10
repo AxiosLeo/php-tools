@@ -38,7 +38,7 @@ class RedisService extends Redis {
         self::$config_index = $select;
 
         $config = Config::get('redis.'.$select);
-
+        $config = empty($config) ? []:$config;
         $this->config = array_merge($this->config , $config);
 
         $this->do_connect($this->config);
