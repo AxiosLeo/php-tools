@@ -15,40 +15,57 @@ use think\Config;
 use \Redis;
 
 class RedisService extends Redis {
-    private $config;
-    private $prefix;
-    private $db;
+    private $config = [
+        'host'          => '127.0.0.1',
+        'auth'          => '',
+        'port'          => '6379',
+        'prefix'        => 'redis:',
+        'database'      =>[
+            'default'    => 0,
+        ]
+    ];
+
+    private static $config_index = '';
+
+    private static $instance ;
+
+    private $db = 0;
+
+    public $prefix = '';
+
     public function __construct($select = 'default')
     {
-        $this->config = Config::get('redis');
-        $this->connection($select);
+        self::$config_index = $select;
+
+        $config = Config::get('redis.'.$select);
+
+        $this->config = array_merge($this->config , $config);
+
+        $this->do_connect($this->config);
     }
     public static function redis($select= 'default'){
-        return new self($select);
-    }
-    public function connection($select = 'default'){
-        if(array_key_exists($select,$this->config)){
-            return $this->do_connect($this->config[$select]);
-        }else{
-            return 'config error';
+        if(self::$instance == null){
+            self::$instance = new self($select);
+        }else if(self::$config_index != $select){
+            self::$instance = new self($select);
         }
+        return self::$instance;
     }
 
     /**
      * @desc 进行redis连接
      * @param $config
-     * @return mixed
+     * @return string
      */
     private function do_connect($config){
-        $this->config = $config;
         if(isset($config['type']) && $config['type'] == 'unix'){
             if (!isset($config['socket'])) {
                 return 'redis config key [socket] not found';
             }
             $this->connect($config['socket']);
         }else{
-            $port = isset($config['port']) ? intval($config['port']) : 6379;
-            $timeout = isset($config['timeout']) ? intval($config['timeout']) : 300;
+            $port = intval($config['port']);
+            $timeout =  intval($config['timeout']);
             $this->connect($config['host'], $port, $timeout);
         }
 
@@ -56,10 +73,9 @@ class RedisService extends Redis {
             $this->auth($config['auth']);
         }
 
-        $this->db = isset($config['database']) ? intval($config['database']) : 0;
         $this->select($this->db);
-        $this->prefix = isset($config['prefix'])&& !empty($config['prefix']) ? $config['prefix'] : 'default:';
-        $this->setOption(\Redis::OPT_PREFIX, $this->prefix );
+
+        $this->setOption(\Redis::OPT_PREFIX, $config['prefix'] );
         return $this;
     }
 
@@ -161,4 +177,5 @@ class RedisService extends Redis {
         // TODO: Implement __destruct() method.
         $this->close();
     }
+
 }
