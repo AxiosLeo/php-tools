@@ -16,7 +16,7 @@
   },
   "require": {
     "php": ">=7.0",
-    "topthink/framework": "^5.0",
+    "topthink/framework": "^5.0.10",
     "topthink/think-mongo": "v1.7",
     "phpmailer/phpmailer": "^5.2"
   },
