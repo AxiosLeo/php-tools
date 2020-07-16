@@ -1,6 +1,6 @@
 {
-  "name": "axios/tpr",
-  "description":"base on thinkphp5. restful api framework",
+  "name": "axios/tpr-tools",
+  "description": "some tools",
   "homepage": "https://github.com/AxiosCros/tpr-composer",
   "license": "Apache-2.0",
   "minimum-stability": "stable",
@@ -14,20 +14,16 @@
     "issues": "https://github.com/AxiosCros/tpr-composer/issues"
   },
   "require": {
-    "php": ">=7.0",
-    "topthink/framework": "^5.0.10",
-    "topthink/think-mongo": "v1.7",
-    "phpmailer/phpmailer": "^5.2"
-  },
-  "require-dev": {
-    "composer/composer": "1.0.*@dev"
+    "php": ">=7.2",
+    "phpmailer/phpmailer": "^5.2",
+    "symfony/var-dumper": "*"
   },
   "autoload": {
     "psr-4": {
-      "axios\\tpr\\": "src"
+      "tpr\\tools\\": "src"
     },
     "files": [
-      "src/helper.php"
+      "helper.php"
     ]
   }
 }
