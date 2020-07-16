@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace tpr\tools;
 
@@ -125,6 +125,7 @@ class Helper
      *              ["book"=>10,"version"=>20],
      *              ["book"=>19,"version"=>20]
      *      ];
+     *
      * @param array  $array
      * @param string $sortRule
      * @param string $order
@@ -133,9 +134,6 @@ class Helper
      */
     public static function arraySort($array, $sortRule = '', $order = 'asc')
     {
-        /*
-
-         */
         if (\is_array($sortRule)) {
             // $sortRule = ['book'=>"asc",'version'=>"asc"];
             usort($array, function ($a, $b) use ($sortRule) {
@@ -143,6 +141,7 @@ class Helper
                     if ($a[$sortKey] == $b[$sortKey]) {
                         return 0;
                     }
+
                     return (('desc' == $order) ? -1 : 1) * (($a[$sortKey] < $b[$sortKey]) ? -1 : 1);
                 }
 
@@ -179,11 +178,11 @@ class Helper
             return null;
         }
         $data = array_shift($params);
-        if (!is_array($data)) {
+        if (!\is_array($data)) {
             return null;
         }
         foreach ($params as $key => $field) {
-            if (is_string($field)) {
+            if (\is_string($field)) {
                 $item = [];
                 foreach ($data as $k => $value) {
                     $item[$k] = $value[$field];
@@ -191,8 +190,9 @@ class Helper
                 $params[$key] = $item;
             }
         }
-        $params[] =& $data;
-        call_user_func_array('array_multisort', $params);
+        $params[] =&$data;
+        \call_user_func_array('array_multisort', $params);
+
         return array_pop($params);
     }
 
@@ -206,7 +206,7 @@ class Helper
      */
     public static function getClientIp($type = 0, $adv = false)
     {
-        $type = $type ? 1 : 0;
+        $type      = $type ? 1 : 0;
         static $ip = null;
         if (null !== $ip) {
             return $ip[$type];
@@ -247,14 +247,14 @@ class Helper
         $uuid   = '';
         if (\is_array($cut)) {
             while ($length > 0) {
-                $uuid   .= substr($str, $len - $length, array_rand($cut)) . $flavour;
+                $uuid .= substr($str, $len - $length, array_rand($cut)) . $flavour;
                 $length -= $cut;
             }
         } elseif (\is_int($cut)) {
             $step = 0;
             while ($length > 0) {
                 $temp   = substr($str, $len - $length, $cut);
-                $uuid   .= 0 != $step ? $flavour . $temp : $temp;
+                $uuid .= 0 != $step ? $flavour . $temp : $temp;
                 $length -= $cut;
                 ++$step;
             }
@@ -265,20 +265,20 @@ class Helper
 
     public static function checkDataToString(&$array = [])
     {
-        if (is_array($array)) {
+        if (\is_array($array)) {
             foreach ($array as &$a) {
-                if (is_array($a)) {
+                if (\is_array($a)) {
                     $a = self::checkDataToString($a);
                 }
-                if (is_int($a)) {
-                    $a = (string)$a;
+                if (\is_int($a)) {
+                    $a = (string) $a;
                 }
                 if (null === $a) {
                     $a = '';
                 }
             }
-        } elseif (is_int($array)) {
-            $array = (string)$array;
+        } elseif (\is_int($array)) {
+            $array = (string) $array;
         } elseif (null === $array) {
             $array = '';
         }

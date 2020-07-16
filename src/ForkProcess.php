@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace tpr\tools;
 
@@ -18,12 +18,13 @@ class ForkProcess
             'pcntl_fork',
             'posix_kill',
             'ftok',
-            'shmop_open'
+            'shmop_open',
         ];
         foreach ($check_funcs as $func) {
-            if (function_exists($func)) {
+            if (\function_exists($func)) {
                 continue;
             }
+
             throw new \ErrorException($func . '() function is undefined.');
         }
     }
@@ -33,6 +34,7 @@ class ForkProcess
         if (null === $max_process) {
             $this->max_process = $max_process;
         }
+
         return $this->max_process;
     }
 
@@ -44,6 +46,7 @@ class ForkProcess
             'args'  => $args,
         ];
         array_push($this->work_queue, $queue);
+
         return $this;
     }
 
@@ -79,8 +82,10 @@ class ForkProcess
         $pid = pcntl_fork();
         if ($pid > 0) {
             pcntl_wait($status);
+
             return true;
-        } else if (0 === $pid) {
+        }
+        if (0 === $pid) {
             $ppid = pcntl_fork();
             if ($ppid > 0) {
                 posix_kill(posix_getpid(), SIGINT);
@@ -89,8 +94,10 @@ class ForkProcess
             if (-1 == $ppid) {
                 exit();
             }
+
             return false;
         }
+
         return false;
     }
 }

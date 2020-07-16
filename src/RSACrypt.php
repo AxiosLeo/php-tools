@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace tpr\tools;
 
@@ -16,7 +16,7 @@ class RSACrypt
     }
 
     /**
-     * get or set private key
+     * get or set private key.
      *
      * @param null $private_key
      *
@@ -27,11 +27,12 @@ class RSACrypt
         if (null !== $private_key) {
             $this->private_key = $private_key;
         }
+
         return $this->private_key;
     }
 
     /**
-     * get or set public key
+     * get or set public key.
      *
      * @param null $public_key
      *
@@ -42,11 +43,12 @@ class RSACrypt
         if (null !== $public_key) {
             $this->public_key = $public_key;
         }
+
         return $this->public_key;
     }
 
     /**
-     * create a pair of private&public key
+     * create a pair of private&public key.
      *
      * @return $this
      */
@@ -57,14 +59,16 @@ class RSACrypt
         $this->privateKey($pri_key);
         $res = openssl_pkey_get_details($res);
         $this->publicKey($res['key']);
+
         return $this;
     }
 
     /**
      * @param $data
      *
-     * @return string
      * @throws \ErrorException
+     *
+     * @return string
      */
     public function encryptByPrivateKey(string $data): string
     {
@@ -74,8 +78,9 @@ class RSACrypt
     /**
      * @param string $data
      *
-     * @return string
      * @throws \ErrorException
+     *
+     * @return string
      */
     public function encryptByPublicKey(string $data): string
     {
@@ -85,8 +90,9 @@ class RSACrypt
     /**
      * @param string $data
      *
-     * @return string
      * @throws \ErrorException
+     *
+     * @return string
      */
     public function decryptByPrivateKey(string $data): string
     {
@@ -96,8 +102,9 @@ class RSACrypt
     /**
      * @param string $data
      *
-     * @return string
      * @throws \ErrorException
+     *
+     * @return string
      */
     public function decryptByPublicKey(string $data): string
     {
@@ -108,8 +115,9 @@ class RSACrypt
      * @param        $data
      * @param string $type
      *
-     * @return string
      * @throws \ErrorException
+     *
+     * @return string
      */
     private function encrypt($data, $type = 'private')
     {
@@ -117,11 +125,11 @@ class RSACrypt
         $count = 0;
         for ($i = 0; $i < \strlen($data); $i += $this->max_length) {
             $src    = substr($data, $i, 117);
-            $result = $type === 'private' ?
+            $result = 'private' === $type ?
                 @openssl_private_encrypt($src, $out, $this->private_key) :
                 @openssl_public_encrypt($src, $out, $this->public_key);
             if (false === $result) {
-                throw new \ErrorException("Failed encrypt by " . $type . " key. string : " . $src);
+                throw new \ErrorException('Failed encrypt by ' . $type . ' key. string : ' . $src);
             }
             $str .= 0 == $count ? base64_encode($result) : ',' . base64_encode($result);
             ++$count;
@@ -134,8 +142,9 @@ class RSACrypt
      * @param        $data
      * @param string $type
      *
-     * @return string
      * @throws \ErrorException
+     *
+     * @return string
      */
     private function decrypt($data, $type = 'private')
     {
@@ -147,7 +156,7 @@ class RSACrypt
                     @openssl_private_encrypt(base64_decode($src), $out, $this->privateKey()) :
                     @openssl_public_decrypt(base64_decode($src), $out, $this->publicKey());
                 if (false === $result) {
-                    throw new \ErrorException("Failed decrypt by " . $type . " key. string : " . $src);
+                    throw new \ErrorException('Failed decrypt by ' . $type . ' key. string : ' . $src);
                 }
                 $str .= $out;
             }
@@ -157,7 +166,7 @@ class RSACrypt
                 @openssl_private_encrypt(base64_decode($src), $out, $this->privateKey()) :
                 @openssl_public_decrypt(base64_decode($src), $out, $this->publicKey());
             if (false === $result) {
-                throw new \ErrorException("Failed decrypt by " . $type . " key. string : " . $src);
+                throw new \ErrorException('Failed decrypt by ' . $type . ' key. string : ' . $src);
             }
             $str .= $out;
         }

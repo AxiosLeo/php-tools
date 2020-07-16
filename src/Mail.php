@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace tpr\tools;
 
@@ -19,7 +19,7 @@ class Mail
         'email'       => '',
         'from_name'   => '',
         'smtp_secure' => 'ssl',
-        'char_set'    => 'UTF-8'
+        'char_set'    => 'UTF-8',
     ];
 
     private $client;
@@ -27,6 +27,7 @@ class Mail
     public function config(array $config = []): self
     {
         $this->mail_config = array_merge($this->mail_config, $config);
+
         return $this;
     }
 
@@ -41,7 +42,7 @@ class Mail
             $mail->SMTPDebug = 1;
         }
 
-        $mail->Host       = $this->mail_config['host'];//smtp服务器地址
+        $mail->Host       = $this->mail_config['host']; //smtp服务器地址
         $mail->Port       = $this->mail_config['port']; //设置ssl连接smtp服务器的远程服务器端口号
         $mail->SMTPAuth   = $this->mail_config['smtp_auth'];
         $mail->SMTPSecure = $this->mail_config['smtp_secure']; //设置使用ssl加密方式登录鉴权

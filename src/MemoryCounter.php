@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace tpr\tools;
 
@@ -45,7 +45,7 @@ class MemoryCounter
         $shm    = ftok($this->pathname, $this->type);
         $shm_id = shmop_open($shm, 'c', 0644, $this->size);
         $curr   = shmop_read($shm_id, $this->size, $this->size);
-        $curr   = empty($curr) ? 1 : (int)$curr;
+        $curr   = empty($curr) ? 1 : (int) $curr;
         $curr   = $curr + $step;
         $curr   = str_pad($curr, $this->size, '0', STR_PAD_LEFT);
         shmop_write($shm_id, $curr, 0);
@@ -61,6 +61,7 @@ class MemoryCounter
         $curr   = $curr - $step;
         $curr   = str_pad($curr, $this->size, '0', STR_PAD_LEFT);
         shmop_write($shm_id, $curr, 0);
+
         return $curr;
     }
 
@@ -70,6 +71,6 @@ class MemoryCounter
         $shm_id  = shmop_open($shm, 'c', 0644, $this->size);
         $current = shmop_read($shm_id, 0, $this->size);
 
-        return empty($current) ? 0 : (int)$current;
+        return empty($current) ? 0 : (int) $current;
     }
 }
