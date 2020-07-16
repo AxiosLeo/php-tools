@@ -15,7 +15,7 @@
   },
   "require": {
     "php": ">=7.2",
-    "phpmailer/phpmailer": "^5.2",
+    "phpmailer/phpmailer": "^6.1",
     "symfony/var-dumper": "*"
   },
   "autoload": {
