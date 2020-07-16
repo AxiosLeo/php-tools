@@ -1,7 +1,7 @@
 {
-  "name": "axios/tpr-tools",
+  "name": "axios/tools",
   "description": "some tools",
-  "homepage": "https://github.com/AxiosCros/tpr-composer",
+  "homepage": "https://github.com/AxiosCros/php-tools",
   "license": "Apache-2.0",
   "minimum-stability": "stable",
   "authors": [
@@ -11,7 +11,7 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/AxiosCros/tpr-composer/issues"
+    "issues": "https://github.com/AxiosCros/php-tools/issues"
   },
   "require": {
     "php": ">=7.2",
@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "tpr\\tools\\": "src"
+      "axios\\tools\\": "src"
     },
     "files": [
       "helper.php"

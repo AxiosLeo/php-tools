@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tpr\tools;
+namespace axios\tools;
 
 class MemoryCounter
 {

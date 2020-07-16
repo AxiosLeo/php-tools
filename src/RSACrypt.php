@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tpr\tools;
+namespace axios\tools;
 
 class RSACrypt
 {
@@ -67,8 +67,6 @@ class RSACrypt
      * @param $data
      *
      * @throws \ErrorException
-     *
-     * @return string
      */
     public function encryptByPrivateKey(string $data): string
     {
@@ -76,11 +74,7 @@ class RSACrypt
     }
 
     /**
-     * @param string $data
-     *
      * @throws \ErrorException
-     *
-     * @return string
      */
     public function encryptByPublicKey(string $data): string
     {
@@ -88,11 +82,7 @@ class RSACrypt
     }
 
     /**
-     * @param string $data
-     *
      * @throws \ErrorException
-     *
-     * @return string
      */
     public function decryptByPrivateKey(string $data): string
     {
@@ -100,11 +90,7 @@ class RSACrypt
     }
 
     /**
-     * @param string $data
-     *
      * @throws \ErrorException
-     *
-     * @return string
      */
     public function decryptByPublicKey(string $data): string
     {

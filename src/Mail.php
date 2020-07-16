@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tpr\tools;
+namespace axios\tools;
 
 class Mail
 {
@@ -33,7 +33,7 @@ class Mail
 
     public function client(bool $debug = false)
     {
-        $mail = new \PHPMailer();
+        $mail = new \PHPMailer\PHPMailer\PHPMailer();
         if (isset($config['is_smtp']) && $config['is_smtp']) {
             $mail->isSMTP();
             $mail->SMTPAuth = true;
