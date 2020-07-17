@@ -6,11 +6,19 @@ namespace axios\tools;
 
 class Helper
 {
+    /**
+     * @param        $date
+     * @param        $hour
+     * @param string $format
+     *
+     * @return array
+     *
+     * @deprecated use Datetime instead, pls
+     */
     public static function getHourBeginEndTime($date, $hour, $format = 'timestamp')
     {
-        $hour  = sprintf('%02d', $hour);
-        $begin = strtotime($date . ' ' . $hour . ':00:00');
-        $end   = strtotime($date . ' ' . $hour . ':00:00 +1 hour -1 seconds');
+        $datetime          = new Datetime(strtotime($date));
+        list($begin, $end) = $datetime->hourBeginEnd($hour);
         if ('timestamp' == $format) {
             return [
                 'begin' => $begin,
@@ -24,10 +32,18 @@ class Helper
         ];
     }
 
+    /**
+     * @param        $date
+     * @param string $format
+     *
+     * @return array
+     *
+     * @deprecated use Datetime instead, pls
+     */
     public static function getDayBeginEndTime($date, $format = 'timestamp')
     {
-        $begin = strtotime($date . ' 00:00:00');
-        $end   = strtotime("{$date} +1 day -1 seconds");
+        $datetime          = new Datetime();
+        list($begin, $end) = $datetime->dayBeginEnd($date);
         if ('timestamp' == $format) {
             return [
                 'begin' => $begin,
@@ -41,12 +57,19 @@ class Helper
         ];
     }
 
+    /**
+     * @param        $year
+     * @param        $month
+     * @param string $format
+     *
+     * @return array
+     *
+     * @deprecated use Datetime instead, pls
+     */
     public static function getMonthBeginEndDay($year, $month, $format = 'timestamp')
     {
-        $month = sprintf('%02d', $month);
-        $ymd   = $year . '-' . $month . '-01';
-        $begin = strtotime($ymd . ' 00:00:00');
-        $end   = strtotime("{$ymd} +1 month -1 seconds");
+        $datetime          = new Datetime();
+        list($begin, $end) = $datetime->monthBeginEnd($year, $month);
         if ('timestamp' == $format) {
             return [
                 'begin' => $begin,
