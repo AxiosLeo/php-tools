@@ -20,9 +20,6 @@
   "autoload": {
     "psr-4": {
       "axios\\tools\\": "src"
-    },
-    "files": [
-      "helper.php"
-    ]
+    }
   }
 }
