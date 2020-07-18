@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace axios\tools;
+namespace axios\tools\traits;
 
 trait InstanceTrait
 {

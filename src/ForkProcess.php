@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace axios\tools;
 
+use axios\tools\traits\InstanceTrait;
+
 class ForkProcess
 {
     use InstanceTrait;
