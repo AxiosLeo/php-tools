@@ -28,27 +28,35 @@ class UUID
         return md5($this->salt . uniqid(md5(microtime(true)), true));
     }
 
-    public function v3($cut = 8, $flavour = '-', $isUpper = false)
+    public function v3($cut = 8, $flavour = '-')
     {
         $str    = self::v2();
-        $len    = \strlen($str);
-        $length = $len;
-        $uuid   = '';
-        if (\is_array($cut)) {
-            while ($length > 0) {
-                $uuid .= substr($str, $len - $length, array_rand($cut)) . $flavour;
-                $length -= $cut;
-            }
-        } elseif (\is_int($cut)) {
-            $step = 0;
-            while ($length > 0) {
-                $temp   = substr($str, $len - $length, $cut);
-                $uuid .= 0 != $step ? $flavour . $temp : $temp;
-                $length -= $cut;
-                ++$step;
-            }
+        $length = 32;
+        $tmp    = [];
+        while ($length > 0) {
+            $part = substr($str, 32 - $length, $cut);
+            array_push($tmp, $part);
+            $length -= $cut;
         }
 
-        return $isUpper ? strtoupper($uuid) : $uuid;
+        return implode($flavour, $tmp);
+    }
+
+    public function v4($cut = [6, 7, 9, 10], $flavour = '-')
+    {
+        array_sum($cut);
+        if (array_sum($cut) < 32) {
+            throw new \InvalidArgumentException('Invalid cut part length');
+        }
+        $str    = self::v2();
+        $length = 32;
+        $tmp    = [];
+        while ($length > 0) {
+            $part = substr($str, 32 - $length, array_rand($cut));
+            array_push($tmp, $part);
+            $length -= $cut;
+        }
+
+        return implode($flavour, $tmp);
     }
 }
