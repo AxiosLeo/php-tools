@@ -14,12 +14,27 @@
     "issues": "https://github.com/AxiosCros/php-tools/issues"
   },
   "require": {
-    "php": ">=7.2",
-    "symfony/var-dumper": "*"
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "*",
+    "phpunit/phpunit": "^8.5"
   },
   "autoload": {
     "psr-4": {
       "axios\\tools\\": "src"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "axios\\tools\\tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": [
+      "@clearCache",
+      "./vendor/bin/phpunit --colors=always"
+    ],
+    "clearCache": "rm -rf cache/*"
   }
 }
