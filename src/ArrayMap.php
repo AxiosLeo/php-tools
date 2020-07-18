@@ -120,6 +120,39 @@ class ArrayMap implements \ArrayAccess
     }
 
     /**
+     * @return null|array|mixed
+     */
+    public function getAllToString()
+    {
+        $recurse = function (&$array = []) use (&$recurse) {
+            if (\is_array($array)) {
+                foreach ($array as &$a) {
+                    if (\is_array($a)) {
+                        $a = $recurse($a);
+                    }
+                    if (\is_int($a)) {
+                        $a = (string) $a;
+                    }
+                    if (null === $a) {
+                        $a = '';
+                    }
+                }
+            } elseif (\is_int($array)) {
+                $array = (string) $array;
+            } elseif (null === $array) {
+                $array = '';
+            }
+
+            return $array;
+        };
+
+        $arr = $this->get();
+        $recurse($arr);
+
+        return $arr;
+    }
+
+    /**
      * 删除任意层级子元素.
      *
      * @param array|int|string $key
