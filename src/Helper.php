@@ -117,24 +117,12 @@ class Helper
      */
     public static function infiniteTree($data, $parent_index = 'parent_id', $data_index = 'id', $child_name = 'child')
     {
-        $items = [];
-        foreach ($data as $d) {
-            $items[$d[$data_index]] = $d;
-            if (!isset($d[$parent_index]) || !isset($d[$data_index]) || isset($d[$child_name])) {
-                return false;
-            }
-        }
-        $tree = [];
-        $n    = 0;
-        foreach ($items as $item) {
-            if (isset($items[$item[$parent_index]])) {
-                $items[$item[$parent_index]][$child_name][] = &$items[$item[$data_index]];
-            } else {
-                $tree[$n++] = &$items[$item[$data_index]];
-            }
-        }
+        $ListToTree = new ListToTree($data);
+        $ListToTree->parent_index($parent_index);
+        $ListToTree->node_index($data_index);
+        $ListToTree->node_name($child_name);
 
-        return $tree;
+        return $ListToTree->tree();
     }
 
     /**
