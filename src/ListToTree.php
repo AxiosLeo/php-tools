@@ -36,15 +36,12 @@ class ListToTree
         $data  = $this->list;
         foreach ($data as $d) {
             $items[$d[$this->node_index]] = $d;
-            if (!isset($d[$this->parent_index]) || !isset($d[$this->node_index]) || isset($d[$this->node_name])) {
-                return false;
-            }
         }
         $tree = [];
         $n    = 0;
-        foreach ($items as $item) {
+        foreach ($items as $node_index => $item) {
             if (isset($items[$item[$this->parent_index]])) {
-                $items[$item[$this->parent_index]][$this->node_name][] = &$items[$item[$this->node_index]];
+                $items[$item[$this->parent_index]][$this->node_name][] = &$items[$node_index];
             } else {
                 $tree[$n++] = &$items[$item[$this->node_index]];
             }
