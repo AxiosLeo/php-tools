@@ -140,83 +140,22 @@ class Helper
     /**
      * 数组排序.
      *
-     * $array = [
-     *              ["book"=>10,"version"=>10],
-     *              ["book"=>19,"version"=>30],
-     *              ["book"=>10,"version"=>30],
-     *              ["book"=>19,"version"=>10],
-     *              ["book"=>10,"version"=>20],
-     *              ["book"=>19,"version"=>20]
-     *      ];
-     *
-     * @param array  $array
-     * @param string $sortRule
-     * @param string $order
+     * @param array        $array
+     * @param array|string $sortRule example : ['<filed-name>'=>SORT_ASC,'<filed-name>'=>SORT_DESC] or filed-name
+     * @param string       $order
      *
      * @return mixed
+     *
+     * @deprecated
      */
-    public static function arraySort($array, $sortRule = '', $order = 'asc')
+    public static function arraySort($array, $sortRule = [], $order = 'asc')
     {
-        if (\is_array($sortRule)) {
-            // $sortRule = ['book'=>"asc",'version'=>"asc"];
-            usort($array, function ($a, $b) use ($sortRule) {
-                foreach ($sortRule as $sortKey => $order) {
-                    if ($a[$sortKey] == $b[$sortKey]) {
-                        return 0;
-                    }
-
-                    return (('desc' == $order) ? -1 : 1) * (($a[$sortKey] < $b[$sortKey]) ? -1 : 1);
-                }
-
-                return 0;
-            });
-        } elseif (\is_string($sortRule) && !empty($sortRule)) {
-            /*
-             * $sortRule = "book";
-             * $order = "asc";
-             */
-            usort($array, function ($a, $b) use ($sortRule, $order) {
-                if ($a[$sortRule] == $b[$sortRule]) {
-                    return 0;
-                }
-
-                return (('desc' == $order) ? -1 : 1) * (($a[$sortRule] < $b[$sortRule]) ? -1 : 1);
-            });
-        } else {
-            usort($array, function ($a, $b) use ($order) {
-                if ($a == $b) {
-                    return 0;
-                }
-
-                return (('desc' == $order) ? -1 : 1) * (($a < $b) ? -1 : 1);
-            });
+        $Arr = new ArrayMap($array);
+        if (\is_string($sortRule)) {
+            $sortRule = [$sortRule => $order];
         }
 
-        return $array;
-    }
-
-    public static function arrayMultiFieldSort(...$params)
-    {
-        if (empty($params)) {
-            return null;
-        }
-        $data = array_shift($params);
-        if (!\is_array($data)) {
-            return null;
-        }
-        foreach ($params as $key => $field) {
-            if (\is_string($field)) {
-                $item = [];
-                foreach ($data as $k => $value) {
-                    $item[$k] = $value[$field];
-                }
-                $params[$key] = $item;
-            }
-        }
-        $params[] =&$data;
-        \call_user_func_array('array_multisort', $params);
-
-        return array_pop($params);
+        return $Arr->sort(null, $sortRule);
     }
 
     /**
