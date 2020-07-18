@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace axios\tools;
 
-class NumberSystemConvert
+class BHDConverter
 {
     private $dict;
     private $patch;
