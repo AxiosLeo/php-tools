@@ -84,48 +84,6 @@ class Helper
     }
 
     /**
-     * 遍历生成树，生成节点列表.
-     *
-     * @param        $tree
-     * @param array  $data
-     * @param int    $layer
-     * @param string $layer_name
-     * @param string $child_name
-     */
-    public static function traversalTree2NodeList($tree, &$data = [], $layer = 0, $layer_name = 'layer', $child_name = 'child')
-    {
-        foreach ($tree as $t) {
-            $node = $t;
-            unset($node[$child_name]);
-            $node[$layer_name] = $layer;
-            $data[]            = $node;
-            if (isset($t[$child_name]) && !empty($t[$child_name])) {
-                self::traversalTree2NodeList($t[$child_name], $data, $layer + 1);
-            }
-        }
-    }
-
-    /**
-     * 无限层级的生成树方法.
-     *
-     * @param        $data
-     * @param string $parent_index
-     * @param string $data_index
-     * @param string $child_name
-     *
-     * @return array|bool
-     */
-    public static function infiniteTree($data, $parent_index = 'parent_id', $data_index = 'id', $child_name = 'child')
-    {
-        $ListToTree = new ListToTree($data);
-        $ListToTree->parent_index($parent_index);
-        $ListToTree->node_index($data_index);
-        $ListToTree->node_name($child_name);
-
-        return $ListToTree->tree();
-    }
-
-    /**
      * 数组排序.
      *
      * @param array        $array

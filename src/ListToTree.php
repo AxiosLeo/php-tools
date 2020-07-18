@@ -30,7 +30,7 @@ class ListToTree
         $this->list = $list;
     }
 
-    public function tree()
+    public function toTree()
     {
         $items = [];
         $data  = $this->list;
