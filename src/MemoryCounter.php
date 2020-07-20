@@ -6,15 +6,15 @@ namespace axios\tools;
 
 class MemoryCounter
 {
-    private $pathname;
-    private $type;
+    private $group;
+    private $name;
     private $size;
 
-    public function __construct($pathname, $type, $size = 8)
+    public function __construct(string $group, string $name, $size = 8)
     {
-        $this->pathname = $pathname;
-        $this->type     = $type;
-        $this->size     = $size;
+        $this->group = $group;
+        $this->name  = $name;
+        $this->size  = $size;
     }
 
     /**
@@ -29,48 +29,71 @@ class MemoryCounter
         }
     }
 
-    public function create($ini = 0)
+    /**
+     * @return resource
+     */
+    public function id()
     {
-        $shm    = ftok($this->pathname, $this->type);
-        $shm_id = shmop_open($shm, 'c', 0644, $this->size);
-        $curr   = $ini;
-        $curr   = str_pad($curr, $this->size, '0', STR_PAD_LEFT);
-        shmop_write($shm_id, $curr, 0);
+        $shm = ftok($this->group, $this->name);
 
-        return $curr;
+        return shmop_open($shm, 'c', 0644, $this->size);
     }
 
-    public function increase($step = 1)
+    /**
+     * @param int $ini
+     *
+     * @return int
+     */
+    public function create($ini = 0): int
     {
-        $shm    = ftok($this->pathname, $this->type);
-        $shm_id = shmop_open($shm, 'c', 0644, $this->size);
-        $curr   = shmop_read($shm_id, $this->size, $this->size);
-        $curr   = empty($curr) ? 1 : (int) $curr;
-        $curr   = $curr + $step;
-        $curr   = str_pad($curr, $this->size, '0', STR_PAD_LEFT);
-        shmop_write($shm_id, $curr, 0);
+        $this->set($ini);
 
-        return $curr;
+        return $ini;
     }
 
-    public function decrease($step = 1)
+    /**
+     * @param int $step
+     *
+     * @return int
+     */
+    public function increase($step = 1): int
     {
-        $shm    = ftok($this->pathname, $this->type);
-        $shm_id = shmop_open($shm, 'c', 0644, $this->size);
-        $curr   = shmop_read($shm_id, 0, $this->size);
-        $curr   = $curr - $step;
-        $curr   = str_pad($curr, $this->size, '0', STR_PAD_LEFT);
-        shmop_write($shm_id, $curr, 0);
+        $curr = $this->current();
+        $curr = $curr + $step;
+        $this->set($curr + $step);
 
-        return $curr;
+        return (int) $curr;
     }
 
-    public function current()
+    /**
+     * @param int $step
+     *
+     * @return int
+     */
+    public function decrease($step = 1): int
     {
-        $shm     = ftok($this->pathname, $this->type);
-        $shm_id  = shmop_open($shm, 'c', 0644, $this->size);
-        $current = shmop_read($shm_id, 0, $this->size);
+        $curr = $this->current();
+        $this->set($curr - $step);
+
+        return (int) $curr;
+    }
+
+    /**
+     * @return int
+     */
+    public function current(): int
+    {
+        $current = shmop_read($this->id(), 0, $this->size);
 
         return empty($current) ? 0 : (int) $current;
+    }
+
+    /**
+     * @param $val
+     */
+    public function set($val): void
+    {
+        $val = str_pad($val, $this->size, '0', STR_PAD_LEFT);
+        shmop_write($this->id(), $val, 0);
     }
 }
