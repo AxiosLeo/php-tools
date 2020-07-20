@@ -27,7 +27,7 @@ class ArrayMap implements \ArrayAccess
      *
      * @desc 可自定义排除过滤
      *
-     * @param        $array
+     * @param array  $array
      * @param string $except    except number(0)|null|string('')
      * @param bool   $reset_key 是否重置键名
      *
@@ -133,6 +133,9 @@ class ArrayMap implements \ArrayAccess
                     if (\is_int($a)) {
                         $a = (string) $a;
                     }
+                    if (true === $a || false === $a) {
+                        $a = $a ? 'true' : 'false';
+                    }
                     if (null === $a) {
                         $a = '';
                     }
@@ -141,6 +144,8 @@ class ArrayMap implements \ArrayAccess
                 $array = (string) $array;
             } elseif (null === $array) {
                 $array = '';
+            } elseif (true === $array || false === $array) {
+                $array = $array ? 'true' : 'false';
             }
 
             return $array;
