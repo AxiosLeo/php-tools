@@ -9,46 +9,48 @@ class MemoryCounter
     private $group;
     private $name;
     private $size;
+    private $id;
 
-    public function __construct(string $group, string $name, $size = 8)
+    public function __construct(string $group = __FILE__, string $name = 'p', $size = 8)
     {
         $this->group = $group;
         $this->name  = $name;
         $this->size  = $size;
     }
 
-    /**
-     * @param array $config
-     */
     public function config($config = [])
     {
         foreach ($config as $key => $val) {
             if (isset($this->{$key})) {
                 $this->{$key} = $val;
+                $this->id     = null;
             }
         }
+
+        return get_object_vars($this);
     }
 
-    /**
-     * @return resource
-     */
     public function id()
     {
-        $shm = ftok($this->group, $this->name);
+        if (null === $this->id) {
+            throw new \ErrorException('Have not used the create() method to create a counter');
+        }
 
-        return shmop_open($shm, 'c', 0644, $this->size);
+        return $this->id;
     }
 
     /**
      * @param int $ini
      *
-     * @return int return current value of counter
+     * @return $this
      */
-    public function create($ini = 0): int
+    public function create($ini = 0): self
     {
+        $shm      = ftok($this->group, $this->name);
+        $this->id = shmop_open($shm, 'c', 0644, $this->size);
         $this->set($ini);
 
-        return $ini;
+        return $this;
     }
 
     /**
@@ -60,7 +62,7 @@ class MemoryCounter
     {
         $curr = $this->current();
         $curr = $curr + $step;
-        $this->set($curr + $step);
+        $this->set($curr);
 
         return (int) $curr;
     }
@@ -73,7 +75,8 @@ class MemoryCounter
     public function decrease($step = 1): int
     {
         $curr = $this->current();
-        $this->set($curr - $step);
+        $curr = $curr - $step;
+        $this->set($curr);
 
         return (int) $curr;
     }
@@ -87,7 +90,14 @@ class MemoryCounter
 
     public function set($val): void
     {
-        $val = str_pad($val, $this->size, '0', STR_PAD_LEFT);
+        $val = str_pad((string) $val, $this->size, '0', STR_PAD_LEFT);
         shmop_write($this->id(), $val, 0);
+    }
+
+    public function clear(): void
+    {
+        shmop_close($this->id());
+        shmop_delete($this->id());
+        $this->id = null;
     }
 }
