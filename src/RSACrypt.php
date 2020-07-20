@@ -60,7 +60,7 @@ class RSACrypt
     /**
      * create a pair of private&public key.
      *
-     * @param array $config
+     * @param array $config config for openssl_pkey_new() method, see detail on https://www.php.net/manual/en/function.openssl-pkey-new.php
      *
      * @return $this
      */

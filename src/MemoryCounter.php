@@ -42,7 +42,7 @@ class MemoryCounter
     /**
      * @param int $ini
      *
-     * @return int
+     * @return int return current value of counter
      */
     public function create($ini = 0): int
     {
@@ -54,7 +54,7 @@ class MemoryCounter
     /**
      * @param int $step
      *
-     * @return int
+     * @return int return current value of counter
      */
     public function increase($step = 1): int
     {
@@ -68,7 +68,7 @@ class MemoryCounter
     /**
      * @param int $step
      *
-     * @return int
+     * @return int return current value of counter
      */
     public function decrease($step = 1): int
     {
@@ -78,9 +78,6 @@ class MemoryCounter
         return (int) $curr;
     }
 
-    /**
-     * @return int
-     */
     public function current(): int
     {
         $current = shmop_read($this->id(), 0, $this->size);
@@ -88,9 +85,6 @@ class MemoryCounter
         return empty($current) ? 0 : (int) $current;
     }
 
-    /**
-     * @param $val
-     */
     public function set($val): void
     {
         $val = str_pad($val, $this->size, '0', STR_PAD_LEFT);

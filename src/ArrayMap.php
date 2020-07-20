@@ -28,7 +28,7 @@ class ArrayMap implements \ArrayAccess
      * @desc 可自定义排除过滤
      *
      * @param        $array
-     * @param string $except
+     * @param string $except    except number(0)|null|string('')
      * @param bool   $reset_key 是否重置键名
      *
      * @return mixed

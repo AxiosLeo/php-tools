@@ -24,13 +24,13 @@ class BHDConverter
      * @param int|string $num_str
      * @param int        $from       number system
      * @param int        $to         number system
-     * @param null       $min_length
+     * @param int        $min_length default 0
      *
      * @return string
      */
-    public function anyToAny($num_str, $from, $to, $min_length = null)
+    public function anyToAny($num_str, int $from, int $to, int $min_length = 0)
     {
-        if (\is_string($num_str)) {
+        if (!\is_string($num_str)) {
             $num_str = (string) $num_str;
         }
         if (10 !== $from) {
@@ -41,7 +41,7 @@ class BHDConverter
 
         $result = $this->decimalToAny($fromBase, $to);
 
-        if (null !== $min_length) {
+        if (0 !== $min_length) {
             $strLength = \strlen($result);
             while ($strLength < $min_length) {
                 $result = $this->patch . $result;
