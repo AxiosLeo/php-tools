@@ -6,6 +6,11 @@ namespace axios\tools;
 
 class RSACrypt
 {
+    public $config = [
+        'digest_alg'       => 'sha512',
+        'private_key_bits' => 4096,
+        'private_key_type' => OPENSSL_KEYTYPE_RSA,
+    ];
     private $private_key;
     private $public_key;
     private $max_length;
@@ -54,7 +59,7 @@ class RSACrypt
      */
     public function create(): self
     {
-        $res = openssl_pkey_new();
+        $res = openssl_pkey_new($this->config);
         openssl_pkey_export($res, $pri_key);
         $this->privateKey($pri_key);
         $res = openssl_pkey_get_details($res);
@@ -117,7 +122,7 @@ class RSACrypt
             if (false === $result) {
                 throw new \ErrorException('Failed encrypt by ' . $type . ' key. string : ' . $src);
             }
-            $str .= 0 == $count ? base64_encode($result) : ',' . base64_encode($result);
+            $str .= 0 == $count ? base64_encode($out) : ',' . base64_encode($out);
             ++$count;
         }
 
@@ -139,22 +144,26 @@ class RSACrypt
             $dataArray = explode(',', $data);
             foreach ($dataArray as $src) {
                 $result = 'private' === $type ?
-                    @openssl_private_encrypt(base64_decode($src), $out, $this->privateKey()) :
-                    @openssl_public_decrypt(base64_decode($src), $out, $this->publicKey());
+                    @openssl_private_encrypt(base64_decode($src), $out, $this->private_key) :
+                    @openssl_public_decrypt(base64_decode($src), $out, $this->public_key);
                 if (false === $result) {
                     throw new \ErrorException('Failed decrypt by ' . $type . ' key. string : ' . $src);
                 }
                 $str .= $out;
             }
         } else {
+            dump('private' === $type);
+
+            $out    = '';
             $src    = base64_decode($data);
             $result = 'private' === $type ?
-                @openssl_private_encrypt(base64_decode($src), $out, $this->privateKey()) :
-                @openssl_public_decrypt(base64_decode($src), $out, $this->publicKey());
+                @openssl_private_encrypt($src, $out, $this->private_key) :
+                @openssl_public_decrypt($src, $out, $this->public_key);
             if (false === $result) {
-                throw new \ErrorException('Failed decrypt by ' . $type . ' key. string : ' . $src);
+                throw new \ErrorException('Failed decrypt by ' . $type . ' key. string : ' . $data);
             }
-            $str .= $out;
+            die();
+            $str = $out;
         }
 
         return $str;
