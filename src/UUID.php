@@ -15,22 +15,22 @@ class UUID
 
     public function v0()
     {
-        return uniqid(microtime(true));
+        return uniqid((string) (microtime(true)));
     }
 
     public function v1()
     {
-        return uniqid(md5(microtime(true)));
+        return uniqid(md5((string) (microtime(true))));
     }
 
     public function v2()
     {
-        return md5($this->salt . uniqid(md5(microtime(true)), true));
+        return md5($this->salt . uniqid(md5((string) (microtime(true))), true));
     }
 
     public function v3($cut = 8, $flavour = '-')
     {
-        $str    = self::v2();
+        $str    = $this->v2();
         $length = 32;
         $tmp    = [];
         while ($length > 0) {
@@ -44,17 +44,14 @@ class UUID
 
     public function v4($cut = [6, 7, 9, 10], $flavour = '-')
     {
-        array_sum($cut);
-        if (array_sum($cut) < 32) {
-            throw new \InvalidArgumentException('Invalid cut part length');
-        }
-        $str    = self::v2();
+        $str    = $this->v2();
         $length = 32;
         $tmp    = [];
         while ($length > 0) {
-            $part = substr($str, 32 - $length, array_rand($cut));
+            $cut_val = array_rand($cut);
+            $part    = substr($str, 32 - $length, $cut_val);
             array_push($tmp, $part);
-            $length -= $cut;
+            $length = $length - $cut_val;
         }
 
         return implode($flavour, $tmp);
