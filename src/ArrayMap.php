@@ -120,11 +120,14 @@ class ArrayMap implements \ArrayAccess
     }
 
     /**
+     * @param array $map
+     *
      * @return null|array|mixed
      */
-    public function getAllToString()
+    public function getAllToString($map = [])
     {
-        $recurse = function (&$array = []) use (&$recurse) {
+        $map     = array_merge(['false' => 'false', 'true' => 'true'], $map);
+        $recurse = function (&$array = []) use (&$recurse, $map) {
             if (\is_array($array)) {
                 foreach ($array as &$a) {
                     if (\is_array($a)) {
@@ -134,7 +137,7 @@ class ArrayMap implements \ArrayAccess
                         $a = (string) $a;
                     }
                     if (true === $a || false === $a) {
-                        $a = $a ? 'true' : 'false';
+                        $a = $a ? $map['true'] : $map['false'];
                     }
                     if (null === $a) {
                         $a = '';
@@ -145,7 +148,7 @@ class ArrayMap implements \ArrayAccess
             } elseif (null === $array) {
                 $array = '';
             } elseif (true === $array || false === $array) {
-                $array = $array ? 'true' : 'false';
+                $array = $array ? $map['true'] : $map['false'];
             }
 
             return $array;
