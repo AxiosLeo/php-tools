@@ -2,6 +2,7 @@
 
 - [ArrayMap](./src/ArrayMap.php) - tool for array and map data
 - [BHDConverter](./src/BHDConverter.php) - tool for number system conversion
+- [CRC64](./src/CRC64.php) - tool for crc64 arithmetic
 - [Datetime](./src/Datetime.php) - tool for date time operation
 - [ForkProcess](./src/ForkProcess.php) - multi-process development tool
 - [Helper](./src/Helper.php) - helper function
