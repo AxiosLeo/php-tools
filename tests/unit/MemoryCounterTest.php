@@ -27,6 +27,5 @@ class MemoryCounterTest extends TestCase
         $this->assertEquals(0, $counter->current());
         $this->assertEquals(1, $counter->increase());
         $this->assertEquals(0, $counter->decrease());
-        self::tearDownAfterClass();
     }
 }
