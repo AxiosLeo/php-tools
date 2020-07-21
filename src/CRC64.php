@@ -39,7 +39,16 @@ class CRC64
         }
     }
 
-    public function value()
+    public function value($value = null)
+    {
+        if (null !== $value) {
+            $this->value = $value;
+        }
+
+        return $this->value;
+    }
+
+    public function result()
     {
         return (string) (sprintf('%u', $this->value));
     }
