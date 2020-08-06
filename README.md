@@ -9,6 +9,8 @@
 - [ListToTree](./src/ListToTree.php) - convert list to tree
 - [TreeToList]('./src/TreeToList.php') - convert tree to list
 - [MemoryCounter](./src/MemoryCounter.php) - counter base on memory
+- [Path](./src/Path.php) - Path Operator
+- [PharOperator](./src/PharOperator.php) - tool for build phar file
 - [RSACrypt](./src/RSACrypt.php) - RSA crypt tool
 - [UUID](./src/UUID.php) - generate uuid string
 
