@@ -20,8 +20,8 @@ class Path
         if (0 === \count($paths)) {
             throw new \InvalidArgumentException('At least one parameter needs to be passed in.');
         }
-        $pathResult = explode(self::DS, $paths[0]);
-        unset($paths[0]);
+        $base          = array_shift($paths);
+        $pathResult    = explode(self::DS, $base);
         $pathResultLen = \count($pathResult);
         if ('' === $pathResult[$pathResultLen - 1]) {
             unset($pathResult[$pathResultLen - 1]);
@@ -45,10 +45,10 @@ class Path
     /**
      * search files.
      *
-     * @param string $dir
-     * @param string $extInclude
-     * @param false  $asc
-     * @param int    $sorting_type
+     * @param string       $dir
+     * @param array|string $extInclude
+     * @param bool         $asc
+     * @param int          $sorting_type
      *
      * @return array
      */
