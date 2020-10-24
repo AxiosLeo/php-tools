@@ -27,7 +27,6 @@ class ArrayMap implements \ArrayAccess
      *
      * @desc 可自定义排除过滤
      *
-     * @param array  $array
      * @param string $except    except number(0)|null|string('')
      * @param bool   $reset_key 是否重置键名
      *
@@ -79,8 +78,32 @@ class ArrayMap implements \ArrayAccess
                 $this->set($k, $v);
             }
         } else {
-            $keyArray    = $this->filter(explode($this->separator, $key), 'number', true);
-            $this->array = $this->recurArrayChange($this->array, $keyArray, $value);
+            $recurArrayChange = function ($array, $keyArr, $value) use (&$recurArrayChange) {
+                $key = array_shift($keyArr);
+                if (null === $key) {
+                    return $value;
+                }
+                if (0 === \count($keyArr)) {
+                    // is last
+                    if (null === $value) {
+                        unset($array[$key]);
+
+                        return $array;
+                    }
+                    $array[$key] = $value;
+
+                    return $array;
+                }
+                if (!isset($array[$key])) {
+                    $array[$key] = [];
+                }
+                $array[$key] = $recurArrayChange($array[$key], $keyArr, $value);
+
+                return $array;
+            };
+
+            $keyArray    = explode($this->separator, trim($key, ' .'));
+            $this->array = $recurArrayChange($this->array, $keyArray, $value);
         }
 
         return $this;
@@ -183,8 +206,7 @@ class ArrayMap implements \ArrayAccess
     /**
      * 数据排序.
      *
-     * @param string $key
-     * @param array  $sortRule example : ['filed-name'=>SORT_ASC,'filed-name'=>SORT_DESC]
+     * @param array $sortRule example : ['filed-name'=>SORT_ASC,'filed-name'=>SORT_DESC]
      *
      * @return $this
      */
@@ -235,14 +257,7 @@ class ArrayMap implements \ArrayAccess
      */
     public function getChildKeyList($key = null)
     {
-        $child = $this->get($key);
-        $list  = [];
-        $n     = 0;
-        foreach ($child as $k => $v) {
-            $list[$n++] = $k;
-        }
-
-        return $list;
+        return array_keys($this->get($key));
     }
 
     /**
@@ -292,42 +307,5 @@ class ArrayMap implements \ArrayAccess
     public function offsetUnset($offset)
     {
         return $this->delete($offset);
-    }
-
-    /**
-     * 递归遍历.
-     *
-     * @param array $array
-     * @param array $keyArray
-     * @param mixed $value
-     *
-     * @return array
-     */
-    private function recurArrayChange($array, $keyArray, $value = null)
-    {
-        $key0 = $keyArray[0];
-        if (1 === \count($keyArray)) {
-            $this->changeValue($array, $key0, $value);
-        } elseif (\is_array($array) && isset($keyArray[1])) {
-            unset($keyArray[0]);
-            $keyArray = array_values($keyArray);
-            if (!isset($array[$key0])) {
-                $array[$key0] = [];
-            }
-            $array[$key0] = $this->recurArrayChange($array[$key0], $keyArray, $value);
-        } else {
-            $this->changeValue($array, $key0, $value);
-        }
-
-        return $array;
-    }
-
-    private function changeValue(&$array, $key, $value)
-    {
-        if (null === $value) {
-            unset($array[$key]);
-        } else {
-            $array[$key] = $value;
-        }
     }
 }
