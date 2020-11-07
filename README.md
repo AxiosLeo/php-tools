@@ -13,6 +13,7 @@
 - [PharOperator](./src/PharOperator.php) - tool for build phar file
 - [RSACrypt](./src/RSACrypt.php) - RSA crypt tool
 - [UUID](./src/UUID.php) - generate uuid string
+- [XMLParser](./src/XMLParser.php) - the parser for XML string
 
 ## Install
 

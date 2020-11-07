@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace axios\tools;
 
-class XML
+class XMLParser
 {
     public static function decode(string $xml_string): array
     {

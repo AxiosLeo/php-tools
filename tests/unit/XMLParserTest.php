@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace axios\tools\tests\unit;
 
-use axios\tools\XML;
+use axios\tools\XMLParser as XML;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class XMLTest extends TestCase
+class XMLParserTest extends TestCase
 {
     public function test()
     {
