@@ -52,4 +52,16 @@ class Datetime
 
         return [$begin, $end];
     }
+
+    public function yearBeginEnd($year)
+    {
+        if (null === $year) {
+            $year = date('Y', $this->base_timestamp);
+        }
+        $ymd   = $year . '-01-01';
+        $begin = strtotime($ymd . ' 00:00:00');
+        $end   = strtotime("{$ymd} +1 year -1 seconds");
+
+        return [$begin, $end];
+    }
 }

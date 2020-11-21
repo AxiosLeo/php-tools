@@ -47,4 +47,13 @@ class DatetimeTest extends TestCase
         $this->assertEquals(1593561599, $end);
         $this->assertEquals(2591999, $end - $begin);
     }
+
+    public function testYearBeginEnd()
+    {
+        $obj               = new Datetime($this->datetime);
+        list($begin, $end) = $obj->yearBeginEnd('2020');
+        $this->assertEquals(1577836800, $begin);
+        $this->assertEquals(1609459199, $end);
+        $this->assertEquals(31622399, $end - $begin);
+    }
 }
