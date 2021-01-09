@@ -17,6 +17,7 @@
 - [RSACrypt](./src/RSACrypt.php) - RSA crypt tool
 - [UUID](./src/UUID.php) - generate uuid string
 - [XMLParser](./src/XMLParser.php) - the parser for XML string
+- [HMac](./src/HMac.php) - Support custom algorithm with HMac
 
 ## Install
 
