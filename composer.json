@@ -23,7 +23,10 @@
   "autoload": {
     "psr-4": {
       "axios\\tools\\": "src"
-    }
+    },
+    "files": [
+      "funtions.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
