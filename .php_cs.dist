@@ -23,6 +23,7 @@ return PhpCsFixer\Config::create()
         'hash_to_slash_comment'                       => true,
         'include'                                     => true,
         'lowercase_cast'                              => true,
+        'native_function_invocation'                  => [],
         'no_multiline_whitespace_before_semicolons'   => true,
         'no_leading_import_slash'                     => true,
         'no_multiline_whitespace_around_double_arrow' => true,

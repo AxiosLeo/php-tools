@@ -14,7 +14,7 @@
     "issues": "https://github.com/AxiosCros/php-tools/issues"
   },
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.2, <8"
   },
   "require-dev": {
     "symfony/var-dumper": "*",

@@ -17,29 +17,37 @@ class Path
      */
     public static function join(...$paths)
     {
-        if (0 === \count($paths)) {
+        
+$is_win = PHP_SHLIB_SUFFIX === 'dll';
+        if (0 === count($paths)) {
             throw new \InvalidArgumentException('At least one parameter needs to be passed in.');
         }
         $base          = array_shift($paths);
-        $pathResult    = explode(self::DS, $base);
-        $pathResultLen = \count($pathResult);
+        if ($is_win && false !== strpos($base, \DIRECTORY_SEPARATOR)) {
+            $pathResult    = explode(\DIRECTORY_SEPARATOR, $base);
+        } else {
+            $pathResult    = explode('/', $base);
+        }
+
+        $pathResultLen = count($pathResult);
         if ('' === $pathResult[$pathResultLen - 1]) {
             unset($pathResult[$pathResultLen - 1]);
         }
         foreach ($paths as $path) {
-            $tmp = explode(self::DS, $path);
+            $tmp = explode('/', $path);
             foreach ($tmp as $str) {
                 if ('..' === $str) {
                     array_pop($pathResult);
                 } elseif ('.' === $str || '' === $str) {
                     continue;
                 } else {
-                    array_push($pathResult, $str);
+                    $pathResult[] = $str;
                 }
             }
         }
 
-        return implode(self::DS, $pathResult);
+        return implode(\DIRECTORY_SEPARATOR, $pathResult);
+
     }
 
     /**

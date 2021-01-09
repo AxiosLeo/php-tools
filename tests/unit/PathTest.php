@@ -15,9 +15,27 @@ class PathTest extends TestCase
 {
     public function testJoin()
     {
-        $this->assertEquals('/path/to', Path::join('/path/to/file.json', '..'));
-        $this->assertEquals('/path/to/file.json', Path::join('/path/to/file.json', '.'));
-        $this->assertEquals('/path/to/some/foo/bar', Path::join('/path/to/', 'some', './', 'foo', 'invalid', '..', 'bar'));
+        $is_win = PHP_SHLIB_SUFFIX === 'dll';
+
+        $this->assertEquals(
+            realpath(__DIR__ . '/../../') . \DIRECTORY_SEPARATOR . 'test.json',
+            Path::join(__DIR__, '../../test.json')
+        );
+
+        $this->assertEquals(
+            $is_win ? '\a\b\c' : '/a/b/c',
+            Path::join('/a/', 'b/c')
+        );
+
+        $this->assertEquals(
+            $is_win ? '\a\b' : '/a/b',
+            Path::join('/a/', './', 'b/c', '../')
+        );
+
+        $this->assertEquals(
+            $is_win ? 'a\b\c\d.php' : 'a/b/c/d.php',
+            Path::join('a/', './', 'b/c', 'd.php')
+        );
     }
 
     public function testSearch()

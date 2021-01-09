@@ -27,7 +27,7 @@ class MemoryCounter
             }
         }
 
-        return get_object_vars($this);
+        return \get_object_vars($this);
     }
 
     public function id()
@@ -46,8 +46,8 @@ class MemoryCounter
      */
     public function create($ini = 0): self
     {
-        $shm      = ftok($this->group, $this->name);
-        $this->id = shmop_open($shm, 'c', 0644, $this->size);
+        $shm      = \ftok($this->group, $this->name);
+        $this->id = \shmop_open($shm, 'c', 0644, $this->size);
         $this->set($ini);
 
         return $this;
@@ -83,7 +83,7 @@ class MemoryCounter
 
     public function current(): int
     {
-        $current = shmop_read($this->id(), 0, $this->size);
+        $current = \shmop_read($this->id(), 0, $this->size);
 
         return empty($current) ? 0 : (int) $current;
     }
@@ -91,13 +91,13 @@ class MemoryCounter
     public function set($val): void
     {
         $val = str_pad((string) $val, $this->size, '0', STR_PAD_LEFT);
-        shmop_write($this->id(), $val, 0);
+        \shmop_write($this->id(), $val, 0);
     }
 
     public function clear(): void
     {
-        shmop_close($this->id());
-        shmop_delete($this->id());
+        \shmop_close($this->id());
+        \shmop_delete($this->id());
         $this->id = null;
     }
 }
