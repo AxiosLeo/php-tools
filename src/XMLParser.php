@@ -8,8 +8,6 @@ class XMLParser
 {
     public static function decode(string $xml_string): array
     {
-        libxml_disable_entity_loader(true);
-
         return json_decode(
             json_encode(
                 simplexml_load_string($xml_string, 'SimpleXMLElement', LIBXML_NOCDATA)
