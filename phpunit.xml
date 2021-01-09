@@ -5,7 +5,7 @@
 
     <testsuites>
         <testsuite name="All">
-            <directory>tests</directory>
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/unit</directory>
