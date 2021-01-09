@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 use axios\tools\HMac;
 
@@ -10,6 +10,7 @@ if (!function_exists('hmac')) {
         $hamc = new HMac();
         $res  = $hamc->count($algorithm, $data, $secret, $raw_output);
         unset($hamc);
+
         return $res;
     }
 }

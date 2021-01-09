@@ -1,12 +1,16 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace axios\tools\tests\unit;
 
 use axios\tools\HMac;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class HMacTest extends TestCase
 {
     public function testHMacSM3()
@@ -17,9 +21,9 @@ class HMacTest extends TestCase
         });
 
         $res = $hmac->count('md5_sha256', 'source', 'secret', false);
-        $this->assertEquals("d6a810f338113f9a41995c3c052a834d51ada5f10aab89aa5ae302b2a21db0c2", $res);
+        $this->assertEquals('d6a810f338113f9a41995c3c052a834d51ada5f10aab89aa5ae302b2a21db0c2', $res);
 
         $res = $hmac->count('md5_sha256', 'source', 'secret', true);
-        $this->assertEquals("d6a810f338113f9a41995c3c052a834d51ada5f10aab89aa5ae302b2a21db0c2", bin2hex($res));
+        $this->assertEquals('d6a810f338113f9a41995c3c052a834d51ada5f10aab89aa5ae302b2a21db0c2', bin2hex($res));
     }
 }
