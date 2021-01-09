@@ -1,5 +1,8 @@
 # PHP Tools
 
+[![CI Build Status](https://github.com/AxiosCros/php-tools/workflows/CI/badge.svg)](https://github.com/AxiosCros/php-tools/actions?query=workflow%3ACI)
+[![Latest Stable Version](https://poser.pugx.org/axios/tools/v)](//packagist.org/packages/axios/tools)
+
 - [ArrayMap](./src/ArrayMap.php) - tool for array and map data
 - [BHDConverter](./src/BHDConverter.php) - tool for number system conversion
 - [CRC64](./src/CRC64.php) - tool for crc64 arithmetic
