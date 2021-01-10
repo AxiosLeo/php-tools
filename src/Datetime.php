@@ -16,7 +16,7 @@ class Datetime
         $this->base_timestamp = $base_timestamp;
     }
 
-    public function hourBeginEnd($hour)
+    public function hourBeginEnd($hour): array
     {
         $date  = date('Y-m-d', $this->base_timestamp);
         $hour  = sprintf('%02d', $hour);
@@ -26,7 +26,7 @@ class Datetime
         return [$begin, $end];
     }
 
-    public function dayBeginEnd($date = null)
+    public function dayBeginEnd($date = null): array
     {
         if (null === $date) {
             $date = date('Y-m-d', $this->base_timestamp);
@@ -37,7 +37,7 @@ class Datetime
         return [$begin, $end];
     }
 
-    public function monthBeginEnd($year = null, $month = null)
+    public function monthBeginEnd($year = null, $month = null): array
     {
         if (null === $year) {
             $year = date('Y', $this->base_timestamp);
@@ -53,7 +53,7 @@ class Datetime
         return [$begin, $end];
     }
 
-    public function yearBeginEnd($year)
+    public function yearBeginEnd($year): array
     {
         if (null === $year) {
             $year = date('Y', $this->base_timestamp);

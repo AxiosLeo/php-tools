@@ -28,7 +28,7 @@ class BHDConverter
      *
      * @return string
      */
-    public function anyToAny($num_str, int $from, int $to, int $min_length = 0)
+    public function anyToAny(int|string $num_str, int $from, int $to, int $min_length = 0): string
     {
         if (!\is_string($num_str)) {
             $num_str = (string) $num_str;
@@ -58,7 +58,7 @@ class BHDConverter
      *
      * @return int|string
      */
-    public function anyToDecimal($num, $from)
+    public function anyToDecimal(int|string $num, int $from): int|string
     {
         $num  = (string) $num;
         $dict = $this->dict;
@@ -73,12 +73,9 @@ class BHDConverter
     }
 
     /**
-     * @param string $num
-     * @param int    $to  number_system
-     *
-     * @return string
+     * @param int $to number_system
      */
-    public function decimalToAny($num, $to)
+    public function decimalToAny(string $num, int $to): string
     {
         $dict = $this->dict;
         $ret  = '';

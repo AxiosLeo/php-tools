@@ -6,15 +6,15 @@ namespace axios\tools;
 
 class RSACrypt
 {
-    public $config             = [
+    public array   $config             = [
         'digest_alg'       => 'sha256',
         'private_key_bits' => 2048,
         'private_key_type' => OPENSSL_KEYTYPE_RSA,
     ];
-    private $private_key        = '';
-    private $public_key         = '';
-    private $encrypt_block_size = 200;
-    private $decrypt_block_size = 256;
+    private string $private_key        = '';
+    private string $public_key         = '';
+    private int    $encrypt_block_size = 200;
+    private int    $decrypt_block_size = 256;
 
     public function __construct($config = [])
     {
@@ -29,10 +29,8 @@ class RSACrypt
      * get or set private key.
      *
      * @param null $private_key
-     *
-     * @return mixed
      */
-    public function privateKey($private_key = null)
+    public function privateKey($private_key = null): string
     {
         if (null !== $private_key) {
             $this->private_key = $private_key;
@@ -48,7 +46,7 @@ class RSACrypt
      *
      * @return mixed
      */
-    public function publicKey($public_key = null)
+    public function publicKey($public_key = null): string
     {
         if (null !== $public_key) {
             $this->public_key = $public_key;
@@ -60,7 +58,8 @@ class RSACrypt
     /**
      * create a pair of private&public key.
      *
-     * @param array $config config for openssl_pkey_new() method, see detail on https://www.php.net/manual/en/function.openssl-pkey-new.php
+     * @param array $config config for openssl_pkey_new() method, see detail on
+     *                      https://www.php.net/manual/en/function.openssl-pkey-new.php
      *
      * @return $this
      */
@@ -78,7 +77,7 @@ class RSACrypt
 
     public function encryptByPrivateKey(string $data): string
     {
-        return $this->encrypt($data, 'private');
+        return $this->encrypt($data);
     }
 
     public function encryptByPublicKey(string $data): string
@@ -96,13 +95,7 @@ class RSACrypt
         return $this->decrypt($data, 'public');
     }
 
-    /**
-     * @param        $data
-     * @param string $type
-     *
-     * @return string
-     */
-    private function encrypt($data, $type = 'private')
+    private function encrypt(string $data, string $type = 'private'): string
     {
         $str  = '';
         $data = str_split($data, $this->encrypt_block_size);
@@ -117,13 +110,7 @@ class RSACrypt
         return base64_encode($str);
     }
 
-    /**
-     * @param        $data
-     * @param string $type
-     *
-     * @return string
-     */
-    private function decrypt($data, $type)
+    private function decrypt(string $data, string $type): string
     {
         $str  = '';
         $data = str_split(base64_decode($data), $this->decrypt_block_size);

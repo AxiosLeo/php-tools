@@ -11,10 +11,8 @@ class Helper
      *
      * @param int  $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
      * @param bool $adv  是否进行高级模式获取（有可能被伪装）
-     *
-     * @return mixed
      */
-    public static function getClientIp($type = 0, $adv = false)
+    public static function getClientIp($type = 0, $adv = false): mixed
     {
         $type      = $type ? 1 : 0;
         static $ip = null;

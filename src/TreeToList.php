@@ -18,24 +18,24 @@ class TreeToList
 {
     use CallPropTrait;
 
-    private $tree;
+    private array $tree;
 
-    private $parent_index = 'parent_id';
+    private string $parent_index = 'parent_id';
 
-    private $node_index = 'id';
+    private string $node_index = 'id';
 
-    private $node_name = 'child';
+    private string $node_name = 'child';
 
-    private $layer_name;
+    private string $layer_name = '';
 
-    private $count;
+    private int $count;
 
-    public function __construct($tree = [])
+    public function __construct(array $tree = [])
     {
         $this->tree = $tree;
     }
 
-    public function toList()
+    public function toList(): array
     {
         $this->count = 0;
         $this->recurse($data, $this->tree);
@@ -43,7 +43,7 @@ class TreeToList
         return $data;
     }
 
-    private function recurse(&$data = [], $tree = [], $layer = 0, $parent_id = 0)
+    private function recurse(?array &$data = [], array $tree = [], int $layer = 0, int $parent_id = 0): void
     {
         foreach ($tree as $t) {
             ++$this->count;
@@ -51,7 +51,7 @@ class TreeToList
             $node[$this->node_index]   = $this->count;
             $node[$this->parent_index] = $parent_id;
             unset($node[$this->node_name]);
-            if (null !== $this->layer_name) {
+            if ($this->layer_name !== '') {
                 $node[$this->layer_name] = $layer;
             }
             $data[] = $node;

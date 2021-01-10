@@ -6,7 +6,7 @@ namespace axios\tools;
 
 class HMac
 {
-    public $algos = [];
+    public array $algos = [];
 
     public function count(string $algorithm, $data = null, $secret = null, bool $raw_output = false): string
     {
@@ -30,7 +30,11 @@ class HMac
         return $raw_output ? pack($pack, $hmac) : $hmac;
     }
 
-    public function registerAlgorithm($algorithm_name, \Closure $callback)
+    /**
+     * @param string   $algorithm_name some custom algorithm name or others in hash_hmac_algos()
+     * @param \Closure $callback       custom implement
+     */
+    public function registerAlgorithm(string $algorithm_name, \Closure $callback)
     {
         $this->algos[$algorithm_name] = $callback;
     }
