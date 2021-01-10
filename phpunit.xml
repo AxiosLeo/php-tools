@@ -5,10 +5,10 @@
 
     <testsuites>
         <testsuite name="All">
-            <directory suffix="Test.php">tests</directory>
+            <directory>tests</directory>
         </testsuite>
         <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/unit</directory>
+            <directory suffix="Test.php">tests/unit</directory>
         </testsuite>
     </testsuites>
 
@@ -26,7 +26,7 @@
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
 </phpunit>
