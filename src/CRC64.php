@@ -6,14 +6,13 @@ namespace axios\tools;
 
 class CRC64
 {
-    private static $crc64tab;
+    private static array $crc64tab = [];
 
-    private $value = 0;
+    private int $value = 0;
 
     public function __construct()
     {
-        if (null === self::$crc64tab) {
-            $crc64tab  = [];
+        if ([] === self::$crc64tab) {
             $poly64rev = (0xC96C5795 << 32) | 0xD7870F42;
             for ($n = 0; $n < 256; ++$n) {
                 $crc = $n;
@@ -24,13 +23,12 @@ class CRC64
                         $crc = ($crc >> 1) & ~(0x8 << 60);
                     }
                 }
-                $crc64tab[$n] = $crc;
+                self::$crc64tab[$n] = $crc;
             }
-            self::$crc64tab = $crc64tab;
         }
     }
 
-    public function append($string)
+    public function append($string): void
     {
         for ($i = 0; $i < \strlen($string); ++$i) {
             $this->value = ~$this->value;
@@ -39,7 +37,7 @@ class CRC64
         }
     }
 
-    public function value($value = null)
+    public function value($value = null): int
     {
         if (null !== $value) {
             $this->value = $value;
@@ -48,12 +46,12 @@ class CRC64
         return $this->value;
     }
 
-    public function result()
+    public function result(): string
     {
         return (string) (sprintf('%u', $this->value));
     }
 
-    private function count($byte, $crc)
+    private function count($byte, $crc): int
     {
         return self::$crc64tab[($crc ^ $byte) & 0xff] ^ (($crc >> 8) & ~(0xff << 56));
     }

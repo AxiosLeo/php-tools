@@ -17,20 +17,20 @@ class ListToTree
 {
     use CallPropTrait;
 
-    private $list;
+    private array $list;
 
-    private $parent_index = 'parent_id';
+    private string $parent_index = 'parent_id';
 
-    private $node_index = 'id';
+    private string $node_index = 'id';
 
-    private $node_name = 'child';
+    private string $node_name = 'child';
 
-    public function __construct($list = [])
+    public function __construct(array $list = [])
     {
         $this->list = $list;
     }
 
-    public function toTree()
+    public function toTree(): array
     {
         $items = [];
         $data  = $this->list;

@@ -11,22 +11,19 @@ class Path
     /**
      * path join.
      *
-     * @param mixed ...$paths
-     *
-     * @return string
+     * @param string ...$paths
      */
-    public static function join(...$paths)
+    public static function join(string ...$paths): string
     {
-        
-$is_win = PHP_SHLIB_SUFFIX === 'dll';
+        $is_win = PHP_SHLIB_SUFFIX === 'dll';
         if (0 === count($paths)) {
             throw new \InvalidArgumentException('At least one parameter needs to be passed in.');
         }
-        $base          = array_shift($paths);
-        if ($is_win && false !== strpos($base, \DIRECTORY_SEPARATOR)) {
-            $pathResult    = explode(\DIRECTORY_SEPARATOR, $base);
+        $base = array_shift($paths);
+        if ($is_win && str_contains($base, \DIRECTORY_SEPARATOR)) {
+            $pathResult = explode(\DIRECTORY_SEPARATOR, $base);
         } else {
-            $pathResult    = explode('/', $base);
+            $pathResult = explode('/', $base);
         }
 
         $pathResultLen = count($pathResult);
@@ -47,7 +44,6 @@ $is_win = PHP_SHLIB_SUFFIX === 'dll';
         }
 
         return implode(\DIRECTORY_SEPARATOR, $pathResult);
-
     }
 
     /**
@@ -60,7 +56,7 @@ $is_win = PHP_SHLIB_SUFFIX === 'dll';
      *
      * @return array
      */
-    public static function search($dir, $extInclude = '*', $asc = false, $sorting_type = SORT_FLAG_CASE)
+    public static function search(string $dir, string|array $extInclude = '*', bool $asc = false, int $sorting_type = SORT_FLAG_CASE): array
     {
         $list = [];
         if (is_dir($dir)) {

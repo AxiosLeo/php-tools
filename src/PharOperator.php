@@ -6,32 +6,23 @@ namespace axios\tools;
 
 class PharOperator
 {
-    /**
-     * @var \Phar
-     */
-    private $phar;
+    private \Phar $phar;
 
-    /**
-     * @var string
-     */
-    private $zip_dir;
+    private string $zip_dir;
 
     /**
      * @var array exclude files or folders
      */
-    private $exclude;
+    private array $exclude;
 
     /**
      * @var mixed|string
      *
      * @example '/\.(json|php|ini)$/'
      */
-    private $include;
+    private mixed $include;
 
-    /**
-     * @var string
-     */
-    private $index = 'autoload.php';
+    private string $index = 'autoload.php';
 
     public function __construct($zip_dir = null, $include = '/\.*$/', $exclude = [])
     {
@@ -48,29 +39,21 @@ class PharOperator
      *
      * @return $this
      */
-    public function setIndex($index)
+    public function setIndex(string $index): self
     {
         $this->index = $index;
 
         return $this;
     }
 
-    /**
-     * @param string $exclude
-     *
-     * @return self
-     */
-    public function addExclude($exclude)
+    public function addExclude(string $exclude): self
     {
         array_push($this->exclude, Path::join($exclude));
 
         return $this;
     }
 
-    /**
-     * @param string $output_path
-     */
-    public function zip($output_path)
+    public function zip(string $output_path): void
     {
         $save_path = $output_path;
         if (is_dir($save_path)) {
@@ -93,10 +76,7 @@ class PharOperator
         $this->phar->stopBuffering();
     }
 
-    /**
-     * @param array $exclude
-     */
-    private function remove($exclude)
+    private function remove(array $exclude): void
     {
         foreach ($exclude as $file) {
             $path = Path::join($this->zip_dir, $file);

@@ -10,8 +10,8 @@ class ForkProcess
 {
     use InstanceTrait;
 
-    private $work_queue = [];
-    private $max_process;
+    private array $work_queue = [];
+    private ?int   $max_process;
 
     public function __construct($max_process = 100)
     {
@@ -31,7 +31,7 @@ class ForkProcess
         }
     }
 
-    public function maxProcess($max_process = null)
+    public function maxProcess($max_process = null): ?int
     {
         if (null === $max_process) {
             $this->max_process = $max_process;
@@ -40,7 +40,7 @@ class ForkProcess
         return $this->max_process;
     }
 
-    public function addWork($class, $func, $args = [])
+    public function addWork($class, $func, $args = []): self
     {
         $queue = [
             'class' => $class,
@@ -62,7 +62,7 @@ class ForkProcess
         }
     }
 
-    private function exec($queue)
+    private function exec($queue): bool
     {
         $class = $queue['class'];
         $func  = $queue['func'];
@@ -72,7 +72,7 @@ class ForkProcess
         }
         $fork = $this->fork();
         if ($fork) {
-            return $fork;
+            return true;
         }
         \call_user_func_array([$class, $func], $args);
         posix_kill(posix_getpid(), SIGINT);

@@ -13,22 +13,22 @@ class UUID
         $this->salt = $salt;
     }
 
-    public function v0()
+    public function v0(): string
     {
         return uniqid((string) (microtime(true)));
     }
 
-    public function v1()
+    public function v1(): string
     {
         return uniqid(md5((string) (microtime(true))));
     }
 
-    public function v2()
+    public function v2(): string
     {
         return md5($this->salt . uniqid(md5((string) (microtime(true))), true));
     }
 
-    public function v3($cut = 8, $flavour = '-')
+    public function v3($cut = 8, $flavour = '-'): string
     {
         $str    = $this->v2();
         $length = 32;
@@ -42,7 +42,7 @@ class UUID
         return implode($flavour, $tmp);
     }
 
-    public function v4($cut = [6, 7, 9, 10], $flavour = '-')
+    public function v4($cut = [6, 7, 9, 10], $flavour = '-'): string
     {
         $str    = $this->v2();
         $length = 32;
