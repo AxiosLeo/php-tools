@@ -30,4 +30,22 @@ class CRC64Test extends TestCase
         $crc64->append('e');
         $this->assertEquals('3877460061917441331', $crc64->result());
     }
+
+    public function testWithChinese()
+    {
+        $crc64 = new CRC64();
+        $crc64->append('中');
+        $this->assertEquals('5878784518235156503', $crc64->result());
+        $first_val = $crc64->value();
+        $crc64->append('文');
+        $this->assertEquals('16371802884590399230', $crc64->result());
+        $crc64->append('内');
+        $this->assertEquals('14919037537769559253', $crc64->result());
+        $crc64->append('容');
+        $this->assertEquals('16369845890586830377', $crc64->result());
+
+        $crc64->value($first_val);
+        $crc64->append('文');
+        $this->assertEquals('16371802884590399230', $crc64->result());
+    }
 }

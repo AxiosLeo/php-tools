@@ -51,7 +51,7 @@ class TreeToList
             $node[$this->node_index]   = $this->count;
             $node[$this->parent_index] = $parent_id;
             unset($node[$this->node_name]);
-            if ($this->layer_name !== '') {
+            if ('' !== $this->layer_name) {
                 $node[$this->layer_name] = $layer;
             }
             $data[] = $node;
