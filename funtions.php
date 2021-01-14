@@ -14,3 +14,11 @@ if (!function_exists('hmac')) {
         return $res;
     }
 }
+
+if (!function_exists('halt') && function_exists('dump')) {
+    function halt(...$params)
+    {
+        dump(...$params);
+        die();
+    }
+}
