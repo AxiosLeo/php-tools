@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace axios\tools;
 
@@ -14,7 +14,8 @@ class BHDConverter
         $dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', // len:62
         $patch = '0',
         $min_length = null
-    ) {
+    )
+    {
         $this->dict       = $dict;
         $this->patch      = $patch;
         $this->min_length = $min_length;
@@ -28,10 +29,10 @@ class BHDConverter
      *
      * @return string
      */
-    public function anyToAny(int|string $num_str, int $from, int $to, int $min_length = 0): string
+    public function anyToAny($num_str, int $from, int $to, int $min_length = 0): string
     {
         if (!\is_string($num_str)) {
-            $num_str = (string) $num_str;
+            $num_str = (string)$num_str;
         }
         if (10 !== $from) {
             $fromBase = $this->anyToDecimal($num_str, $from);
@@ -58,25 +59,29 @@ class BHDConverter
      *
      * @return int|string
      */
-    public function anyToDecimal(int|string $num, int $from): int|string
+    public function anyToDecimal($num, int $from)
     {
-        $num  = (string) $num;
+        $num  = (string)$num;
+        $from = (string)$from;
         $dict = $this->dict;
         $len  = \strlen($num);
-        $dec  = 0;
+        $dec  = "0";
         for ($i = 0; $i < $len; ++$i) {
             $pos = strpos($dict, $num[$i]);
-            $dec = bcadd(bcmul(bcpow($from, $len - $i - 1), $pos), $dec);
+            $dec = bcadd(bcmul(bcpow($from, (string)($len - $i - 1)), (string)$pos), $dec);
         }
 
         return $dec;
     }
 
     /**
-     * @param int $to number_system
+     * @param int|string $num
+     * @param int        $to number_system
      */
-    public function decimalToAny(string $num, int $to): string
+    public function decimalToAny($num, int $to): string
     {
+        $num  = (string)$num;
+        $to   = (string)$to;
         $dict = $this->dict;
         $ret  = '';
         do {
