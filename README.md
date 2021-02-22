@@ -5,7 +5,7 @@
 
 > Some code snippets that are often used in PHP.
 > Recommended for use in development environments only.
-> Need php 8.0.* and above.
+> Need PHP 7.4/8.0 and above.
 
 - [ArrayMap](./src/ArrayMap.php) - tool for array and map data
 - [BHDConverter](./src/BHDConverter.php) - tool for number system conversion

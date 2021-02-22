@@ -57,11 +57,12 @@ class ArrayMap implements \ArrayAccess
     /**
      * 设置任意层级子元素.
      *
-     * @param array|int|string $key
+     * @param mixed $key
+     * @param mixed $value
      *
      * @return $this
      */
-    public function set(mixed $key, mixed $value): self
+    public function set($key, $value): self
     {
         if (\is_array($key)) {
             foreach ($key as $k => $v) {
@@ -104,8 +105,10 @@ class ArrayMap implements \ArrayAccess
      *
      * @param null|int|string $key
      * @param mixed           $default
+     *
+     * @return mixed
      */
-    public function get($key = null, $default = null): mixed
+    public function get($key = null, $default = null)
     {
         if (null === $key) {
             return $this->array;
@@ -130,7 +133,10 @@ class ArrayMap implements \ArrayAccess
         return $tmp;
     }
 
-    public function getAllToString(array $map = []): mixed
+    /**
+     * @return mixed
+     */
+    public function getAllToString(array $map = [])
     {
         $map     = array_merge(['false' => 'false', 'true' => 'true'], $map);
         $recurse = function (&$array = []) use (&$recurse, $map) {
@@ -173,7 +179,7 @@ class ArrayMap implements \ArrayAccess
      *
      * @return $this
      */
-    public function delete(mixed $key): self
+    public function delete($key): self
     {
         if (\is_array($key)) {
             foreach ($key as $k) {
@@ -244,8 +250,10 @@ class ArrayMap implements \ArrayAccess
 
     /**
      * isset($array[$key]).
+     *
+     * @param mixed $offset
      */
-    public function offsetExists(mixed $offset): bool
+    public function offsetExists($offset): bool
     {
         return null !== $this->get($offset);
     }
@@ -253,9 +261,11 @@ class ArrayMap implements \ArrayAccess
     /**
      * $array[$key].
      *
+     * @param mixed $offset
+     *
      * @return mixed
      */
-    public function offsetGet(mixed $offset): array
+    public function offsetGet($offset): array
     {
         return $this->get($offset);
     }
@@ -263,9 +273,12 @@ class ArrayMap implements \ArrayAccess
     /**
      * $array[$key] = $value.
      *
+     * @param mixed $offset
+     * @param mixed $value
+     *
      * @return $this
      */
-    public function offsetSet(mixed $offset, mixed $value): self
+    public function offsetSet($offset, $value): self
     {
         return $this->set($offset, $value);
     }
@@ -273,9 +286,11 @@ class ArrayMap implements \ArrayAccess
     /**
      * unset($array[$key]).
      *
+     * @param mixed $offset
+     *
      * @return $this
      */
-    public function offsetUnset(mixed $offset): self
+    public function offsetUnset($offset): self
     {
         return $this->delete($offset);
     }

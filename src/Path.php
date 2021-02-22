@@ -49,14 +49,9 @@ class Path
     /**
      * search files.
      *
-     * @param string       $dir
      * @param array|string $extInclude
-     * @param bool         $asc
-     * @param int          $sorting_type
-     *
-     * @return array
      */
-    public static function search(string $dir, string|array $extInclude = '*', bool $asc = false, int $sorting_type = SORT_FLAG_CASE): array
+    public static function search(string $dir, $extInclude = '*', bool $asc = false, int $sorting_type = SORT_FLAG_CASE): array
     {
         $list = [];
         if (is_dir($dir)) {
