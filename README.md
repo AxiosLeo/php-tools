@@ -7,7 +7,9 @@
 > Recommended for use in development environments only.
 > Need PHP 7.4/8.0 and above.
 
-| Code Snippet Name                        | Feature Description                |
+- Util Class
+
+| Class Name                               | Feature Description                |
 | :--------------------------------------- | :--------------------------------- |
 | [SM3](./src/SM3.php)                     | SM3 crypt tool                     |
 | [HMac](./src/HMac.php)                   | support custom algorithm with HMac |
@@ -26,6 +28,20 @@
 | [CDKEYProducer](./src/CDKEYProducer.php) | tool for produce CDKEY             |
 | [funtions](./functions.php)              | helper functions                   |
 
+- Util Functions
+
+| Function Name            | Description                            |
+| :----------------------- | :------------------------------------- |
+| [sm3][sm3]               | encode string with sm3 algorithm       |
+| [sm3_file][sm3_file]     | encode file with sm3 algorithm         |
+| [hmac][hmac]             | encode string with hmac algorithm      |
+| [halt][halt]             | dump some information and exit process |
+| [xml_encode][xml_encode] | convert array to xml string            |
+| [xml_decode][xml_decode] | convert xml string to array            |
+| [uuid][uuid]             | generate uuid string                   |
+| [path_join][path_join]   | join path                              |
+| [client_ip][client_ip]   | get client ip                          |
+
 ## Install
 
 ```bash
@@ -35,3 +51,21 @@ composer require axios/tools
 ## Usage
 
 > see [Unit Test Case](./tests/unit/)
+
+[sm3]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L28
+
+[sm3_file]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L38
+
+[hmac]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L8
+
+[halt]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L19
+
+[xml_encode]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L48
+
+[xml_decode]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L55
+
+[uuid]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L62
+
+[path_join]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L73
+
+[client_ip]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L88
