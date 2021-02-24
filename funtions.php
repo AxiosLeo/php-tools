@@ -5,7 +5,7 @@ declare(strict_types=1);
 use axios\tools\HMac;
 
 if (!function_exists('hmac')) {
-    function hmac($algorithm, $data = null, $secret = null, bool $raw_output = false): string
+    function hmac(string $algorithm, string $data = '', string $secret = '', bool $raw_output = false): string
     {
         $hamc = new HMac();
         $res  = $hamc->count($algorithm, $data, $secret, $raw_output);
@@ -16,16 +16,16 @@ if (!function_exists('hmac')) {
 }
 
 if (!function_exists('halt') && function_exists('dump')) {
-    function halt(...$params)
+    function halt(...$args)
     {
-        dump(...$params);
+        dump(...$args);
 
         exit();
     }
 }
 
 if (!function_exists('sm3')) {
-    function sm3(string $str, $raw_output = false): string
+    function sm3(string $str, bool $raw_output = false): string
     {
         $sm3 = new \axios\tools\SM3();
         $sm3->encode($str);
@@ -35,7 +35,7 @@ if (!function_exists('sm3')) {
 }
 
 if (!function_exists('sm3_file')) {
-    function sm3_file(string $filepath, $raw_output = false): string
+    function sm3_file(string $filepath, bool $raw_output = false): string
     {
         $sm3 = new \axios\tools\SM3();
         $sm3->encodeFile($filepath);
@@ -85,14 +85,14 @@ if (!function_exists('client_ip')) {
      *
      * @return mixed
      */
-    function client_ip($type = 0, $adv = false)
+    function client_ip(int $type = 0, bool $advance = false)
     {
         $type      = $type ? 1 : 0;
         static $ip = null;
         if (null !== $ip) {
             return $ip[$type];
         }
-        if ($adv) {
+        if ($advance) {
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 $arr = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
                 $pos = array_search('unknown', $arr);
