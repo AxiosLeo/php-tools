@@ -5,7 +5,7 @@ declare(strict_types=1);
 use axios\tools\HMac;
 
 if (!function_exists('hmac')) {
-    function hmac($algorithm, $data = null, $secret = null, bool $raw_output = false)
+    function hmac($algorithm, $data = null, $secret = null, bool $raw_output = false): string
     {
         $hamc = new HMac();
         $res  = $hamc->count($algorithm, $data, $secret, $raw_output);
@@ -24,6 +24,58 @@ if (!function_exists('halt') && function_exists('dump')) {
     }
 }
 
+if (!function_exists('sm3')) {
+    function sm3(string $str, $raw_output = false): string
+    {
+        $sm3 = new \axios\tools\SM3();
+        $sm3->encode($str);
+
+        return $raw_output ? $sm3->getBinary() : $sm3->getHex();
+    }
+}
+
+if (!function_exists('sm3_file')) {
+    function sm3_file(string $filepath, $raw_output = false): string
+    {
+        $sm3 = new \axios\tools\SM3();
+        $sm3->encodeFile($filepath);
+
+        return $raw_output ? $sm3->getBinary() : $sm3->getHex();
+    }
+}
+
+if (!function_exists('xml_encode')) {
+    function xml_encode(array $data, $root_node = 'data', $root_attr = [], $item_node = 'item', $item_key = 'id', $encoding = 'utf-8'): string
+    {
+        return \axios\tools\XMLParser::encode($data, $root_node, $root_attr, $item_node, $item_key, $encoding);
+    }
+}
+
+if (!function_exists('xml_decode')) {
+    function xml_decode(string $xml_string): array
+    {
+        return \axios\tools\XMLParser::decode($xml_string);
+    }
+}
+
+if (!function_exists('uuid')) {
+    function uuid(string $salt = ''): string
+    {
+        $uuid = new \axios\tools\UUID($salt);
+        $str  = $uuid->v2();
+        unset($uuid);
+
+        return $str;
+    }
+}
+
+if (!function_exists('path_join')) {
+    function path_join(string ...$paths): string
+    {
+        return \axios\tools\Path::join(...$paths);
+    }
+}
+
 if (!function_exists('client_ip')) {
     /*
      * get the IP address of the client
@@ -35,8 +87,8 @@ if (!function_exists('client_ip')) {
      */
     function client_ip($type = 0, $adv = false)
     {
-        $type              = $type ? 1 : 0;
-        static $ip         = null;
+        $type      = $type ? 1 : 0;
+        static $ip = null;
         if (null !== $ip) {
             return $ip[$type];
         }
