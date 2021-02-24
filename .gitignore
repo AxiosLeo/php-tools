@@ -4,3 +4,4 @@ vendor/
 runtime/
 *.cache
 cache/
+test.tmp
