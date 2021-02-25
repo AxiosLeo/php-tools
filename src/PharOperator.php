@@ -20,7 +20,7 @@ class PharOperator
      *
      * @example '/\.(json|php|ini)$/'
      */
-    private mixed $include;
+    private $include;
 
     private string $index = 'autoload.php';
 
