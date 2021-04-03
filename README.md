@@ -26,7 +26,6 @@
 | [PharOperator](./src/PharOperator.php)   | tool for build phar file           |
 | [BHDConverter](./src/BHDConverter.php)   | tool for binary conversions        |
 | [CDKEYProducer](./src/CDKEYProducer.php) | tool for produce CDKEY             |
-| [functions](./functions.php)              | helper functions                   |
 
 - Util Functions
 
