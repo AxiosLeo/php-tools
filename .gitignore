@@ -5,3 +5,4 @@ runtime/
 *.cache
 cache/
 test.tmp
+.vscode/
