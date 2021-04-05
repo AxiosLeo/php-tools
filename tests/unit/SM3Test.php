@@ -17,7 +17,7 @@ class SM3Test extends TestCase
 {
     private ?SM3 $sm3;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->sm3 = new SM3();

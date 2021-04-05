@@ -15,7 +15,7 @@ class DatetimeTest extends TestCase
 {
     private $datetime;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->datetime = strtotime('2020-06-06 23:12:46');

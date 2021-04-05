@@ -47,7 +47,7 @@ class ForkProcess
             'func'  => $func,
             'args'  => $args,
         ];
-        array_push($this->work_queue, $queue);
+        $this->work_queue[] = $queue;
 
         return $this;
     }
@@ -76,6 +76,7 @@ class ForkProcess
         }
         \call_user_func_array([$class, $func], $args);
         posix_kill(posix_getpid(), SIGINT);
+
         exit();
     }
 
@@ -91,6 +92,7 @@ class ForkProcess
             $ppid = pcntl_fork();
             if ($ppid > 0) {
                 posix_kill(posix_getpid(), SIGINT);
+
                 exit();
             }
             if (-1 == $ppid) {

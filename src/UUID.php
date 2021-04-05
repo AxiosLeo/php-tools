@@ -34,8 +34,8 @@ class UUID
         $length = 32;
         $tmp    = [];
         while ($length > 0) {
-            $part = substr($str, 32 - $length, $cut);
-            array_push($tmp, $part);
+            $part  = substr($str, 32 - $length, $cut);
+            $tmp[] = $part;
             $length -= $cut;
         }
 
@@ -50,8 +50,8 @@ class UUID
         while ($length > 0) {
             $cut_val = array_rand($cut);
             $part    = substr($str, 32 - $length, $cut_val);
-            array_push($tmp, $part);
-            $length = $length - $cut_val;
+            $tmp[]   = $part;
+            $length  = $length - $cut_val;
         }
 
         return implode($flavour, $tmp);

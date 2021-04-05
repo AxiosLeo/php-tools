@@ -212,12 +212,14 @@ class ArrayMap implements \ArrayAccess
         $params = [];
         foreach ($sortRule as $key => $value) {
             $params[] = $key;
+
             switch ($value) {
                 case SORT_DESC:
                 case 'desc':
                     $params[] = SORT_DESC;
 
                     break;
+
                 default:
                     $params[] = SORT_ASC;
             }

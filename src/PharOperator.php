@@ -48,7 +48,7 @@ class PharOperator
 
     public function addExclude(string $exclude): self
     {
-        array_push($this->exclude, Path::join($exclude));
+        $this->exclude[] = Path::join($exclude);
 
         return $this;
     }
