@@ -4,6 +4,69 @@ declare(strict_types=1);
 
 use axios\tools\HMac;
 
+if (!function_exists('render_str')) {
+    function render_str(string $template, array $params, string $left_tag='${', string $right_tag='}'): string
+    {
+        foreach ($params as $name => $value) {
+            $template = str_replace($left_tag . $name . $right_tag, $value, $template);
+        }
+
+        return $template;
+    }
+}
+
+if (!function_exists('path_join')) {
+    function path_join(string ...$paths): string
+    {
+        $is_win = \PHP_SHLIB_SUFFIX === 'dll';
+        if (0 === \count($paths)) {
+            throw new \InvalidArgumentException('At least one parameter needs to be passed in.');
+        }
+        $base = array_shift($paths);
+        if ($is_win && false !== strpos($base, \DIRECTORY_SEPARATOR)) {
+            $pathResult = explode(\DIRECTORY_SEPARATOR, $base);
+        } else {
+            $pathResult = explode('/', $base);
+        }
+
+        $pathResultLen = \count($pathResult);
+        if ('' === $pathResult[$pathResultLen - 1]) {
+            unset($pathResult[$pathResultLen - 1]);
+        }
+        foreach ($paths as $path) {
+            $tmp = explode('/', $path);
+            foreach ($tmp as $str) {
+                if ('..' === $str) {
+                    array_pop($pathResult);
+                } elseif ('.' === $str || '' === $str) {
+                    continue;
+                } else {
+                    $pathResult[] = $str;
+                }
+            }
+        }
+
+        return implode(\DIRECTORY_SEPARATOR, $pathResult);
+    }
+}
+
+if (!function_exists('fs_write')) {
+    function exec_command($cmd, ?string $cwd = null)
+    {
+        if (null !== $cwd) {
+            $cmd = 'cd ' . $cwd . ' && ' . $cmd;
+        }
+        while (@ob_end_flush()) {
+            continue;
+        } // end all output buffers if any
+        $proc = popen($cmd, 'r');
+        while (!feof($proc)) {
+            echo fread($proc, 4096);
+            @flush();
+        }
+    }
+}
+
 if (!function_exists('hmac')) {
     function hmac(string $algorithm, string $data = '', string $secret = '', bool $raw_output = false): string
     {
