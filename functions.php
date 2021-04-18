@@ -15,41 +15,6 @@ if (!function_exists('render_str')) {
     }
 }
 
-if (!function_exists('path_join')) {
-    function path_join(string ...$paths): string
-    {
-        $is_win = \PHP_SHLIB_SUFFIX === 'dll';
-        if (0 === \count($paths)) {
-            throw new \InvalidArgumentException('At least one parameter needs to be passed in.');
-        }
-        $base = array_shift($paths);
-        if ($is_win && false !== strpos($base, \DIRECTORY_SEPARATOR)) {
-            $pathResult = explode(\DIRECTORY_SEPARATOR, $base);
-        } else {
-            $pathResult = explode('/', $base);
-        }
-
-        $pathResultLen = \count($pathResult);
-        if ('' === $pathResult[$pathResultLen - 1]) {
-            unset($pathResult[$pathResultLen - 1]);
-        }
-        foreach ($paths as $path) {
-            $tmp = explode('/', $path);
-            foreach ($tmp as $str) {
-                if ('..' === $str) {
-                    array_pop($pathResult);
-                } elseif ('.' === $str || '' === $str) {
-                    continue;
-                } else {
-                    $pathResult[] = $str;
-                }
-            }
-        }
-
-        return implode(\DIRECTORY_SEPARATOR, $pathResult);
-    }
-}
-
 if (!function_exists('fs_write')) {
     function exec_command($cmd, ?string $cwd = null)
     {
