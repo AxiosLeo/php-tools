@@ -4,7 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/axios/tools/v)](//packagist.org/packages/axios/tools)
 
 > Some code snippets that are often used in PHP.
-> Recommended for use in development environments only.
+> 
 > Need PHP 7.4/8.0 and above.
 
 - Util Class
@@ -39,7 +39,7 @@
 | [xml_encode][xml_encode] | convert array to xml string            |
 | [xml_decode][xml_decode] | convert xml string to array            |
 | [uuid][uuid]             | generate uuid string                   |
-| [path_join][path_join]   | join path                              |
+| [path_join][path_join]   | join path    string                    |
 | [client_ip][client_ip]   | get client ip                          |
 | [fs_write][fs_write]     | write file                             |
 | [render_str][render_str] | render string with params              |
