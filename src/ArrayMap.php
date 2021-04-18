@@ -62,7 +62,7 @@ class ArrayMap implements \ArrayAccess
      *
      * @return $this
      */
-    public function set($key, $value): self
+    public function set($key, $value = null): self
     {
         if (\is_array($key)) {
             foreach ($key as $k => $v) {
