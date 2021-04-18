@@ -15,7 +15,7 @@ if (!function_exists('render_str')) {
     }
 }
 
-if (!function_exists('fs_write')) {
+if (!function_exists('exec_command')) {
     function exec_command($cmd, ?string $cwd = null)
     {
         if (null !== $cwd) {
