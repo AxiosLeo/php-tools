@@ -15,7 +15,7 @@ class Path
      */
     public static function join(string ...$paths): string
     {
-        $is_win = PHP_SHLIB_SUFFIX === 'dll';
+        $is_win = \PHP_SHLIB_SUFFIX === 'dll';
         if (0 === count($paths)) {
             throw new \InvalidArgumentException('At least one parameter needs to be passed in.');
         }
@@ -51,7 +51,7 @@ class Path
      *
      * @param array|string $extInclude
      */
-    public static function search(string $dir, $extInclude = '*', bool $asc = false, int $sorting_type = SORT_FLAG_CASE): array
+    public static function search(string $dir, $extInclude = '*', bool $asc = false, int $sorting_type = \SORT_FLAG_CASE): array
     {
         $list = [];
         if (is_dir($dir)) {
@@ -60,7 +60,7 @@ class Path
                 $tmp = str_replace('.', '', $file_name);
                 if ('' != $tmp) {
                     $subFile = self::join($dir, $file_name);
-                    $ext     = pathinfo($file_name, PATHINFO_EXTENSION);
+                    $ext     = pathinfo($file_name, \PATHINFO_EXTENSION);
                     if (is_dir($subFile)) {
                         $list = array_merge($list, self::search($subFile, $extInclude, $asc, $sorting_type));
                     } elseif (\is_string($extInclude)) {

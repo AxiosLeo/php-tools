@@ -90,9 +90,9 @@ class SM3Test extends TestCase
             @mkdir(\dirname($filename), 0755, true);
         }
         $fp = fopen($filename, $mode);
-        if (flock($fp, LOCK_EX)) {
+        if (flock($fp, \LOCK_EX)) {
             fwrite($fp, $text);
-            flock($fp, LOCK_UN);
+            flock($fp, \LOCK_UN);
         }
         fclose($fp);
     }

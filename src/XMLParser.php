@@ -10,7 +10,7 @@ class XMLParser
     {
         return json_decode(
             json_encode(
-                simplexml_load_string($xml_string, 'SimpleXMLElement', LIBXML_NOCDATA)
+                simplexml_load_string($xml_string, 'SimpleXMLElement', \LIBXML_NOCDATA)
             ),
             true
         );

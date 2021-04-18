@@ -9,7 +9,7 @@ class RSACrypt
     public array   $config             = [
         'digest_alg'       => 'sha256',
         'private_key_bits' => 2048,
-        'private_key_type' => OPENSSL_KEYTYPE_RSA,
+        'private_key_type' => \OPENSSL_KEYTYPE_RSA,
     ];
     private string $private_key        = '';
     private string $public_key         = '';
@@ -117,8 +117,8 @@ class RSACrypt
         foreach ($data as $chunk) {
             $partial = '';
             'private' === $type ?
-                openssl_private_decrypt($chunk, $partial, $this->private_key, OPENSSL_PKCS1_PADDING) :
-                openssl_public_decrypt($chunk, $partial, $this->public_key, OPENSSL_PKCS1_PADDING);
+                openssl_private_decrypt($chunk, $partial, $this->private_key, \OPENSSL_PKCS1_PADDING) :
+                openssl_public_decrypt($chunk, $partial, $this->public_key, \OPENSSL_PKCS1_PADDING);
             $str .= $partial;
         }
 

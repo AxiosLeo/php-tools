@@ -15,7 +15,7 @@ class PathTest extends TestCase
 {
     public function testJoin()
     {
-        $is_win = PHP_SHLIB_SUFFIX === 'dll';
+        $is_win = \PHP_SHLIB_SUFFIX === 'dll';
 
         $this->assertEquals(
             realpath(__DIR__ . '/../../') . \DIRECTORY_SEPARATOR . 'test.json',

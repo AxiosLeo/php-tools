@@ -75,7 +75,7 @@ class ForkProcess
             return true;
         }
         \call_user_func_array([$class, $func], $args);
-        posix_kill(posix_getpid(), SIGINT);
+        posix_kill(posix_getpid(), \SIGINT);
 
         exit();
     }
@@ -91,7 +91,7 @@ class ForkProcess
         if (0 === $pid) {
             $ppid = pcntl_fork();
             if ($ppid > 0) {
-                posix_kill(posix_getpid(), SIGINT);
+                posix_kill(posix_getpid(), \SIGINT);
 
                 exit();
             }
