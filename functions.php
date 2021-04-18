@@ -137,7 +137,7 @@ if (!function_exists('client_ip')) {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
         // IP address legitimacy verification
-        $long = sprintf('%u', ip2long($ip));
+        $long = sprintf('%u', ip2long((string) $ip));
         $ip   = $long ? [$ip, $long] : ['0.0.0.0', 0];
 
         return $ip[$type];
