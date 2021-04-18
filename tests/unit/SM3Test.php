@@ -41,7 +41,7 @@ class SM3Test extends TestCase
 
     public function testEncodeWithFile()
     {
-        $filepath = Path::join(__DIR__, '../../test.tmp');
+        $filepath = Path::join(__DIR__, '../../runtime/test.tmp');
         $this->write($filepath, 'test', 'w');
         $this->sm3->encodeFile($filepath);
         $this->assertEquals(hex2bin('55e12e91650d2fec56ec74e1d3e4ddbfce2ef3a65890c2a19ecf88a307e76a23'), $this->sm3->getBinary());
