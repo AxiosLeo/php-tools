@@ -20,6 +20,7 @@
 | [RSACrypt](./src/RSACrypt.php)           | RSA crypt tool                     |
 | [Datetime](./src/Datetime.php)           | tool for date time operation       |
 | [XMLParser](./src/XMLParser.php)         | the parser for XML string          |
+| [MimeTypes](./src/MimeTypes.php)         | tool for MimeTypes                 |
 | [ListToTree](./src/ListToTree.php)       | convert list to tree               |
 | [TreeToList](./src/TreeToList.php)       | convert tree to list               |
 | [ForkProcess](./src/ForkProcess.php)     | multi-process demo                 |
@@ -40,6 +41,8 @@
 | [uuid][uuid]             | generate uuid string                   |
 | [path_join][path_join]   | join path                              |
 | [client_ip][client_ip]   | get client ip                          |
+| [fs_write][fs_write]     | write file                             |
+| [render_str][render_str] | render string with params              |
 
 ## Install
 
@@ -68,3 +71,7 @@ composer require axios/tools
 [path_join]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L73
 
 [client_ip]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L88
+
+[fs_write]: https://github.com/AxiosCros/php-tools/blob/3225d9b27aba6c2cc2c86756c93c4a300d4c5247/functions.php#L18
+
+[render_str]: https://github.com/AxiosCros/php-tools/blob/3225d9b27aba6c2cc2c86756c93c4a300d4c5247/functions.php#L7
