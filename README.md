@@ -2,6 +2,7 @@
 
 [![CI Build Status](https://github.com/AxiosCros/php-tools/workflows/CI/badge.svg)](https://github.com/AxiosCros/php-tools/actions?query=workflow%3ACI)
 [![Latest Stable Version](https://poser.pugx.org/axios/tools/v)](//packagist.org/packages/axios/tools)
+[![MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 > Some code snippets that are often used in PHP.
 > 
@@ -53,6 +54,10 @@ composer require axios/tools
 ## Usage
 
 > see [Unit Test Case](./tests/unit/)
+
+## License
+
+The TPR framework is open-sourced software licensed under the [MIT](LICENSE).
 
 [sm3]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L28
 
