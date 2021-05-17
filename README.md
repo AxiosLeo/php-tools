@@ -16,6 +16,7 @@
 | [HMac](./src/HMac.php)                   | support custom algorithm with HMac |
 | [UUID](./src/UUID.php)                   | generate uuid string               |
 | [Path](./src/Path.php)                   | path operator                      |
+| [Files](./src/Files.php)                 | files operator                     |
 | [CRC64](./src/CRC64.php)                 | tool for crc64 arithmetic          |
 | [ArrayMap](./src/ArrayMap.php)           | tool for array and map data        |
 | [RSACrypt](./src/RSACrypt.php)           | RSA crypt tool                     |
