@@ -42,7 +42,6 @@
 | [uuid][uuid]             | generate uuid string                   |
 | [path_join][path_join]   | join path    string                    |
 | [client_ip][client_ip]   | get client ip                          |
-| [fs_write][fs_write]     | write file                             |
 | [render_str][render_str] | render string with params              |
 
 ## Install
@@ -76,7 +75,5 @@ The TPR framework is open-sourced software licensed under the [MIT](LICENSE).
 [path_join]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L73
 
 [client_ip]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L88
-
-[fs_write]: https://github.com/AxiosCros/php-tools/blob/3225d9b27aba6c2cc2c86756c93c4a300d4c5247/functions.php#L18
 
 [render_str]: https://github.com/AxiosCros/php-tools/blob/3225d9b27aba6c2cc2c86756c93c4a300d4c5247/functions.php#L7
