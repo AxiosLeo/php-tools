@@ -57,7 +57,7 @@ composer require axios/tools
 
 ## License
 
-The TPR framework is open-sourced software licensed under the [MIT](LICENSE).
+The project is open-sourced software licensed under the [MIT](LICENSE).
 
 [sm3]: https://github.com/AxiosCros/php-tools/blob/8f914703845099a6e91f123f31b3c0972ea3d941/funtions.php#L28
 
