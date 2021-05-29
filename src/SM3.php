@@ -11,9 +11,9 @@ namespace axios\tools;
  */
 class SM3
 {
-    const IV      = '7380166f4914b2b9172442d7da8a0600a96f30bc163138aae38dee4db0fb0e4e';
-    const LEN     = 512;
-    const STR_LEN = 64;
+    public const IV      = '7380166f4914b2b9172442d7da8a0600a96f30bc163138aae38dee4db0fb0e4e';
+    public const LEN     = 512;
+    public const STR_LEN = 64;
 
     private ?string $hex    = null;
     private ?string $binary = null;

@@ -6,7 +6,7 @@ namespace axios\tools;
 
 class Path
 {
-    const DS = \DIRECTORY_SEPARATOR;
+    public const DS = \DIRECTORY_SEPARATOR;
 
     /**
      * path join.

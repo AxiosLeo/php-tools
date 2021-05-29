@@ -18,7 +18,8 @@
   },
   "require-dev": {
     "symfony/var-dumper": "*",
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^9.5",
+    "friendsofphp/php-cs-fixer": "^2.19"
   },
   "autoload": {
     "psr-4": {
@@ -38,6 +39,7 @@
       "@clearCache",
       "./vendor/bin/phpunit --colors=always"
     ],
+    "fix": "./vendor/bin/php-cs-fixer fix ./",
     "clearCache": "rm -rf cache/*"
   }
 }
