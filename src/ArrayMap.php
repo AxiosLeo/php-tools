@@ -277,23 +277,19 @@ class ArrayMap implements \ArrayAccess
      *
      * @param mixed $offset
      * @param mixed $value
-     *
-     * @return $this
      */
-    public function offsetSet($offset, $value): self
+    public function offsetSet($offset, $value): void
     {
-        return $this->set($offset, $value);
+        $this->set($offset, $value);
     }
 
     /**
      * unset($array[$key]).
      *
      * @param mixed $offset
-     *
-     * @return $this
      */
-    public function offsetUnset($offset): self
+    public function offsetUnset($offset): void
     {
-        return $this->delete($offset);
+        $this->delete($offset);
     }
 }

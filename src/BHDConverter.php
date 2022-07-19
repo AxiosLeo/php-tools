@@ -8,7 +8,6 @@ class BHDConverter
 {
     private $dict;
     private $patch;
-    private $min_length;
 
     public function __construct(
         $dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', // len:62
@@ -17,7 +16,6 @@ class BHDConverter
     ) {
         $this->dict       = $dict;
         $this->patch      = $patch;
-        $this->min_length = $min_length;
     }
 
     /**
