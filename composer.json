@@ -19,7 +19,7 @@
   "require-dev": {
     "symfony/var-dumper": "*",
     "phpunit/phpunit": "^9.5",
-    "friendsofphp/php-cs-fixer": "^2.19"
+    "friendsofphp/php-cs-fixer": "^3.52.1"
   },
   "autoload": {
     "psr-4": {
