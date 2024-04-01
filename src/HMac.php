@@ -22,10 +22,10 @@ class HMac
         if (\strlen($secret) > $size) {
             $secret = pack($pack, $callback($secret));
         }
-        $key  = str_pad($secret, $size, \chr(0x00));
-        $ipad = $key ^ str_repeat(\chr(0x36), $size);
-        $opad = $key ^ str_repeat(\chr(0x5C), $size);
-        $hmac = $callback($opad . pack($pack, $callback($ipad . $data)));
+        $key      = str_pad($secret, $size, \chr(0x00));
+        $ipad     = $key ^ str_repeat(\chr(0x36), $size);
+        $opad     = $key ^ str_repeat(\chr(0x5C), $size);
+        $hmac     = $callback($opad . pack($pack, $callback($ipad . $data)));
 
         return $raw_output ? pack($pack, $hmac) : $hmac;
     }

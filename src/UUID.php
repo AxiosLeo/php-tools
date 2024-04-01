@@ -51,7 +51,7 @@ class UUID
             $cut_val = array_rand($cut);
             $part    = substr($str, 32 - $length, $cut_val);
             $tmp[]   = $part;
-            $length  = $length - $cut_val;
+            $length -= $cut_val;
         }
 
         return implode($flavour, $tmp);

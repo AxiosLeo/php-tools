@@ -70,7 +70,7 @@ class ArrayMap implements \ArrayAccess
             }
         } else {
             $recurArrayChange = function ($array, $keyArr, $value) use (&$recurArrayChange) {
-                $key = array_shift($keyArr);
+                $key         = array_shift($keyArr);
                 if (null === $key) {
                     return $value;
                 }
@@ -93,8 +93,8 @@ class ArrayMap implements \ArrayAccess
                 return $array;
             };
 
-            $keyArray    = explode($this->separator, trim($key, ' .'));
-            $this->array = $recurArrayChange($this->array, $keyArray, $value);
+            $keyArray         = explode($this->separator, trim($key, ' .'));
+            $this->array      = $recurArrayChange($this->array, $keyArray, $value);
         }
 
         return $this;
@@ -166,7 +166,7 @@ class ArrayMap implements \ArrayAccess
             return $array;
         };
 
-        $arr = $this->get();
+        $arr     = $this->get();
         $recurse($arr);
 
         return $arr;
@@ -200,16 +200,16 @@ class ArrayMap implements \ArrayAccess
      *
      * @return $this
      */
-    public function sort(string $key = null, array $sortRule = []): mixed
+    public function sort(?string $key = null, array $sortRule = []): mixed
     {
-        $data = $this->get($key);
+        $data     = $this->get($key);
         if (!\is_array($data)) {
             throw new \InvalidArgumentException('Invalid data. Only supported array.');
         }
         if (0 === \count($sortRule)) {
             throw new \InvalidArgumentException('Invalid sort rule.');
         }
-        $params = [];
+        $params   = [];
         foreach ($sortRule as $key => $value) {
             $params[] = $key;
 
@@ -227,14 +227,14 @@ class ArrayMap implements \ArrayAccess
 
         foreach ($params as $key => $field) {
             if (\is_string($field)) {
-                $item = [];
+                $item         = [];
                 foreach ($data as $k => $value) {
                     $item[$k] = $value[$field];
                 }
                 $params[$key] = $item;
             }
         }
-        $params[] =&$data;
+        $params[] = &$data;
         \call_user_func_array('array_multisort', $params);
 
         return array_pop($params);

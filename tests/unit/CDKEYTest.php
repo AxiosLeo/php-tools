@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class CDKEYTest extends TestCase
@@ -32,7 +33,7 @@ class CDKEYTest extends TestCase
     {
         $producer = new CDKEYProducer(4, 4);
         $this->assertCount(100, $producer->get(100));
-        $this->assertTrue(0 === strpos($producer->getOne(), '101D'));
-        $this->assertTrue(0 === strpos($producer->getOne(), '101E'));
+        $this->assertTrue(str_starts_with($producer->getOne(), '101D'));
+        $this->assertTrue(str_starts_with($producer->getOne(), '101E'));
     }
 }

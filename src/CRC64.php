@@ -8,14 +8,14 @@ class CRC64
 {
     private static array $crc64tab = [];
 
-    private int $value = 0;
+    private int $value             = 0;
 
     public function __construct()
     {
         if ([] === self::$crc64tab) {
             $poly64rev = (0xC96C5795 << 32) | 0xD7870F42;
             for ($n = 0; $n < 256; ++$n) {
-                $crc = $n;
+                $crc                = $n;
                 for ($k = 0; $k < 8; ++$k) {
                     if ($crc & true) {
                         $crc = ($crc >> 1) & ~(0x8 << 60) ^ $poly64rev;
@@ -53,6 +53,6 @@ class CRC64
 
     private function count($byte, $crc): int
     {
-        return self::$crc64tab[($crc ^ $byte) & 0xff] ^ (($crc >> 8) & ~(0xff << 56));
+        return self::$crc64tab[($crc ^ $byte) & 0xFF] ^ (($crc >> 8) & ~(0xFF << 56));
     }
 }

@@ -11,7 +11,7 @@ class ForkProcess
     use InstanceTrait;
 
     private array $work_queue = [];
-    private ?int   $max_process;
+    private ?int $max_process;
 
     public function __construct($max_process = 100)
     {
@@ -42,7 +42,7 @@ class ForkProcess
 
     public function addWork($class, $func, $args = []): self
     {
-        $queue = [
+        $queue              = [
             'class' => $class,
             'func'  => $func,
             'args'  => $args,
@@ -70,7 +70,7 @@ class ForkProcess
         if (\is_string($class) && class_exists($class)) {
             $class = new $class();
         }
-        $fork = $this->fork();
+        $fork  = $this->fork();
         if ($fork) {
             return true;
         }

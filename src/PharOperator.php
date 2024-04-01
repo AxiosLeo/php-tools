@@ -35,8 +35,6 @@ class PharOperator
     }
 
     /**
-     * @param $index
-     *
      * @return $this
      */
     public function setIndex(string $index): self
@@ -55,7 +53,7 @@ class PharOperator
 
     public function zip(string $output_path): void
     {
-        $save_path = $output_path;
+        $save_path  = $output_path;
         if (is_dir($save_path)) {
             throw new \InvalidArgumentException("{$output_path} must be file path.");
         }

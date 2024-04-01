@@ -22,11 +22,11 @@ class TreeToList
 
     private string $parent_index = 'parent_id';
 
-    private string $node_index = 'id';
+    private string $node_index   = 'id';
 
-    private string $node_name = 'child';
+    private string $node_name    = 'child';
 
-    private string $layer_name = '';
+    private string $layer_name   = '';
 
     private int $count;
 
@@ -54,7 +54,8 @@ class TreeToList
             if ('' !== $this->layer_name) {
                 $node[$this->layer_name] = $layer;
             }
-            $data[] = $node;
+
+            $data[]                    = $node;
             if (isset($t[$this->node_name]) && !empty($t[$this->node_name])) {
                 $this->recurse($data, $t[$this->node_name], $layer + 1, $this->count);
             }

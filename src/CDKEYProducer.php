@@ -20,12 +20,12 @@ class CDKEYProducer
         if ($ticket_len > 0) {
             $this->code_min = (int) $this->converter->anyToDecimal('1' . str_repeat('0', $ticket_len - 1), 62);
         }
-        $this->code_max = (int) $this->converter->anyToDecimal(str_repeat('Z', $ticket_len), 62);
+        $this->code_max  = (int) $this->converter->anyToDecimal(str_repeat('Z', $ticket_len), 62);
         if ($mixed_str_len > 0) {
             $this->mix_min = (int) $this->converter->anyToDecimal('1' . str_repeat('0', $mixed_str_len - 1), 62);
         }
-        $this->mix_max = (int) $this->converter->anyToDecimal(str_repeat('Z', $mixed_str_len), 62);
-        $this->offset  = $offset;
+        $this->mix_max   = (int) $this->converter->anyToDecimal(str_repeat('Z', $mixed_str_len), 62);
+        $this->offset    = $offset;
     }
 
     public function setOffset(int $offset): self

@@ -6,15 +6,15 @@ namespace axios\tools;
 
 class RSACrypt
 {
-    public array   $config             = [
+    public array $config            = [
         'digest_alg'       => 'sha256',
         'private_key_bits' => 2048,
         'private_key_type' => \OPENSSL_KEYTYPE_RSA,
     ];
-    private string $private_key        = '';
-    private string $public_key         = '';
-    private int    $encrypt_block_size = 200;
-    private int    $decrypt_block_size = 256;
+    private string $private_key     = '';
+    private string $public_key      = '';
+    private int $encrypt_block_size = 200;
+    private int $decrypt_block_size = 256;
 
     public function __construct($config = [])
     {
@@ -69,7 +69,7 @@ class RSACrypt
         $res    = openssl_pkey_new($config);
         openssl_pkey_export($res, $pri_key);
         $this->privateKey($pri_key);
-        $res = openssl_pkey_get_details($res);
+        $res    = openssl_pkey_get_details($res);
         $this->publicKey($res['key']);
 
         return $this;

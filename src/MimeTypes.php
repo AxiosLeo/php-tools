@@ -7,7 +7,7 @@ namespace axios\tools;
 class MimeTypes
 {
     // copy from : https://github.com/ralouphie/mimey/blob/develop/mime.types.php
-    public array $mimes      = [
+    public array $mimes         = [
         'wof'         => [
             0 => 'application/font-woff',
         ],
@@ -2979,7 +2979,7 @@ class MimeTypes
             0 => 'x-conference/x-cooltalk',
         ],
     ];
-    public array $extensions = [
+    public array $extensions    = [
         'application/font-woff'                                                     => [
             0 => 'wof',
         ],
@@ -5543,7 +5543,7 @@ class MimeTypes
         'extensions' => [],
     ];
 
-    private array $types = [
+    private array $types        = [
         'text',
         'application',
         'video',

@@ -31,7 +31,7 @@ class XMLParser
             foreach ($root_attr as $key => $value) {
                 $array[] = "{$key}=\"{$value}\"";
             }
-            $attr = implode(' ', $array);
+            $attr  = implode(' ', $array);
         }
         $attr = empty($attr) ? '' : " {trim({$attr})}";
         $xml  = "<?xml version=\"1.0\" encoding=\"{$encoding}\"?>";

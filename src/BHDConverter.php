@@ -13,8 +13,8 @@ class BHDConverter
         $dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', // len:62
         $patch = '0',
     ) {
-        $this->dict       = $dict;
-        $this->patch      = $patch;
+        $this->dict  = $dict;
+        $this->patch = $patch;
     }
 
     /**

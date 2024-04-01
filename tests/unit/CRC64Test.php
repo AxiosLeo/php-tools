@@ -9,13 +9,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class CRC64Test extends TestCase
 {
     public function testCRC64()
     {
-        $crc64 = new CRC64();
+        $crc64     = new CRC64();
         $crc64->append('t');
         $first_val = $crc64->value();
         $this->assertEquals('9684896945377528848', $crc64->result());
@@ -33,7 +34,7 @@ class CRC64Test extends TestCase
 
     public function testWithChinese()
     {
-        $crc64 = new CRC64();
+        $crc64     = new CRC64();
         $crc64->append('中');
         $this->assertEquals('5878784518235156503', $crc64->result());
         $first_val = $crc64->value();

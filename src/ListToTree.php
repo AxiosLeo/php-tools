@@ -21,9 +21,9 @@ class ListToTree
 
     private string $parent_index = 'parent_id';
 
-    private string $node_index = 'id';
+    private string $node_index   = 'id';
 
-    private string $node_name = 'child';
+    private string $node_name    = 'child';
 
     public function __construct(array $list = [])
     {
@@ -37,8 +37,8 @@ class ListToTree
         foreach ($data as $d) {
             $items[$d[$this->node_index]] = $d;
         }
-        $tree = [];
-        $n    = 0;
+        $tree  = [];
+        $n     = 0;
         foreach ($items as $node_index => $item) {
             if (isset($items[$item[$this->parent_index]])) {
                 $items[$item[$this->parent_index]][$this->node_name][] = &$items[$node_index];

@@ -63,10 +63,10 @@ return (new PhpCsFixer\Config())
         //     'use',
         // ],
         'binary_operator_spaces'                      => [
-            'default'   => 'align_single_space_by_scope',
+            'default'   => 'align',
             'operators' => [
-                '=>' => 'align_single_space_by_scope',
-                '='  => 'align_single_space_by_scope',
+                '=>' => 'align',
+                '='  => 'align',
             ],
         ],
         'braces'                                      => [

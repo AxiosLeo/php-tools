@@ -98,7 +98,7 @@ class Files
         if (flock($fp, \LOCK_EX)) {
             while ($blank > 0) {
                 fwrite($fp, \PHP_EOL);
-                $blank = $blank - 1;
+                --$blank;
             }
             fwrite($fp, $text . \PHP_EOL);
             flock($fp, \LOCK_UN);
