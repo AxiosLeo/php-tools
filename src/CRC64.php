@@ -13,7 +13,7 @@ class CRC64
     public function __construct()
     {
         if ([] === self::$crc64tab) {
-            $poly64rev = (0xC96C5795 << 32) | 0xD7870F42;
+            $poly64rev = (0xC96C5795 << 32)|0xD7870F42;
             for ($n = 0; $n < 256; ++$n) {
                 $crc                = $n;
                 for ($k = 0; $k < 8; ++$k) {

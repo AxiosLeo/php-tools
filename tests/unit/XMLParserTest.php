@@ -33,7 +33,7 @@ class XMLParserTest extends TestCase
             'list' => [
                 'item' => [1, 2, 3, 4],
             ],
-            'map'  => ['a' => 'b', 'c' => 'd'],
+            'map' => ['a' => 'b', 'c' => 'd'],
         ], XML::decode($expected));
     }
 }

@@ -54,7 +54,7 @@ class SM3
         }
 
         $str .= $bt;
-        $count        = strlen($str)    * 8;
+        $count        = strlen($str) * 8;
         $l            = $count / self::LEN;
         for ($i = 0; $i < $l; ++$i) {
             $vr = $this->cf($vr, substr($str, $i * self::STR_LEN, self::STR_LEN));
@@ -153,17 +153,17 @@ class SM3
 
     private function ff($j, $x, $y, $z): int
     {
-        return $j < 16 ? $x ^ $y ^ $z : ($x & $y) | ($x & $z) | ($y & $z);
+        return $j < 16 ? $x ^ $y ^ $z : ($x & $y)|($x & $z)|($y & $z);
     }
 
     private function gg($j, $x, $y, $z): int
     {
-        return $j < 16 ? $x ^ $y ^ $z : ($x & $y) | (~$x & $z);
+        return $j < 16 ? $x ^ $y ^ $z : ($x & $y)|(~$x & $z);
     }
 
     private function lm($a, $n): int
     {
-        return $a >> (32 - $n) | (($a << $n) & 0xFFFFFFFF);
+        return $a >> (32 - $n)|(($a << $n) & 0xFFFFFFFF);
     }
 
     private function p0($x): int
