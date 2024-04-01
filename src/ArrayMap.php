@@ -200,7 +200,7 @@ class ArrayMap implements \ArrayAccess
      *
      * @return $this
      */
-    public function sort(string $key = null, array $sortRule = []): self
+    public function sort(string $key = null, array $sortRule = []): mixed
     {
         $data = $this->get($key);
         if (!\is_array($data)) {
