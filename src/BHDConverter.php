@@ -6,15 +6,17 @@ namespace axios\tools;
 
 class BHDConverter
 {
-    private $dict;
-    private $patch;
+    private $dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';  // len:62
+    private $patch = '0';
 
-    public function __construct(
-        $dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', // len:62
-        $patch = '0',
-    ) {
-        $this->dict  = $dict;
-        $this->patch = $patch;
+    public function __construct($dict = null, $patch = null)
+    {
+        if ($dict) {
+            $this->dict  = $dict;
+        }
+        if ($patch) {
+            $this->patch = $patch;
+        }
     }
 
     /**
